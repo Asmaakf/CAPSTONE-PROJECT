@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% block title%} contact {% endblock%}
+{% block content %}
+<!-- hero عشان اللون بس -->   
+<section class="bg-dark" style="width: 100%; height: 300px;">
+
+</section>
+
+
+<section>
+
+
+<div class="container mt-5">
+    <div class="row">
+    
+        <div class="col-md-6">
+            <form action="{% url 'contact:contact_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                {% csrf_token %}
+                <div class="row">
+                    <h2>Contact Support</h2>
+                    <div class="col-md-6">
+                        <h4>Username</h4>
+                        <input name="name" type="text" placeholder="Lama" class="form-control" required minlength="2"  value="{% if request.user.is_authenticated %} {{ request.user.username}}{% endif %}"  />
+                    </div>
+                </div>
+                <div>
+                    <h4>Email</h4>
+                      <a href="mailto:email@example.com" style="display: none;"></a>
+                      <input name="email" type="email" placeholder="email@example.com" class="form-control" required minlength="5" onclick="document.querySelector('a[href=\'mailto:email@example.com\']').click();"  value="{% if request.user.is_authenticated %} {{ request.user.email}}{% endif %}" />
+                </div>
+                <div>
+                   <h4>Message</h4>
+                     <textarea name="message" placeholder="Enter ur qusstion or message"  class="form-control" required minlength="10"></textarea>
+                </div>
+                   <input type="submit" class="btn btn-dark" value="Submit" />
+            </form>
+        </div>
+        <div class="col-md-6">
+            
+            
+            <a class="text-dark text-decoration-none p-5" href="{% url 'contact:message_view' %}">show message -></a>
+           
+        </div>
+    </div>
+</div>
+
+</section>
+
+{% endblock %}

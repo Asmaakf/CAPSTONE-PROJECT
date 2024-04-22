@@ -1,0 +1,75 @@
+{% extends 'main/dashboard_base.html' %}
+{% load static %}
+
+ {% block content %}
+
+<div class="row">
+<div class="col-2">
+<button type="submit" class="b3">انشاء جلسة</button> </div>
+<!-- contant -->
+  <div class="col-md-7 mt-5 d-flex flex-column align-items-end">
+  
+  <h2>الجلسات</h2>
+  <div class="row">
+    <div class="col">
+      <div class="request-box">
+        <p>jhjkbjb</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discussion -->
+  <div class="row mt-5">
+    <div class="col">
+      <h2 class="d-flex flex-column align-items-end">المناقشة</h2>
+      <div class="disction-box">
+        <div class="message-box">
+          <!-- Messages go here -->
+        </div>
+        <form class="discussion-form">
+          <textarea name="message" placeholder="اكتب تعليقك هنا .." class="message" required></textarea>
+          <input type="submit" value="ارسال" class="b4" />
+        </form>
+      </div>
+    </div>
+  </div>
+</div><!-- col end -->
+
+
+
+
+  <div class="col-md-3 d-flex flex-column align-items-end">
+    <div class="sidbar">
+      <div class="sid-info">
+        <div class="group-name">
+          <h3>اسم المجموعة</h3>
+        </div>
+        <h5 class="member-titl">الاعضاء</h5>
+        <div class="member-box1">
+          <div class="members">
+            <p>الاسم <img class="member-img" src="{% static 'images/profile.png'%}"></p>
+            <p> الاسم ٢ <img class="member-img" src="{% static 'images/profile.png'%}"> </p>
+            <p> الاسم ٣ <img class="member-img" src="{% static 'images/profile.png'%}"> </p>
+          </div>
+        </div>
+        <div class="sid-buttons">
+          <button type="submit" class="b">رفع ملف</button>
+          <button type="submit" class="b">اضافه Flash Card</button>
+          <button type="submit" class="b2">اضافة عضو</button>
+        </div>
+      </div>
+    </div><!-- sid bar end-->
+  </div>
+
+  
+</div><!--end row -->
+
+
+
+
+
+
+
+
+
+  {% endblock %}
