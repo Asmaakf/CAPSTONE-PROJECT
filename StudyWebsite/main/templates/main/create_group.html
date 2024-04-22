@@ -1,0 +1,25 @@
+{% extends 'main/dashboard_base.html' %}
+{% load static %}
+
+ {% block content %}
+
+
+
+ <form action="{% url 'main:create_group_view' %}"  method="POST"  enctype="multipart/form-data" class="d-flex flex-column gap-2" >
+    {% csrf_token %}
+
+     <label for="text">Group name:</label>
+    <input type="text" name="name" placeholder="ex:Ahamd" class="form-control" required  />
+    <br>
+    <label for="email">Group description:</label>
+    <input type="text" name="description" placeholder="description" class="form-control" required />
+    <br>
+    <h5>Choose Image:</h5>
+  <div class="form-group ">
+     <input name="icon"  type="file"  accept="image/*" class="form-control" />
+      </div>
+    <br>
+    <input type="submit" value="send"  class="b btn btn-primary"/>
+    </form>
+
+   {% endblock %}
