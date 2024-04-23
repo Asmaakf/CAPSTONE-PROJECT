@@ -8,9 +8,11 @@ def index_view(request: HttpRequest):
     return render(request, "main/index.html")
 
 
-def group_dashboard(request:HttpRequest):
+def group_dashboard(request:HttpRequest , group_id):
+  group=StudyGroup.objects.get(id=group_id)
+  
 
-  return render(request,"main/group_dashboard.html")
+  return render(request,"main/group_dashboard.html" , {"group":group })
 
 
 def user_dashboard(request:HttpRequest):
