@@ -14,8 +14,9 @@
 <section>
     <div class="container mt-5">
         <h2>Add New set</h2>
-        <form action="{% url 'review_sets:add_set_view' %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <form action="{% url 'review_sets:add_set_view' group.id %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
             {% csrf_token %}
+            
             <div class="row my-3">
                 <div class="col-12">
                     <label for="title" class="form-label">Set Topic</label>

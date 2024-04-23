@@ -1,14 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from main.models import StudyGroup
 
 # Create your models here.
 
-# ناقصني القروب خلاني ابكي 
 class ReviewSet(models.Model):
     title = models.CharField(max_length=2000)
     description = models.TextField()
     created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    group=models.ForeignKey(StudyGroup, on_delete=models.CASCADE)
 
     #string representation
     def __str__(self):
