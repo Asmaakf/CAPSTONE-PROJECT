@@ -24,13 +24,14 @@ def add_attachment_view(request:HttpRequest,group_id):
             )
             
             new_attachment.save()
-            return redirect("main:all_attachment_view",group_id=group.id)# تعديل
+            return redirect("attachments:all_attachment_view",group_id=group.id)# تعديل
          except Exception as e:
                     print(e)
    
     return render(request, "main/attachment.html")
 
-def delete_attachment_view(request:HttpRequest,attachment_id):
+def delete_attachment_view(request:HttpRequest,attachment_id ,group_id):
+  group=StudyGroup.objects.get(pk=group_id)
   try:
     contact=Attachment.objects.get(pk=attachment_id)
     contact.delete()
@@ -38,20 +39,19 @@ def delete_attachment_view(request:HttpRequest,attachment_id):
      contact=None
   except Exception as e:
     print(e)
-  return redirect("attachments:attachment_view")
+  return redirect("attachments:all_attachment_view",group_id=group.id)
 
-def update_attachment_view(request:HttpRequest,attachment_id):
+def update_attachment_view(request:HttpRequest,attachment_id ,group_id):
+    group=StudyGroup.objects.get(pk=group_id)
     attachment = Attachment.objects.get(pk=attachment_id)
 
     if request.method == "POST":
         try:
            attachment.title = request.POST["title"]
-           attachment.media = request.FILES.get["media", attachment.media]
-           attachment.group= request.POST["group"] #تعديل هي والي تحتها
-           attachment.uploaded_by = request.POST["uploaded_by"]
-         
+           attachment.media = request.FILES.get("media", attachment.media)
+  
            attachment.save()
-           return redirect("attachments:update_attachment", attachment_id = attachment.id)
+           return redirect("attachments:all_attachment_view", group_id=group.id)
         except Exception as e:
             print(e)
-    return render(request, 'attachments/attachment_update.html',{"attachment":attachment})
+    return render(request, 'main/attachment_update.html',{"attachment":attachment,"group":group})
