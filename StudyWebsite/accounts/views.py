@@ -12,9 +12,18 @@ from django.contrib.auth import authenticate, login, logout
 #import transaction
 from django.db import transaction, IntegrityError
 
+# import profile
+from .models import Profile
+
+# delete
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
+
+
 
 # Create your views here.
 
+# register
 def user_register_view(request:HttpRequest):
     msg = None
 
@@ -29,6 +38,8 @@ def user_register_view(request:HttpRequest):
                 password=request.POST["password"]
             )
             new_user.save()
+            profile = Profile(user=new_user,birthdate = request.POST["birthdate"])
+            profile.save()
 
             #redirect to login page
             return redirect("accounts:user_login_view")
@@ -42,6 +53,7 @@ def user_register_view(request:HttpRequest):
             print(e)
     
     return render(request, "accounts/user_register.html", {"msg" : msg})
+
 
 
 
@@ -69,4 +81,63 @@ def user_logout_view(request:HttpRequest):
         logout(request)
     
     return redirect('accounts:user_login_view')
+
+# profile
+def user_profile_view(request:HttpRequest, user_name):
+
+    user = User.objects.get(username=user_name)
+    
+    return render(request, "accounts/user_profile.html", {"user" : user})
+
+# update profile
+def update_user_profile_view(request:HttpRequest):
+    msg = None
+
+    if not request.user.is_authenticated:
+        return redirect("accounts:user_login_view")
+    
+    if request.method == "POST":
+        
+        try:
+
+            with transaction.atomic():
+
+                user:User = request.user
+                user.first_name = request.POST["first_name"]
+                user.last_name = request.POST["last_name"]
+                user.save()
+            
+                try:
+                    profile:Profile = user.profile
+                except Exception as e:
+                    profile = Profile(user=user)
+
+                profile.avatar = request.FILES.get("avatar", profile.avatar)
+                profile.birthdate = request.POST["birthdate"]
+                profile.bio = request.POST["bio"]
+                profile.linkedin_link = request.POST["linkedin_link"]
+                profile.github_link = request.POST["github_link"]
+                profile.save()
+
+                return redirect("accounts:user_profile_view", user_name=user.username)
+
+        except Exception as e:
+            msg = f"Something went wrong {e}"
+            print(e)
+
+    return render(request, "accounts/update_user_profile.html", {"msg" : msg })
+
+# delete
+@login_required
+def delete_user_profile(request):
+    if request.method == "POST":
+        try:
+            user = request.user  # الحصول على المستخدم الحالي
+            user.delete()  # حذف الحساب
+            return redirect('accounts:user_login_view')  # إعادة التوجيه إلى صفحة تسجيل الدخول بعد الحذف
+        except Exception as e:
+            # معالجة الأخطاء
+            return HttpResponseForbidden("حدث خطأ أثناء محاولة حذف الحساب.")
+    else:
+        return HttpResponseForbidden("طريقة الطلب غير مدعومة.")
 
