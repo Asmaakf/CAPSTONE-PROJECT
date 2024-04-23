@@ -22,8 +22,8 @@
                          
                             
                               
-                            <a href="{% url 'attachments:delete_attachment' attachment.id %}" class="btn btn-dark">Delete</a>
-                            <a href="{% url 'attachments:update_attachment' attachment.id %}" class="btn btn-dark">Update</a>
+                            <a href="{% url 'attachments:delete_attachment_view' attachment.id group.id %}" class="btn btn-dark">Delete</a>
+                            <a href="{% url 'attachments:update_attachment_view' attachment.id group.id %}" class="btn btn-dark">Update</a>
                             </div>
                         </div>
                         
@@ -61,14 +61,8 @@
                                         <h5>Choose media:</h5>
                                         <input name="media" type="file" accept="image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" required />
                                     </div>
-                                    <div>
-                                        <h4>Uploaded by</h4>
-                                        <input name="uploaded_by" type="text" placeholder="User" class="form-control" required minlength="2"  value="{% if request.user.is_authenticated %} {{ request.user.username}}{% endif %}"/>
-                                    </div>
-                                    <div>
-                                        <h4>Group</h4>
-                                        <input name="group" type="text" placeholder="Group" class="form-control" required minlength="2" readonly value="{% if request.user.is_authenticated %} {{ request.user.studygroup.name}}{% endif %}" />
-                                    </div>
+                                   
+                                   
                                     <input type="submit" class="btn btn-dark" value="Submit" />
                                 </form>
                             </div>

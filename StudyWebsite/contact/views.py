@@ -31,7 +31,7 @@ def message_view(request:HttpRequest):
  return render(request, "contact/message.html", {"contacts" : contacts })
 
 
-def delete_message(request:HttpRequest ,msg_id):
+def delete_message_view(request:HttpRequest ,msg_id):
   
   if not request.user.is_superuser:
     return redirect('main:not_allowed_page') #باقي مو موجوده
