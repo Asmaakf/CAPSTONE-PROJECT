@@ -5,29 +5,32 @@ from main.models import StudyGroup
 
 
 # Create your views here.
-def attachment_view(request:HttpRequest,group_id):
+def all_attachment_view(request:HttpRequest , group_id):
     attachments= Attachment.objects.all()
+    group=StudyGroup.objects.get(pk=group_id)
+    return render(request, "main/attachment.html", {"attachments": attachments , "group":group} )
+
+
+def add_attachment_view(request:HttpRequest,group_id):
     if request.method == 'POST':
-        if request.user.is_authenticated:
-            uploaded_by=request.user
-             
-        try:
+        if request.user.is_authenticated:    
+         try:
             group=StudyGroup.objects.get(pk=group_id)
             new_attachment = Attachment(
                 title=request.POST["title"],  
                 media=request.FILES.get("media"),  
-                uploaded_by=uploaded_by,
+                uploaded_by=request.user,
                 group=group,
             )
             
             new_attachment.save()
-            return redirect("attachments:attachment_view",group_id=group.id)# تعديل
-        except Exception as e:
+            return redirect("main:all_attachment_view",group_id=group.id)# تعديل
+         except Exception as e:
                     print(e)
    
-    return render(request, "attachments/attachment.html", {"attachments": attachments})
+    return render(request, "main/attachment.html")
 
-def delete_attachment(request:HttpRequest,attachment_id):
+def delete_attachment_view(request:HttpRequest,attachment_id):
   try:
     contact=Attachment.objects.get(pk=attachment_id)
     contact.delete()
@@ -37,7 +40,7 @@ def delete_attachment(request:HttpRequest,attachment_id):
     print(e)
   return redirect("attachments:attachment_view")
 
-def update_attachment(request:HttpRequest,attachment_id):
+def update_attachment_view(request:HttpRequest,attachment_id):
     attachment = Attachment.objects.get(pk=attachment_id)
 
     if request.method == "POST":
