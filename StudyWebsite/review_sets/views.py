@@ -38,11 +38,11 @@ def update_set_view(request: HttpRequest):
 def delete_set_view(request: HttpRequest):
     pass
 
-def all_sets_view(request: HttpRequest):
+def all_sets_view(request: HttpRequest, group_id):
+    sets= ReviewSet.objects.all()
+    group=StudyGroup.objects.get(pk=group_id)
+    return render(request, "review_sets/all_sets.html", {"sets": sets , "group":group} )
 
-    sets = ReviewSet.objects.all()
-
-    return render(request, "review_sets/all_sets.html", {"sets" : sets})
 
 
 
