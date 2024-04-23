@@ -42,6 +42,4 @@ def delete_message(request:HttpRequest ,msg_id):
      contact=None
   except Exception as e:
     print(e)
-
-    
   return redirect('contact:message_view')

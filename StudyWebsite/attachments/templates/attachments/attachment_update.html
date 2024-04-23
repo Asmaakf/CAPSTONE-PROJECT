@@ -47,7 +47,7 @@
                             </div>
                             <div class="modal-body">
                                
-                                <form action="{% url 'attachments:attachment_view' group.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                <form action="{% url 'attachments:attachment_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                     {% csrf_token %}
                                   
                                     <div class="row">
