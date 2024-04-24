@@ -132,11 +132,11 @@ def update_user_profile_view(request:HttpRequest):
 def delete_user_profile(request):
     if request.method == "POST":
         try:
-            user = request.user  # الحصول على المستخدم الحالي
-            user.delete()  # حذف الحساب
-            return redirect('accounts:user_login_view')  # إعادة التوجيه إلى صفحة تسجيل الدخول بعد الحذف
+            user = request.user  
+            user.delete() 
+            return redirect('accounts:user_login_view')  
         except Exception as e:
-            # معالجة الأخطاء
+           
             return HttpResponseForbidden("حدث خطأ أثناء محاولة حذف الحساب.")
     else:
         return HttpResponseForbidden("طريقة الطلب غير مدعومة.")

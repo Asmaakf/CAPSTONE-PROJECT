@@ -3,64 +3,74 @@
 {% block title %}Update {{ request.user.username }}'s Profile{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h1 style="margin-top: 150px;">Update Profile</h1>
+<div class="container" style="margin-top: 100px;">
+    <h1>تحديث الملف الشخصي</h1>
 
     {% if msg %}
         <div class="alert alert-danger">{{ msg }}</div>
     {% endif %}
     
     <div class="row">
-        <div class="col">
+        <div class="col-md-8 mx-auto">
             <form action="{% url 'accounts:update_user_profile_view' %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
                 {% csrf_token %}
+
                 
                 <div class="form-group">
-                    <label for="first_name">First Name</label>
-                    <input name="first_name" class="form-control" type="text" minlength="3" placeholder="First Name" value="{{ user.first_name }}"/>
+                    <label for="first_name">الاسم الأول</label>
+                    <input name="first_name" class="form-control" type="text" minlength="3" placeholder="الاسم الأول" value="{{ user.first_name }}"/>
                 </div>
 
-                <div class="form-group">
-                    <label for="last_name">Last Name</label>
-                    <input name="last_name" class="form-control" type="text" minlength="3" placeholder="Last Name" value="{{ user.last_name }}"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input name="email" class="form-control" type="email" placeholder="Email" value="{{ user.email }}"/>
-                </div>
-
-                <div class="form-group">
-                    <label for="bio">Bio</label>
-                    <textarea name="bio" class="form-control" placeholder="About Yourself">{{ user.profile.bio }}</textarea>
-                </div>
                 
                 <div class="form-group">
-                    <label for="birthdate">Birthdate</label>
-                    <input name="birthdate" class="form-control" type="date" placeholder="Birthdate" value="{{ user.profile.birthdate }}"/>
+                    <label for="last_name">الاسم الأخير</label>
+                    <input name="last_name" class="form-control" type="text" minlength="3" placeholder="الاسم الأخير" value="{{ user.last_name }}"/>
                 </div>
+
                 
                 <div class="form-group">
-                    <label for="avatar">Avatar</label>
-                    <img src="{{ user.profile.avatar.url }}" style="width: 100px; border-radius: 100%;" alt="Current Avatar"/>
+                    <label for="email">البريد الإلكتروني</label>
+                    <input name="email" class="form-control" type="email" placeholder="البريد الإلكتروني" value="{{ user.email }}"/>
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="bio">نبذة عنك</label>
+                    <textarea name="bio" class="form-control" placeholder="اكتب نبذة عنك">{{ user.profile.bio }}</textarea>  
+                </div>
+
+                
+                <div class="form-group">
+                    <label for="birthdate">تاريخ الميلاد</label>
+                    <input name="birthdate" class="form-control" type="date" placeholder="تاريخ الميلاد" value="{{ user.profile.birthdate }}"/>
+                </div>
+
+                
+                <div class="form-group text-center">
+                    <label for="avatar">الصورة الشخصية</label>
+                    <img src="{{ user.profile.avatar.url }}" style="width: 80px; border-radius: 50%;" alt="الصورة الحالية"/>
                     <input type="file" class="form-control" name="avatar"/>
                 </div>
 
+                
                 <div class="form-group">
-                    <label for="linkedin_link">LinkedIn Link</label>
-                    <input name="linkedin_link" class="form-control" type="text" placeholder="LinkedIn Profile Link" value="{{ user.profile.linkedin_link }}"/>
+                    <label for="linkedin_link">رابط LinkedIn</label>
+                    <input name="linkedin_link" class="form-control" type="text" placeholder="رابط ملف لينكدإن" value="{{ user.profile.linkedin_link }}"/>
                 </div>
 
+                
                 <div class="form-group">
-                    <label for="github_link">GitHub Link</label>
-                    <input name="github_link" class="form-control" type="text" placeholder="GitHub Profile Link" value="{{ user.profile.github_link }}"/>
+                    <label for="github_link">رابط GitHub</label>
+                    <input name="github_link" class="form-control" type="text" placeholder="رابط ملف جيتهاب" value="{{ user.profile.github_link }}"/>
                 </div>
+
                 
                 <div class="form-group text-center">
-                    <input type="submit" class="btn btn-dark" value="Update Profile"/>
+                    <input type="submit" class="btn btn-primary" value="تحديث الملف الشخصي"/>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 {% endblock %}
