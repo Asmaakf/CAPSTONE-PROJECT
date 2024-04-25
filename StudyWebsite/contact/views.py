@@ -16,7 +16,7 @@ def contact_view(request:HttpRequest):
             )
             
             new_con.save()
-            return redirect("main:index_view")
+            return redirect("main:index_view")#احس تتغير اشوفها بعدين المفروض يوجهه لمكان الرساله
         except Exception as e:
                     print(e)
         

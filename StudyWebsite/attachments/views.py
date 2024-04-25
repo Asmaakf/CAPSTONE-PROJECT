@@ -6,9 +6,9 @@ from main.models import StudyGroup
 
 # Create your views here.
 def all_attachment_view(request:HttpRequest , group_id):
-    attachments= Attachment.objects.all()
     group=StudyGroup.objects.get(pk=group_id)
-    return render(request, "main/attachment.html", {"attachments": attachments , "group":group} )
+    attachments= Attachment.objects.filter(group=group)
+    return render(request, "main/attachment.html", {"attachments": attachments ,"group":group} )
 
 
 def add_attachment_view(request:HttpRequest,group_id):
@@ -54,4 +54,4 @@ def update_attachment_view(request:HttpRequest,attachment_id ,group_id):
            return redirect("attachments:all_attachment_view", group_id=group.id)
         except Exception as e:
             print(e)
-    return render(request, 'main/attachment_update.html',{"attachment":attachment,"group":group})
+    return render(request, 'main/attachment.html',{"attachment":attachment,"group":group})

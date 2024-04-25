@@ -8,67 +8,104 @@
 <section>
     <div class="container">
         <div class="row">
-            <!-- عرض المرفقات -->
+            <!-- عرض الميديا-->
             <div class="col-md-6">
                 <div class="row mt-4">
                     {% for attachment in attachments %}
-                        <div class="col-6 mb-0">
+                       
+                        <div class="col-6 mb-3">
                             <div class="PL d-flex flex-column gap-3 border border-1 shadow p-2 rounded-3 h-100 mb-4">
-                                <p>{{ attachment.group }}</p>
-                                <p>{{ attachment.title }}</p>
-                                <a href="{{ attachment.media.url }}" target="_blank">View Media</a>
-                                <h6>{{ attachment.uploaded_at }}</h6>
+                                <p>{{ attachment.group.name }}</p>
+                                <p>اسم الملف:{{ attachment.title }}</p>
+                                <a href="{{ attachment.media.url }}" target="_blank">عرض الملف</a>
+                                <h6>تاريخ إرفاق الملف: <br>{{ attachment.uploaded_at }}</h6>
                                 
-                         
-                            
-                              
-                            <a href="{% url 'attachments:delete_attachment_view' attachment.id group.id %}" class="btn btn-dark">Delete</a>
-                            <a href="{% url 'attachments:update_attachment_view' attachment.id group.id %}" class="btn btn-dark">Update</a>
+
+                                <!--تحديث الميديا -->
+                                <button type="button" class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#updateAttachmentModal{{ attachment.id }}">
+                                    تحديث الملف
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="updateAttachmentModal{{ attachment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">تحديث الملف</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'attachments:update_attachment_view' attachment.id group.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4>اسم الملف</h4>
+                                                            <input name="title" type="text" placeholder="Science" class="form-control" value="{{ attachment.title }}" />
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <h5>اختيار الملف:</h5>
+                                                        {% if attachment.media.url %}
+                                                            {% if attachment.media.url|lower|slice:'-4:' == '.jpg' or attachment.media.url|lower|slice:'-5:' == '.jpeg' or attachment.media.url|lower|slice:'-4:' == '.png' %}
+                                                                <img src="{{ attachment.media.url }}" style="width: 150px;"/>
+                                                            {% else %}
+                                                                <p>الملف: {{ attachment.media.name }}</p>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                        <input name="media" type="file" accept="image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" />
+                                                    </div>
+                                                    <input type="submit" class="btn btn-dark" value="إرسال" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- نهاية تحديث  -->
+
+                                <a href="{% url 'attachments:delete_attachment_view' attachment.id group.id %}" class="btn btn-dark">حذف الملف </a>
                             </div>
                         </div>
-                        
+                  
                     {% endfor %}
                 </div>
             </div>
 
-            <!-- هنا زر الاضافه للميديا -->
-            <div class="col-md-6" style="margin-left: 600px; margin-top: -50px;">
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add Media
+
+            <!-- هنا زر الاضافة للميديا -->
+            <div class="col-md-6">
+                <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addAttachmentModal">
+                    إضافة ملف
                 </button>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="addAttachmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Attachment Form</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">إضافة ملف</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                               
                                 <form action="{% url 'attachments:add_attachment_view' group.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                     {% csrf_token %}
-                                  
                                     <div class="row">
-                                        <h2>Attachment</h2>
+                                        
                                         <div class="col-md-6">
-                                            <h4>Title</h4>
+                                            <h4>اسم الملف</h4>
                                             <input name="title" type="text" placeholder="Science" class="form-control" required minlength="2" />
                                         </div>
                                     </div>
                                     <div>
-                                        <h5>Choose media:</h5>
+                                        <h5>اختيار الملف:</h5>
                                         <input name="media" type="file" accept="image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" required />
                                     </div>
-                                   
-                                   
-                                    <input type="submit" class="btn btn-dark" value="Submit" />
+                                    <input type="submit" class="btn btn-dark" value="إرفاق الملف" />
                                 </form>
                             </div>
                         </div>
                     </div>
                 </div>
+         
             </div>
         </div>
     </div>
