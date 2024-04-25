@@ -10,24 +10,26 @@
 
 </section>
 
+
 <!-- start add new set section (form) -->
 <section>
     <div class="container mt-5">
-        <h2>Add New set</h2>
-        <form action="{% url 'review_sets:add_set_view' %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <h2>Update set</h2>
+        <form action="{% url 'review_sets:update_set_view' r_set.id %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
             {% csrf_token %}
             
             <div class="row my-3">
                 <div class="col-12">
                     <label for="title" class="form-label">Set Topic</label>
-                    <input name="title" type="text" placeholder="Set Topic" class="form-control" minlength="5" required/>     
+                    <input name="title" type="text" value="{{r_set.title}}" placeholder="Set Topic" class="form-control" minlength="5" />     
                 </div>
+
                 <div class="col-12">
                     <label for="description" class="form-label">Description</label>
-                    <textarea name="description" class="form-control" minlength="20" required></textarea>
+                    <textarea name="description" class="form-control" minlength="20" >"{{r_set.description}}"</textarea>
                 </div>
                 <div class="col-12 ">
-                    <input type="submit" class="btn btn-success w-100 " value="Add Set" />
+                    <input type="submit" class="btn btn-success w-100 " value="Update Set" />
                 </div>
             </div>
         </form>

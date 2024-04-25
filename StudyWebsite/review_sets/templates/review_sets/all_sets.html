@@ -13,21 +13,31 @@
     <div class="container mt-5 px-5">  
         <div class="row g-5">
             <div class="col">
-               {% for set in sets %}
+               {% for r_set in sets %}
                     <div class="col-12 col-md-4">
                         <div class="card rounded-4">
                             <div class="bg-white">
                             </div>
                             <div class="card_content mt-3">
-                                <h2 class="">{{set.title}}</h2>
-                                <p class="">{{ set.description }}</p>
-                                <p class="">{{ set.created_at }}</p>
-                                <p class="">{{ set.created_by }}</p>
-                                <p><a href="#" class="text-decoration-none know-more">START</a></p>
+                                <h2 class="">{{r_set.title}}</h2>
+                                <p class="">{{ r_set.description }}</p>
+                                <p class="">{{ r_set.created_at }}</p>
+                                <p class="">{{ r_set.created_by }}</p>
+                                <a href="{% url 'review_sets:delete_set_view' r_set.id %}" class="text-decoration-none know-more">Delete</a>
                             </div>
                         </div>
                     </div>
                {% endfor %}     
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p><a href="{% url 'review_sets:add_set_view' %}" class="text-decoration-none know-more">Add new set</a></p>
             </div>
         </div>
     </div>
