@@ -3,71 +3,65 @@
 {% block title %}{{ user_object.username }} Profile{% endblock %}
 {% load static %}
 {% block content%}
-<div class="container">
-  <div class="row " style="margin-top: 150px;">
-    <div class="col-md-4 text-center">
-        <h2>@{{ user.username }}</h2>
-        <img src="{{ user.profile.avatar.url }}" style="width: 80%; border-radius: 100%; object-fit: cover;" alt="User Avatar">
-      </div>
-    <div class="col-md-8 mt-5">
-      <div class="card shadow" style="background-color: #f8f9fa; border-radius: 50px;">
-        <div class="card-body">
-          <h1 class="card-title text-center mb-4">Profile</h1>
-          <div class="row mb-3">
-            <div class="col">
-              <h6 class="card-subtitle mb-2 text-muted">User Information:</h6>
-              <div class="row">
-                <div class="col-4"><strong>Username:</strong></div>
-                <div class="col-8">{{ user.username }}</div>
-              </div>
-              <div class="row">
-                <div class="col-4"><strong>First Name:</strong></div>
-                <div class="col-8">{{ user.first_name }}</div>
-              </div>
-              <div class="row">
-                <div class="col-4"><strong>Last Name:</strong></div>
-                <div class="col-8">{{ user.last_name }}</div>
-              </div>
-              <div class="row">
-                <div class="col-4"><strong>Email:</strong></div>
-                <div class="col-8"><a href="mailto:{{ user.email }}" class="text-decoration-none text-dark">{{ user.email }}</a></div>
-              </div>
-              <!-- مايطلع التاريخ -->
-              <div class="row">
-                <div class="col-4"><strong>Birthdate:</strong></div>
-                <div class="col-8">{{ user.profile.birthdate }}</div>
-              </div>
-
-              <div class="row">
-                <div class="col-4"><strong>Bio:</strong></div>
-                <div class="col-8">{{ user.profile.bio }}</div>
-              </div>
-            
-              <div class="row">
-                <div class="col-4"><strong>LinkedIn:</strong></div>
-                <div class="col-8"><a href="{{ user.profile.linkedin_link }}" class="text-decoration-none text-dark">{{ user.profile.linkedin_link }}</a></div>
-              </div>
-              <div class="row">
-                <div class="col-4"><strong>GitHub:</strong></div>
-                <div class="col-8"><a href="{{ user.profile.github_link }}" class="text-decoration-none text-dark">{{ user.profile.github_link }}</a></div>
-              </div>
-            </div>
+<section>
+<div class="container my-5"> 
+  <div class="row justify-content-center align-items-end" style="height: 100px;"> 
+      <div class="col-md-3 text-center">
+          
+          <div class="shadow-lg" style="background-color: white; border-radius: 10px; padding: 10px;">
+              <img src="{{ user.profile.avatar.url }}" 
+                   style="width: 100px; border-radius: 50%; object-fit: cover;" 
+                   alt="صورة المستخدم"/> 
+              <h3 class="mt-2">@{{ user.username }}</h3> 
           </div>
-          {% if request.user == user or request.user.is_superuser %}
-          <div class="text-center d-flex justify-content-center gap-3">  <!-- استخدام d-flex للمحاذاة -->
-            <a href="{% url 'accounts:update_user_profile_view' %}" class="btn btn-dark text-decoration-none">تحديث </a>  <!-- زر التحديث -->
-        
-            <!-- زر حذف البروفايل مع تحذير أو تأكيد -->
-            <form method="POST" action="{% url 'accounts:delete_user_profile' %}">  <!-- رابط لحذف البروفايل -->
-                {% csrf_token %}  <!-- حماية من CSRF -->
-                <button type="submit" class="btn btn-danger" onclick="return confirm('هل أنت متأكد أنك تريد حذف حسابك؟ هذا الإجراء لا يمكن التراجع عنه، وسيؤدي إلى فقدان جميع بياناتك بشكل دائم.')">حذف</button>  <!-- زر الحذف -->
-
-            </form>
-        </div>
-        
-          {% endif %}
-        </div>
       </div>
-    </div>
+      
+      
+      <div class="col-md-8">
+          <div class="card shadow" style="border-radius: 20px;">
+              <div class="card-body">
+                  <h3 class="card-title text-center mb-4">الملف الشخصي</h3> 
+                  
+                  
+                  <div class="row mb-3">
+                      <div class="col-4"><strong>الاسم الأول:</strong></div>
+                      <div class="col-8">{{ user.first_name }}</div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-4"><strong>الاسم الأخير:</strong></div>
+                      <div class="col-8">{{ user.last_name }}</div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-4"><strong>البريد الإلكتروني:</strong></div>
+                      <div class="col-8"><a href="mailto:{{ user.email }}" class="text-decoration-none text-dark">{{ user.email }}</a></div> <!-- بريد إلكتروني -->
+                  </div>
+                  
+                  
+                  <div class="row mb-3">
+                      <div class="col-4"><strong>LinkedIn:</strong></div>
+                      <div class="col-8"><a href="{{ user.profile.linkedin_link }}" class="text-decoration-none text-dark">{{ user.profile.linkedin_link }}</a></div>
+                  </div>
+                  <div class="row mb-3">
+                      <div class="col-4"><strong>GitHub:</strong></div>
+                      <div class="col-8"><a href="{{ user.profile.github_link }}" class="text-decoration-none text-dark">{{ user.profile.github_link }}</a></div>
+                  </div>
+                  
+                  
+                  {% if request.user == user or request.user.is_superuser %}
+                  <div class="d-flex justify-content-center gap-3"> 
+                      <a href="{% url 'accounts:update_user_profile_view' %}" class="btn btn-outline-dark">تحديث</a> 
+                      
+                      <form method="POST" action="{% url 'accounts:delete_user_profile' %}"> 
+                          {% csrf_token %}  
+                          <button type="submit" class="btn btn-outline-danger" 
+                                  onclick="return confirm('هل أنت متأكد من رغبتك في حذف الحساب؟ هذا الإجراء نهائي.')">حذف</button>
+                      </form>
+                  </div>
+                  {% endif %}
+              </div>
+          </div>
+      </div>
   </div>
+</div>
+</section>
 {% endblock %}
