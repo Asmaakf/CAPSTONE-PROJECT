@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'attachments',
     'common_questions',
     'student_dashboard',
+    'session',
 
 ]
 
