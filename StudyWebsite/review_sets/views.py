@@ -62,36 +62,75 @@ def all_sets_view(request: HttpRequest):
     return render(request, "review_sets/all_sets.html", {"sets": sets } )
 
 
+def full_set_view(request: HttpRequest, set_id): #  set detail
+    try:
+        review_set = ReviewSet.objects.get(pk=set_id)
+        cards = FlashCard.objects.filter(review_set=review_set)
+
+    except ReviewSet.DoesNotExist:
+        review_set = None
+    except Exception as e:
+        print(e)
+
+    return render(request, "review_sets/full_set.html", {"review_set" : review_set, "cards" : cards})
+
+
+
 
 ####################### FlashCard views ##########################
 
-# FlashCard views
-def add_card_view(request: HttpRequest):
+def add_card_view(request: HttpRequest, set_id):
 
     if request.method == 'POST':
 
+        if request.user.is_authenticated:    
+            try:
+                review_set = ReviewSet.objects.get(pk=set_id)
+                new_card = FlashCard(
+                    question = request.POST["question"],
+                    answer = request.POST["answer"],
+                    review_set = review_set,
+                )
+
+                new_card.save()  
+                return redirect("review_sets:full_set_view", set_id=review_set.id) ##pop up successfully
+            except Exception as e:
+                print(e)
+
+    return render(request, "review_sets/full_set.html")
+
+
+
+def update_card_view(request: HttpRequest, set_id, card_id):
+    
+    review_set = ReviewSet.objects.get(pk=set_id)
+    card = FlashCard.objects.get(pk=card_id)
+
+    if request.method == "POST":
+
         try:
-            new_card = FlashCard(
-                question = request.POST["question"],
-                answer = request.POST["answer"],
-            )
-            new_card.save()  
-            return redirect("review_sets:all_cards_view") ##pop up successfully
+            card.question = request.POST["question"],
+            card.answer = request.POST["answer"]
+            card.save()
+            return redirect ("review_sets:full_set_view", set_id=review_set.id)
         except Exception as e:
             print(e)
+    return render(request, 'review_sets/full_set.html',{"review_set" : review_set, "card" : card})
 
-    return render(request, "review_sets/add_card.html")
 
 
-def update_card_view(request: HttpRequest):
-    pass
+def delete_card_view(request: HttpRequest, set_id, card_id):
 
-def delete_card_view(request: HttpRequest):
-    pass
+     #limit access to this view for only staff
+   
+    review_set = ReviewSet.objects.get(pk=set_id)
+    try:
+        card = FlashCard.objects.get(pk=card_id)
+        card.delete()
+    except FlashCard.DoesNotExist:
+        card = None
+    except Exception as e:
+        print(e)
 
-def full_set_view(request: HttpRequest): # containe set detail
-
-    cards = FlashCard.objects.all()
-
-    return render(request, "review_sets/full_set.html", {"cards" : cards})
-
+    return redirect("review_sets:full_set_view", set_id=review_set.id)
+    

@@ -17,5 +17,6 @@ class ReviewSet(models.Model):
 # ناقصني السيت اي دي خلاني ابكي 
 
 class FlashCard(models.Model):
+    review_set = models.ForeignKey(ReviewSet, on_delete=models.CASCADE)
     question = models.CharField(max_length=2000)
     answer = models.CharField(max_length=2000)
