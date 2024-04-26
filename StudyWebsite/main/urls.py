@@ -11,4 +11,5 @@ urlpatterns = [
     path("delete/<group_id>/group/",views.delete_group,name="delete_group_view"),
     path("requests/<group_id>/",views.member_request_view,name="member_request_view"),
     path("user/requests/<user_id>/<request_id>/",views.accept_reject_member_request_view,name="accept_reject_member_request_view"),
+    path("remove/member/<user_id>/<request_id>/<group_id>/",views.remove_member_view,name="remove_member_view"),
 ]

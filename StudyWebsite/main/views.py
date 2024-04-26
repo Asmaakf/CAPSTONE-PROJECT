@@ -18,10 +18,10 @@ def group_dashboard(request:HttpRequest , group_id , user_id):
   member=MembershipeRequesite.objects.filter(member=user)
   members=MembershipeRequesite.objects.filter(group=group_id)
   users = User.objects.all()
-  
+  user_requests=MembershipeRequesite.objects.all
   
 
-  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members } )
+  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests } )
 
 
 def user_dashboard(request:HttpRequest , user_id):
@@ -87,16 +87,17 @@ def member_request_view(request:HttpRequest , group_id):
           messages.error(request, "request already send to this user ")
           return redirect("main:group_dashboard_view" ,group_id=group_id,user_id=specific_member.id)
         
-        membership_request=MembershipeRequesite(
-            group=group_request,
-            member=specific_member,
-            status=request.POST.get("status" ,default="Pending"),
+        membership=MembershipeRequesite(
+              group=group_request,
+              member=specific_member,
+              status=request.POST.get("status" ,default="Pending"),
           )
-        membership_request.save() 
+        membership.save() 
         messages.success(request, "request sent successfully ")
         return redirect('main:group_dashboard_view', group_id=group_request.id , user_id=request.user.id)
       else:
          #send email as an invite
+         
          
          messages.error(request, "User Not found. Invitation email is sent.")
          return  redirect("main:group_dashboard_view" ,group_id=group_id,user_id=request.user.id)
@@ -125,5 +126,19 @@ def accept_reject_member_request_view(request:HttpRequest , user_id , request_id
         
       except Exception as e:
             print(e)
+   return redirect('main:user_dashboard_view',user_id=request.user.id)
 
-   return render(request,'main/accept_reject_request.html',{"user":user,"user_requests":user_requests,"status" : MembershipeRequesite.status_choice.choices})
+def remove_member_view(request:HttpRequest , user_id , request_id ,group_id ):
+   group=StudyGroup.objects.get(pk=group_id)
+   user=User.objects.get(id=user_id)
+   user_requests=MembershipeRequesite.objects.get(pk=request_id)
+   if request.method =="POST":
+      try:
+         new_status=user_requests.status=request.POST["status"]
+         if new_status == "Reject":
+          user_requests.delete()
+          return redirect('main:group_dashboard_view' ,user_id= user.id ,group_id=group.id )
+      except Exception as e:
+            print(e)
+            messages.error(request, "Somthing went worng ")
+   return redirect('main:group_dashboard_view' ,user_id= user.id ,group_id=group.id )

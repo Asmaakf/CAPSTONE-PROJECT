@@ -2,6 +2,12 @@
 {% load static %}
 
  {% block content %}
+{% if messages %}
+       
+          {% for message in messages %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+          {% endfor %}
+      {% endif %}
 
 <div class="row">
 <div class="col-2">
@@ -55,9 +61,9 @@
           </div>
         </div>
         <div class="sid-buttons">
-          <button type="submit" class="b"><button type="submit" class="b"><a href="{% url 'attachments:all_attachment_view' group.id %}" class="btn btn-warning rounded-5 shadow">attachments</a></button></button>
-          <button type="submit" class="b"><button type="submit" class="b"><a href="{% url 'review_sets:all_sets_view'  %}" class="btn btn-warning rounded-5 shadow">All Flashcard sets</a></button></button>
-          <button type="submit" class="b2" data-bs-toggle="modal" data-bs-target="#add_member" >اضافة عضو</button>
+          <button type="submit" class="b shadow"><a href="{% url 'attachments:all_attachment_view' group.id %}" class="text-decoration-none">attachments</a></button>
+          <button type="submit" class="b shadow"><a href="{% url 'review_sets:all_sets_view'  %}" class="text-decoration-none">All Flashcard sets</a></button>
+          <button type="submit" class="b2 shadow" data-bs-toggle="modal" data-bs-target="#add_member" >اضافة عضو</button>
         </div>
       </div>
     </div><!-- sid bar end-->
@@ -72,17 +78,15 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                                <h5 class="modal-title" id="add_member"> </h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                            
                                <form action="{% url 'main:member_request_view' group.id %}"  method="POST"  class="d-flex flex-column gap-2" >
                                 {% csrf_token %}
-
                                 <label for="user-select">invaite a user:</label>
-                                    <input type="text" name="user_name" placeholder="ex:Ahamd" class="form-control" required  />
-                                    <br>
+                                <input type="text" name="user_name" placeholder="ahamd@gmail.com" class="form-control" required  />
+                                <br>
                                 <input type="submit" value="send"  class="b btn btn-primary"/>
                                 </form>
 
@@ -93,7 +97,30 @@
             </div>
 
 
+<!--delete members for leader-->
+{% for request in user_requests %}
+{% if request.group_id == group.id and request.status == 'Accept' and request.group.creator != request.member %}
+{{request.member}}
+<form action="{% url 'main:remove_member_view' user.id request.id group.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button type="submit">Remove</button>
+</form>
+{% endif %}
+{% endfor %}
 
+<br><br>
 
+<!--member leave group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator != request.member %}
+{{request.member}}
+<form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="b"type="submit">Leave group</button>
+</form>
+{% endif %}
+{% endfor %}
 
   {% endblock %}

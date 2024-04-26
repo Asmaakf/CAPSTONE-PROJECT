@@ -15,6 +15,31 @@ ffvdvvf
 <div class="row">
 مجموعاتي
 </div>
+<!--groups user is a member-->
+<div class="row">
+{% for i in user_requests%}
+{% if i.status == 'Accept' and i.group.creator != i.member %}
+<div class="col-6 ">
+<div class="ag-courses_item">
+  <a class="ag-courses-item_link" href="{% url 'main:group_dashboard_view' i.group.id user.id  %}">
+    <div class="ag-courses-item_bg"></div>
+    <div class="ag-courses-item_title">
+    <img class="member-img" src="{{i.group.icon.url}}"> 
+   {{i.group.name}}
+    
+    </div>
+    <div class="ag-courses-item_date-box">
+      
+      <span class="ag-courses-item_date"> {{i.group.creator.first_name}} {{i.group.creator.last_name}} </span>
+    </div>
+  </a>
+</div>
+</div><!--col-->
+{% endif %}
+{% endfor %}
+
+</div><!--end row-->
+<h2>Your groups </h2>
 <div class="row">
 {% for i in user_requests%}
 {% if i.status == 'Accept' and i.group.creator == i.member %}
@@ -36,6 +61,8 @@ ffvdvvf
 </div><!--col-->
 {% endif %}
 {% endfor %}
+
+
 
 </div><!--end row-->
 </div><!--end box-->
@@ -83,6 +110,28 @@ ffvdvvf
 
 
 
+{% for request in user_requests %}
+    {% if request.status == 'Pending' %}
+        <div class="requests_card">
+            <p>Request ID: {{ request.id }}</p>
+            <p>Status: {{ request.status }}</p>
+            <p>Group Name: {{ request.group.name }}</p>
+            <img class="member-img" src="{{ request.group.icon.url }}" alt="Group Icon">
+
+            <form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="Accept">
+                <button type="submit">Accept</button>
+            </form>
+
+            <form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="status" value="Reject">
+                <button type="submit">Reject</button>
+            </form>
+        </div>
+    {% endif %}
+{% endfor %}
 
 
 
