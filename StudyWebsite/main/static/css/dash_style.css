@@ -132,12 +132,15 @@
 }
 
 .b{
-    background-color: bisque;
+    background-color: rgb(242, 199, 147);
     width: 200px;
     height: 40px;
     border: none;
     border-radius: 30px;
     margin-bottom: 1vw;
+}
+.b a{
+    text-decoration: none;
 }
 .b:hover{
     background-color: rgb(127, 187, 225);

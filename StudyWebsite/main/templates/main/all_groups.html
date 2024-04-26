@@ -1,0 +1,41 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} all groups {% endblock %}
+
+
+{% block content %}
+
+
+
+
+<!-- hero -->   
+<section class="bg-dark" style="width: 100%; height: 700px;">
+
+</section>
+
+<!-- content -->
+<section class="mt-5">
+    <div class="container mt-5 mb-5">
+        <div class="row mt-5">
+            <div class="col text-center">
+                <h1>الصفحة الرئيسية</h1>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% for group in all_group%}
+<img class="member-img"  style="width: 40px; height: 40px; border-radius: 50%;" src="{{ group.icon.url }}" alt="Group Icon">
+<a href="{% url 'main:group_dashboard_view' group.id user.id  %}"> {{group.name}} </a>
+{{group.description}}
+{{group.creator}}
+{{group.created_at}}
+<form action="{% url 'main:delete_group_view' group.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="group" value="delete">
+<button class="b"type="submit">delete</button>
+</form>
+{% endfor %}
+
+{% endblock %}

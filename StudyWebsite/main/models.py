@@ -18,3 +18,11 @@ class MembershipeRequesite(models.Model):
     member=models.ForeignKey(User,on_delete=models.CASCADE)
     status=models.CharField(max_length = 64 , choices=status_choice.choices , default="Pending")
     date_joined=models.DateTimeField(auto_now_add=True)
+
+
+
+class Discussion(models.Model):
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    group=models.ForeignKey(StudyGroup,on_delete=models.CASCADE)
+    message=models.TextField()
+    msg_at=models.DateTimeField(auto_now_add=True)
