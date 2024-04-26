@@ -2,11 +2,44 @@
 {% load static %}
 
  {% block content %}
-
+<button type="submit" class="b3"> <a href="{% url 'main:create_group_view' user.id   %}" class="gap">create group </a> </button> 
 <div class="row">
-<div class="col-9 d-flex flex-column align-items-end">
 
+<div class="col-3 d-flex ">
+ffvdvvf
+</div><!--col end-->
+
+<div class="col-6 d-flex flex-column align-items-end">
+<div class="groups_box">
+<h2 class="user_dash_title">المجموعات</h2>
+<div class="row">
+مجموعاتي
 </div>
+<div class="row">
+{% for i in user_requests%}
+{% if i.status == 'Accept' and i.group.creator == i.member %}
+<div class="col-6 ">
+<div class="ag-courses_item">
+  <a class="ag-courses-item_link" href="{% url 'main:group_dashboard_view' i.group.id user.id  %}">
+    <div class="ag-courses-item_bg"></div>
+    <div class="ag-courses-item_title">
+    <img class="member-img" src="{{i.group.icon.url}}"> 
+   {{i.group.name}}
+    
+    </div>
+    <div class="ag-courses-item_date-box">
+      
+      <span class="ag-courses-item_date"> {{i.group.creator.first_name}} {{i.group.creator.last_name}} </span>
+    </div>
+  </a>
+</div>
+</div><!--col-->
+{% endif %}
+{% endfor %}
+
+</div><!--end row-->
+</div><!--end box-->
+</div><!--col end-->
 
 <div class="col-3 d-flex flex-column ">
 <div class="profile-sid">
@@ -14,14 +47,44 @@
 <img class="profile-sid-img" src="{% static 'images/profile.png'%}">
 </div>
 <div class="user-info">
-<h4>الاسم</h4>
+<h4>{{user.username}}</h4>
 <p>البريد الالكتروني </p>
 </div>
 
 </div>
 </div><!--col end-->
 
+</div><!--end row-->
+
+<div class="row">
+<div class="col-3 d-flex ">
+
+</div><!--col end-->
+<div class="col-9 d-flex ">
+ffvdvvf
+</div><!--col end-->
 
 </div><!--end row-->
+
+{% for i in user_requests%}
+{% if i.status == 'Pending' %}
+<div class="requests_card">
+<a href="{% url 'main:accept_reject_member_request_view' user.id i.id  %}" class="gap">view request </a>
+
+
+{{i.member}}
+{{i.status}}
+{{i.group.name}}
+
+<img class="member-img" src="{{i.group.icon.url}}" > 
+</div>
+{% endif %}
+{% endfor %}
+
+
+
+
+
+
 
   {% endblock %}

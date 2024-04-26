@@ -1,0 +1,13 @@
+ <form action="{% url 'main:accept_reject_member_request_view' user.id user_requests.id %}"  method="POST"  class="d-flex flex-column gap-2" >
+    {% csrf_token %}
+<label for="inputCity">Choose :</label>
+<div class="form-group ">
+<select name ="status" class="form-select" aria-label="Default select example">
+{% for value, s in status %}
+<option value ="{{value}}">{{s}}</option>
+{% endfor %}
+</select>
+ </div>
+<br>
+  <button type="submit" class="b btn ">send</button>
+ </form>

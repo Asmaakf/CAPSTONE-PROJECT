@@ -5,7 +5,7 @@
 
 
 
- <form action="{% url 'main:create_group_view' %}"  method="POST"  enctype="multipart/form-data" class="d-flex flex-column gap-2" >
+ <form action="{% url 'main:create_group_view' user.id%}"  method="POST"  enctype="multipart/form-data" class="d-flex flex-column gap-2" >
     {% csrf_token %}
 
      <label for="text">Group name:</label>

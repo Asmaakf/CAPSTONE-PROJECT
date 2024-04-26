@@ -9,3 +9,12 @@ class StudyGroup(models.Model):
     created_at=models.DateTimeField(auto_now_add=True)
     icon=models.ImageField(upload_to="images/", default="images/default.jpg")
 
+
+
+class MembershipeRequesite(models.Model):
+    status_choice = models.TextChoices("Status", ["Accept","Reject","Pending"])
+    
+    group=models.ForeignKey(StudyGroup,on_delete=models.CASCADE)
+    member=models.ForeignKey(User,on_delete=models.CASCADE)
+    status=models.CharField(max_length = 64 , choices=status_choice.choices , default="Pending")
+    date_joined=models.DateTimeField(auto_now_add=True)
