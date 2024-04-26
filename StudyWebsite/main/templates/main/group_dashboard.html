@@ -7,7 +7,7 @@
 <div class="col-2">
 <button type="submit" class="b3">انشاء جلسة</button> </div>
 <!-- contant -->
-<div class="col-md-7 mt-5 d-flex flex-column align-items-end">
+  <div class="col-md-7 mt-5 d-flex flex-column align-items-end">
   
   <h2>الجلسات</h2>
   <div class="row">
@@ -36,24 +36,28 @@
 </div><!-- col end -->
 
 
+
+
   <div class="col-md-3 d-flex flex-column align-items-end">
     <div class="sidbar">
       <div class="sid-info">
         <div class="group-name">
-          <h3>اسم المجموعة</h3>
+          <h3>{{group.name}} </h3>
         </div>
         <h5 class="member-titl">الاعضاء</h5>
         <div class="member-box1">
           <div class="members">
-            <p>الاسم <img class="member-img" src="{% static 'images/profile.png'%}"></p>
-            <p> الاسم ٢ <img class="member-img" src="{% static 'images/profile.png'%}"> </p>
-            <p> الاسم ٣ <img class="member-img" src="{% static 'images/profile.png'%}"> </p>
+            {% for member in members %}
+            {% if member.status == 'Accept' %}
+            <p>{{ member.member.first_name }} {{ member.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
+            {% endif %}
+            {% endfor %}
           </div>
         </div>
         <div class="sid-buttons">
           <button type="submit" class="b"><button type="submit" class="b"><a href="{% url 'attachments:all_attachment_view' group.id %}" class="btn btn-warning rounded-5 shadow">attachments</a></button></button>
-          <button type="submit" class="b"><button type="submit" class="b"><a href="{% url 'review_sets:all_sets_view' group.id %}" class="btn btn-warning rounded-5 shadow">All Flashcard sets</a></button></button>
-          <button type="submit" class="b2">اضافة عضو</button>
+          <button type="submit" class="b"><button type="submit" class="b"><a href="{% url 'review_sets:all_sets_view'  %}" class="btn btn-warning rounded-5 shadow">All Flashcard sets</a></button></button>
+          <button type="submit" class="b2" data-bs-toggle="modal" data-bs-target="#add_member" >اضافة عضو</button>
         </div>
       </div>
     </div><!-- sid bar end-->
@@ -63,8 +67,30 @@
 </div><!--end row -->
 
 
+                <!-- Modal -->
+                <div class="modal fade" id="add_member" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                            
+                               <form action="{% url 'main:member_request_view' group.id %}"  method="POST"  class="d-flex flex-column gap-2" >
+                                {% csrf_token %}
 
+                                <label for="user-select">invaite a user:</label>
+                                    <input type="text" name="user_name" placeholder="ex:Ahamd" class="form-control" required  />
+                                    <br>
+                                <input type="submit" value="send"  class="b btn btn-primary"/>
+                                </form>
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
 
 
