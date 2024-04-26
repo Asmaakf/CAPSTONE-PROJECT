@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="rtl">
   <head>
@@ -58,6 +59,7 @@
                     {% if request.user.is_authenticated %} 
                       <li><a class="dropdown-item" href="{% url 'accounts:user_profile_view' request.user.username %}"> الصفحة الشخصية</a></li>
                       {% endif %}
+                       <li><a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"> ملفي الشخصي</a></li>
                     <li><a class="dropdown-item" href="#">اثنين </a></li>
                     <li><a class="dropdown-item" href="#">ثلاثة </a></li>
                     <li><a class="dropdown-item" href="#">اربعه</a></li>
