@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
-from .models import StudyGroup ,MembershipeRequesite 
+from .models import StudyGroup ,MembershipeRequesite , Discussion
 from django.contrib.auth.models import User
 from django.contrib import messages
 
@@ -11,6 +11,9 @@ def index_view(request: HttpRequest):
     return render(request, "main/index.html")
 
 
+def all_groups_view(request: HttpRequest):
+   all_group=StudyGroup.objects.all
+   return render(request, "main/all_groups.html",{"all_group":all_group})
 
 def group_dashboard(request:HttpRequest , group_id , user_id):
   user=User.objects.get(pk=user_id)
@@ -19,9 +22,10 @@ def group_dashboard(request:HttpRequest , group_id , user_id):
   members=MembershipeRequesite.objects.filter(group=group_id)
   users = User.objects.all()
   user_requests=MembershipeRequesite.objects.all
+  discussion=Discussion.objects.all
   
 
-  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests } )
+  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests , "discussion":discussion } )
 
 
 def user_dashboard(request:HttpRequest , user_id):
@@ -69,7 +73,7 @@ def delete_group(request:HttpRequest , group_id):
     group=None
   except Exception as e:
     print(e)
-  return redirect('main:user_dashboard_view')
+  return redirect('main:all_groups_view')
 
 
 
@@ -142,3 +146,36 @@ def remove_member_view(request:HttpRequest , user_id , request_id ,group_id ):
             print(e)
             messages.error(request, "Somthing went worng ")
    return redirect('main:group_dashboard_view' ,user_id= user.id ,group_id=group.id )
+
+
+
+def discussion_view(request:HttpRequest , group_id):
+  if request.method == "POST":
+        member_msg=StudyGroup.objects.get(pk=group_id)
+        msg=Discussion(
+        group=member_msg,
+        user=request.user,
+        message=request.POST["message"],
+        )
+        msg.save()
+  return redirect('main:group_dashboard_view' , group_id=member_msg.id ,user_id=request.user.id )
+
+
+def delete_discussion_view(request:HttpRequest , group_id , msg_id):
+  try:
+    member_msg=StudyGroup.objects.get(pk=group_id)
+    msg=Discussion.objects.get(pk=msg_id)
+    msg.delete()
+  except Discussion.DoesNotExist:
+    msg=None
+  except Exception as e:
+    print(e)
+  return redirect('main:group_dashboard_view' , group_id=member_msg.id ,user_id=request.user.id)
+
+
+def not_found_view(request:HttpRequest):
+   return render(request,"main/not_found.html")
+
+
+def not_allowed_view(request:HttpRequest):
+   return render(request,"main/not_allowed.html")

@@ -31,8 +31,20 @@
       <div class="disction-box">
         <div class="message-box">
           <!-- Messages go here -->
+          {% for message in discussion %}
+          {% if message.group_id == group.id %}
+          {{message.message}}
+
+            <form action="{% url 'main:delete_discussion_view' group.id message.id %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="message" value="delete">
+                <button class="b"type="submit">delete</button>
+            </form>
+          {% endif %}
+          {% endfor %}
         </div>
-        <form class="discussion-form">
+        <form  action="{% url 'main:discussion_view' group.id %}" method="post" class="discussion-form">
+           {% csrf_token %}
           <textarea name="message" placeholder="اكتب تعليقك هنا .." class="message" required></textarea>
           <input type="submit" value="ارسال" class="b4" />
         </form>
@@ -122,5 +134,8 @@
 </form>
 {% endif %}
 {% endfor %}
+
+
+
 
   {% endblock %}
