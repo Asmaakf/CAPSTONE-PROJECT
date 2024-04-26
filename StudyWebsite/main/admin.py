@@ -1,3 +1,5 @@
 from django.contrib import admin
+from .models import MembershipeRequesite , StudyGroup
 
-# Register your models here.
+admin.site.register(MembershipeRequesite)
+admin.site.register(StudyGroup)
