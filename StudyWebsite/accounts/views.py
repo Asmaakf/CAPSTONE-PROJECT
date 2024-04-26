@@ -31,8 +31,7 @@ def user_register_view(request:HttpRequest):
         try:
             #create new user
             new_user = User.objects.create_user(
-                username=request.POST["username"], 
-                email=request.POST["email"], 
+                username=request.POST["email"],  
                 first_name=request.POST["first_name"], 
                 last_name=request.POST["last_name"], 
                 password=request.POST["password"]
@@ -63,7 +62,7 @@ def user_login_view(request:HttpRequest):
     if request.method == "POST":
 
         #authenticat user
-        user = authenticate(request, username=request.POST["username"], password=request.POST["password"])
+        user = authenticate(request, username=request.POST["email"], password=request.POST["password"])
 
         if user:
             #login user
