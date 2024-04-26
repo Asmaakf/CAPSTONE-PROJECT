@@ -6,8 +6,7 @@
 {% block content %}
 
 <!-- hero عشان اللون بس -->   
-<section class="bg-dark" style="width: 100%; height: 300px;">
-
+<section class="bg-black" style="width: 100%; height: 100px;">
 </section>
 
 <section >
@@ -20,8 +19,8 @@
                 </div>
             </div>
         </div>
-        <div class="row d-flex justify-content-center align-items-center mb-3">
-            <div class="col-12 ">
+        <div class="row mb-3">
+            <div class="col-12 col-md-7">
                 <div class="row gy-5 justify-content-center">
                     <div class="col-12 col-lg-5">
                         <form action="{% url 'accounts:user_register_view' %}" method="POST" class="d-flex flex-column gap-2" enctype="multipart/form-data">
@@ -40,38 +39,30 @@
                                 <div class="row gy-3 overflow-hidden">
                                     <div class="col-6">
                                         <div class="form-floating mb-3">
-                                            <input type="text" class="form-control border-0 border-bottom rounded-0" name="last_name" id="last_name" placeholder="Last Name" minlength="3" required>
-                                            <label for="last_name" class="form-label">الاسم الأخير</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-floating mb-3">
                                             <input type="text" class="form-control border-0 border-bottom rounded-0" name="first_name" id="first_name" placeholder="الاسم الأول" minlength="3" required>
                                             <label for="first_name" class="form-label">الاسم الأول</label>
                                         </div>
                                     </div>
+                                    <div class="col-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control border-0 border-bottom rounded-0" name="last_name" id="last_name" placeholder="Last Name" minlength="3" required>
+                                            <label for="last_name" class="form-label">الاسم الأخير</label>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3"> <!-- need to vaildate it يكون تاريخ قديم -->
                                         <input type="date" class="form-control border-0 border-bottom rounded-0" name="birthdate" id="birthdate" value="{{ user.profile.birthdate }}" required>
                                         <label for="birthdate">تاريخ الميلاد</label>
                                     </div>
                                 </div>
-                                
-                                
-
-                                
-
-                            
                                 <div class="col-12">
-                                    <div class="form-floating mb-3">
+                                    <div class="form-floating mb-3"> <!-- confirm password يتأكد من الباسسورد -->
                                         <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" minlength="8" placeholder="Password" required>
                                         <label for="password" class="form-label">كلمة المرور</label>
                                     </div>
                                 </div>
-
-
                                 <div class="col-12 ">
                                     <div class="d-grid">
                                         <input type="submit" class="btn btn-primary rounded-5" value="تسجيل" />
