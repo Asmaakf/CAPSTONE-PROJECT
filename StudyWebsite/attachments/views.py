@@ -33,10 +33,10 @@ def add_attachment_view(request:HttpRequest,group_id):
 def delete_attachment_view(request:HttpRequest,attachment_id ,group_id):
   group=StudyGroup.objects.get(pk=group_id)
   try:
-    contact=Attachment.objects.get(pk=attachment_id)
-    contact.delete()
+    attachment=Attachment.objects.get(pk=attachment_id)
+    attachment.delete()
   except Attachment.DoesNotExist:
-     contact=None
+     attachment=None
   except Exception as e:
     print(e)
   return redirect("attachments:all_attachment_view",group_id=group.id)
