@@ -48,7 +48,6 @@ def update_set_view(request: HttpRequest, set_id):
 def delete_set_view(request: HttpRequest, set_id ):
 
     #limit access to this view for only staff
-   
     try:
         r_set = ReviewSet.objects.get(pk=set_id)
         r_set.delete()

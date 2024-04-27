@@ -23,7 +23,7 @@
                                 <p class="">{{ r_set.description }}</p>
                                 <p class="">{{ r_set.created_at }}</p>
                                 <p class="">{{ r_set.created_by }}</p>
-                                <a href="{% url 'review_sets:delete_set_view' r_set.id %}" class="text-decoration-none know-more">Delete</a>
+                                <a href="{% url 'review_sets:delete_set_view' r_set.id group.id %}" class="text-decoration-none know-more">Delete</a>
                             </div>
                         </div>
                     </div>
@@ -37,7 +37,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p><a href="{% url 'review_sets:add_set_view' %}" class="text-decoration-none know-more">Add new set</a></p>
+                <p><a href="{% url 'review_sets:add_set_view' group.id %}" class="text-decoration-none know-more">Add new set</a></p>
             </div>
         </div>
     </div>
