@@ -29,5 +29,7 @@ urlpatterns = [
     path("common_questions/", include("common_questions.urls")),
     path("student_dashboard/", include("student_dashboard.urls")),
     path("zoom/", include("zoom.urls")),
+    path("todo_list/", include("todo_list.urls")),
+
     
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

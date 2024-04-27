@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'common_questions',
     'student_dashboard',
     'zoom',
+    'todo_list',
 
 
 ]
