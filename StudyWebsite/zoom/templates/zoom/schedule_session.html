@@ -1,0 +1,10 @@
+<h2>Booked successfully</h2>
+
+<form action="{% url 'zoom:create_zoom_meeting_view' 4 2 %}" method="post">
+    {% csrf_token %}
+    <input type="text" placeholder="topic" name="topic" />
+    <input type="text" placeholder="agenda" name="agenda" />
+    <input type="number" placeholder="PASSWORD" name="password" />
+    <input type="datetime-local" placeholder="start time" name="start_time" />
+    <input type="submit" placeholder="topic" value="Create meeting" />
+</form>

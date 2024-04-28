@@ -4,6 +4,6 @@ from . import views
 app_name  = "zoom"
 
 urlpatterns = [
-    path("session/", views.zoom_session_view, name="zoom_session_view"),
+    path("session/<user_id>/<group_id>/", views.create_zoom_meeting_view, name="create_zoom_meeting_view"),
 
 ]

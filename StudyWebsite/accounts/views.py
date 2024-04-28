@@ -89,26 +89,31 @@ def user_profile_view(request:HttpRequest, user_name):
     return render(request, "accounts/user_profile.html", {"user" : user})
 
 # update profile
-def update_user_profile_view(request:HttpRequest):
+from django.http import HttpRequest
+from django.shortcuts import render, redirect
+from django.db import transaction
+from django.contrib.auth.models import User
+from accounts.models import Profile
+
+def update_user_profile_view(request: HttpRequest ,user_id):
     msg = None
 
     if not request.user.is_authenticated:
         return redirect("accounts:user_login_view")
     
     if request.method == "POST":
+        user_id = request.user.id  
         
         try:
-
             with transaction.atomic():
-
-                user:User = request.user
+                user: User = request.user
                 user.first_name = request.POST["first_name"]
                 user.last_name = request.POST["last_name"]
                 user.save()
             
                 try:
-                    profile:Profile = user.profile
-                except Exception as e:
+                    profile: Profile = user.profile
+                except Profile.DoesNotExist: 
                     profile = Profile(user=user)
 
                 profile.avatar = request.FILES.get("avatar", profile.avatar)
@@ -118,13 +123,14 @@ def update_user_profile_view(request:HttpRequest):
                 profile.github_link = request.POST["github_link"]
                 profile.save()
 
+                
                 return redirect("accounts:user_profile_view", user_name=user.username)
 
         except Exception as e:
-            msg = f"Something went wrong {e}"
-            print(e)
+            msg = f"حدث خطأ ما: {e}"
+            print(f"Error for user ID {user_id}: {e}")
 
-    return render(request, "accounts/update_user_profile.html", {"msg" : msg })
+    return render(request, "accounts/update_user_profile.html", {"msg": msg})
 
 # delete
 @login_required
