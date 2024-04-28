@@ -9,29 +9,30 @@ from main.models import StudyGroup
 
 
 # Review Set views
-def add_set_view(request: HttpRequest):
-
+def add_set_view(request: HttpRequest,group_id):
+    
     if request.method == 'POST':
 
         if request.user.is_authenticated:
             try:
+                group=StudyGroup.objects.get(pk=group_id)
                 new_set = ReviewSet(
                     title = request.POST["title"],
                     description = request.POST["description"],
                     created_by = request.user,
                 )
                 new_set.save()  
-                return redirect("review_sets:all_sets_view") ##pop up successfully
+                return redirect("review_sets:all_sets_view",group_id=group.id) ##pop up successfully
             except Exception as e:
                 print(e)
     return render(request, "review_sets/add_set.html")
 
 
 
-def update_set_view(request: HttpRequest, set_id):
+def update_set_view(request: HttpRequest, set_id,group_id):
 
     #limit access to this view for only staff
-
+    group=StudyGroup.objects.get(pk=group_id)
     #update
     r_set = ReviewSet.objects.get(pk=set_id)
     if request.method == "POST":
@@ -39,26 +40,27 @@ def update_set_view(request: HttpRequest, set_id):
             r_set.title = request.POST["title"]
             r_set.description = request.POST["description"]
             r_set.save()
-            return redirect("review_sets:full_set_view", set_id = r_set.id)
+            return redirect("review_sets:full_set_view", set_id = r_set.id, group_id=group.id)
         except Exception as e:
             print(e)
-    return render(request, "review_sets/update_set.html", {"r_set" : r_set})
+    return render(request, "review_sets/update_set.html", {"r_set" : r_set,"group":group})
 
 
-def delete_set_view(request: HttpRequest, set_id ):
-
+def delete_set_view(request: HttpRequest, set_id,group_id ):
+    group=StudyGroup.objects.get(pk=group_id)
     #limit access to this view for only staff
     try:
         r_set = ReviewSet.objects.get(pk=set_id)
         r_set.delete()
     except Exception as e:
         print(e)
-    return redirect("review_sets:all_sets_view")
+    return redirect("review_sets:all_sets_view",group_id=group.id)
 
 
-def all_sets_view(request: HttpRequest):
-    sets= ReviewSet.objects.all()
-    return render(request, "review_sets/all_sets.html", {"sets": sets } )
+def all_sets_view(request: HttpRequest,group_id):
+    group=StudyGroup.objects.get(pk=group_id)
+    sets= ReviewSet.objects.filter(group=group)
+    return render(request, "review_sets/all_sets.html", {"sets": sets,"group":group} )
 
 
 def full_set_view(request: HttpRequest, set_id): #  set detail

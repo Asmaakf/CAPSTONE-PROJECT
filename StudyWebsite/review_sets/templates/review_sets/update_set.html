@@ -15,7 +15,7 @@
 <section>
     <div class="container mt-5">
         <h2>Update set</h2>
-        <form action="{% url 'review_sets:update_set_view' r_set.id %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        <form action="{% url 'review_sets:update_set_view' r_set.id group.id %}" method="POST" enctype="multipart/form-data" class="d-flex flex-column gap-2">
             {% csrf_token %}
             
             <div class="row my-3">
