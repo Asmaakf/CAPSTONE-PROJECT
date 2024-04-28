@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpRequest, HttpResponse
 from .models import ContactSupport
 from django.contrib.auth.models import User
-
+from django.contrib import messages
 # Create your views here.
 
 def contact_view(request:HttpRequest):
@@ -16,9 +16,11 @@ def contact_view(request:HttpRequest):
             )
             
             new_con.save()
-            return redirect("main:index_view")#احس تتغير اشوفها بعدين المفروض يوجهه لمكان الرساله
+            messages.success(request, "Your message is successfully submitted.") 
+            return redirect("contact:contact_view")
         except Exception as e:
-                    print(e)
+          print(e)
+          messages.error(request, "An error occurred.")
         
 
     return render(request, "contact/contact.html")
@@ -26,7 +28,7 @@ def contact_view(request:HttpRequest):
 
 def message_view(request:HttpRequest):
  if not request.user.is_superuser:
-        return redirect(request, "main/not_found.html")
+      return redirect('main:not_allowed_view')
  contacts = ContactSupport.objects.all()
  return render(request, "contact/message.html", {"contacts" : contacts })
 
@@ -34,7 +36,7 @@ def message_view(request:HttpRequest):
 def delete_message_view(request:HttpRequest ,msg_id):
   
   if not request.user.is_superuser:
-    return redirect('main:not_allowed_page') #باقي مو موجوده
+    return redirect('main:not_allowed_view') #باقي مو موجوده
   try:
     contact=ContactSupport.objects.get(pk=msg_id)
     contact.delete()
