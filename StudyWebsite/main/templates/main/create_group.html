@@ -9,7 +9,7 @@
     {% csrf_token %}
 
      <label for="text">Group name:</label>
-    <input type="text" name="name" placeholder="ex:Ahamd" class="form-control" required  />
+    <input type="text" name="name" placeholder="ex:Ahamd" class="form-control" required minlength="12" />
     <br>
     <label for="email">Group description:</label>
     <input type="text" name="description" placeholder="description" class="form-control" required />
