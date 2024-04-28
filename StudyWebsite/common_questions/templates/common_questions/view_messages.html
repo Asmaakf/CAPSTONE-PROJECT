@@ -7,9 +7,8 @@
 
 </section>
 
-
 <section>
-    <div class="container py-5 mt-4 rounded-4 px-4">
+    <div class="container my-5 py-4 px-5 rounded-4">
         <div class="row text-center g-2 d-flex justify-content-center">
             <h1 class="display-5 fw-bold">كيف نقدر نساعدك؟</h1>
             <p>كيف نقدر نساعدك هنا مع محزم عندك اهم الاسئلة الشائعة </p>
@@ -26,7 +25,7 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-12 col-md-6 d-flex justify-content-center mb-5">
+            <div class="col-12 col-lg-5">
                 <div class="accordion" id="accordionFlushExample">
                     {% for q in questions_answers %}
                         <div class="accordion-item">
@@ -44,20 +43,22 @@
                     {% empty %}
                         <p>لا توجد أسئلة.</p>
                     {% endfor %}
-                    <div class="mt-5 d-flex justify-content-center flex-column text-center align-items-center">
+                    <div class="mt-5 d-flex justify-content-center flex-column text-center align-items-center mb-5">
                         <p>
                             إذا لم تجد الإجابة على استفسارك، لا تتردد في التواصل مع فريق الدعم الفني. نحن هنا لمساعدتك في أي وقت.
-                       </p>
-                       <a href="{% url 'contact:contact_view' %}" class="btn btn-primary rounded-pill w-50 justify-content-center">تواصل معنا</a>
+                        </p>
+                        <a href="{% url 'contact:contact_view' %}" class="btn btn-primary rounded-pill w-50 justify-content-center ">تواصل معنا</a>
                     </div>
-                   
-                </div>
-            </div>  
-            <div class="col-12 col-md-6 d-flex justify-content-center mb-5">
-                <img src="{% static 'images/faq.jpg' %}" alt="FAQ img" style="width: 90%; object-fit: cover;">   
+                </div> 
+            </div>
+            <div class="col-12 col-md-1 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
+                <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
+                <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
+            </div>
+            <div class="col-12 col-md-6 d-flex justify-content-center">
+                <img src="{% static 'images/qus.png' %}" alt="login img" class="log-img" style="width: 100%;">
             </div>
         </div>
     </div>
 </section>
-
 {% endblock %}

@@ -1,55 +1,68 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %} login {% endblock %}
+{% block title %} تسجيل الدخول {% endblock %}
 
 {% block content %}
 
+
+
 <section >
-  <div class="container-fluid" style="margin-top: 98px;">
-  <div class="row">
-      <div class="col-12 col-md-6 justify-content-center d-flex align-items-center">
-        <div style="padding-left: 50px; padding-right:50px; width: 80%; height: 100vh; align-items: center; padding-top: 150px;">
-          <h2 class="display-5 fw-bold text-center">تسجيل الدخول</h2>
-          <p class="text-center mb-3">ليس لديك حساب ؟<a href="{% url 'accounts:user_register_view' %}">تسجيل جديد</a></p>
-          {% if msg %} <!-- pop up -->
-            <div class="alert alert-danger">
-              {{msg}}
-            </div>
-          {% endif %}
-          <form action="{% url 'accounts:user_login_view' %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
-            {% csrf_token %}                
-            <div class="row gy-3 overflow-hidden">
-                <div class="col-12">
-                    <div class="form-floating mb-3">
-                      <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
-                      <label for="email" class="form-label">الإيميل</label>
-                    </div>
+  <div class="container my-5 py-4 px-5 rounded-4">
+      <div class="row">
+          <div class="col-12">
+              <div class="mb-5">    
+                <h2 class="display-5 fw-bold text-center">تسجيل الدخول</h2>
+                <p class="text-center m-0">ليس لديك حساب؟<a href="{% url 'accounts:user_register_view' %}" class="link-primary text-decoration-none">تسجيل جديد</a></p>
+                {% if msg %} <!-- pop up -->
+                <div class="alert alert-danger">
+                  {{msg}}
                 </div>
-            </div>
-            <div class="row gy-3 overflow-hidden">
-                <div class="col-12">
-                    <div class="form-floating mb-3">
-                      <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" minlength="8" placeholder="Password" required>
-                      <label for="password" class="form-label">كلمة المرور</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row gy-3 overflow-hidden">
-              <div class="col-12 ">
-                <div class="d-grid">
-                  <input type="submit" class="btn btn-primary rounded-5" value="تسجيل الدخول" />
-                </div>
+                {% endif %}  
+              </div>    
+          </div>
+      </div>
+      <div class="row d-flex justify-content-center align-items-center mb-3">
+          <div class="col-12 ">
+              <div class="row gy-5 justify-content-center">
+                  <div class="col-12 col-lg-5">
+                      <form action="{% url 'accounts:user_login_view' %}" method="POST" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+                          {% csrf_token %}                
+
+                          <div class="row gy-3 overflow-hidden">
+
+                              <div class="col-12">
+                                  <div class="form-floating mb-3">
+                                      <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
+                                      <label for="email" class="form-label">البريد الإلكتروني</label>
+                                  </div>
+                              </div>
+                     
+                              <div class="col-12">
+                                  <div class="form-floating mb-3">
+                                      <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" minlength="8" placeholder="كلمة المرور" required>
+                                      <label for="password" class="form-label">كلمة المرورو</label>
+                                  </div>
+                              </div>
+
+                              <div class="col-12 ">
+                                  <div class="d-grid">
+                                      <input type="submit" class="btn btn-success rounded-5" value="تسجيل الدخول" />
+                                  </div>
+                              </div>
+                          </div>
+                      </form>
+                  </div>
+                  <div class="col-12 col-md-1 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
+                      <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
+                      <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
+                  </div>
+                  <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+                    <img src="{% static 'images/login.png' %}" alt="login img" class="log-img" style="width: 100%;">
+                  </div>
               </div>
-            </div>
-          </form>
-        </div>    
+          </div>
       </div>
-      <div class="col-12 col-md-6 bg-dark" style="height: 100vh;">
-          <img src="{% static 'images/login.png' %}" alt="login img" class="log-img" style="width: 100%; background-color: palegoldenrod ;">
-      </div>
-    </div>  
   </div>
 </section>
-
 {% endblock %}

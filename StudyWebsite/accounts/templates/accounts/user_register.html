@@ -1,76 +1,89 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %} Register {% endblock %}
+{% block title %} تسجيل مستخدم جديد {% endblock %}
 
 {% block content %}
 
 <!-- hero عشان اللون بس -->   
+
 <section >
-    <div class="container mt-5 pt-3">
-        <div class="row align-items-center mt-5 pt-5">
-            <div class="col-12 col-md-6 justify-content-center d-flex align-items-center">
-                <div>
+    <div class="container my-5 py-4 px-5 rounded-4" style="background-color: white;">
+        <div class="row">
+            <div class="col-12">
+                <div class="mb-5">
                     <h2 class="display-5 fw-bold text-center">تسجيل جديد</h2>
-                    <p class="text-center mb-3">هل لديك حساب بالفعل ؟ <a href="{% url 'accounts:user_login_view' %}" class="link-primary text-decoration-none">تسجيل الدخول</a></p>
-                    <form action="{% url 'accounts:user_register_view' %}" method="POST" class="d-flex flex-column gap-2" enctype="multipart/form-data">
-                        {% csrf_token %}                
-                        <div class="row gy-3 overflow-hidden">
-                            <div class="col-12">
-                                <div class="form-floating mb-3">
-                                    <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
-                                    <label for="email" class="form-label">الإيميل</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gy-3 overflow-hidden">
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control border-0 border-bottom rounded-0" name="first_name" id="first_name" placeholder="الاسم الأول" minlength="3" required>
-                                    <label for="first_name" class="form-label">الاسم الأول</label>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control border-0 border-bottom rounded-0" name="last_name" id="last_name" placeholder="Last Name" minlength="3" required>
-                                    <label for="last_name" class="form-label">الاسم الأخير</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gy-3 overflow-hidden">
-                            <div class="col-12">
-                                <div class="form-floating mb-3"> <!-- need to vaildate it يكون تاريخ قديم -->
-                                    <input type="date" class="form-control border-0 border-bottom rounded-0" name="birthdate" id="birthdate" required>
-                                    <label for="birthdate" class="form-label mb-2">تاريخ الميلاد</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gy-3 overflow-hidden">
-                            <div class="col-12">
-                                <div class="form-floating mb-3"> <!-- confirm password يتأكد من الباسسورد -->
-                                    <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" minlength="8" placeholder="Password" required>
-                                    <label for="password" class="form-label">كلمة المرور</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row gy-3 overflow-hidden">
-                            <div class="col-12 ">
-                                <div class="d-grid">
-                                    <input type="submit" class="btn btn-primary rounded-5" value="تسجيل" />
-                                </div>
-                            </div>
-                        </div>
-                    </form>
+                    <p class="text-center m-0">هل لديك حساب بالفعل؟<a href="{% url 'accounts:user_login_view' %}" class="link-primary text-decoration-none">تسجيل الدخول</a></p>
+                    {% if msg %} <!-- pop up -->
+                    <div class="alert alert-danger">
+                      {{msg}}
+                    </div>
+                    {% endif %}  
                 </div>
-                
-            </div>
-            <div class="col-12 col-md-6 ">
-                <img src="{% static 'images/Signup.png' %}" alt="login img" class="log-img" style="width: 100%;">
             </div>
         </div>
-        
+        <div class="row d-flex justify-content-center align-items-center mb-3">
+            <div class="col-12 ">
+                <div class="row gy-5 justify-content-center">
+                    <div class="col-12 col-lg-5">
+                        <form action="{% url 'accounts:user_register_view' %}" method="POST" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+                            {% csrf_token %}                
+
+                            <div class="row gy-3 overflow-hidden">
+
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
+                                        <label for="email" class="form-label">البريد الإلكتروني</label>
+                                    </div>
+                                </div>
+
+                                <div class="row gy-3 overflow-hidden">
+                                    <div class="col-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control border-0 border-bottom rounded-0" name="first_name" id="first_name" placeholder="الاسم الأول" minlength="3" required>
+                                            <label for="first_name" class="form-label">الاسم الأول</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" class="form-control border-0 border-bottom rounded-0" name="last_name" id="last_name" placeholder="الاسم الأخير" minlength="3" required>
+                                            <label for="last_name" class="form-label">الاسم الأخير</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-floating mb-3"> <!-- need to vaildate it يكون تاريخ قديم -->
+                                        <input type="date" class="form-control border-0 border-bottom rounded-0" name="birthdate" id="birthdate" required>
+                                        <label for="birthdate" class="form-label mb-2">تاريخ الميلاد</label>
+                                    </div>
+                                </div>
+                                                              
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" minlength="8" placeholder="كلمة المرور" required>
+                                        <label for="password" class="form-label">كلمة المرورو</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 ">
+                                    <div class="d-grid">
+                                        <input type="submit" class="btn blue rounded-5" value="تسجيل" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-12 col-md-1 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
+                        <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
+                        <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
+                    </div>
+                    <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+                        <img src="{% static 'images/Signup.png' %}" alt="login img" class="log-img" style="width: 100%;">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </section>
-
-
 {% endblock %}

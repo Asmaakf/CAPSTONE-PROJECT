@@ -8,11 +8,18 @@
     line-height:2;
 }
 
+
 a{
     text-decoration: none;
     transition: all 0.4s ease;
     font-weight: 700;
 }
+
+/* color */
+
+.green{background-color:#41b853;}
+
+.blue{color:#43bee5;}
 
 /* navbar style */
 .nav-setting{
@@ -142,4 +149,6 @@ svg {
 
 /* hero */
 
+
+/**/
 
