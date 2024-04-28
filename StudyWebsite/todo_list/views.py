@@ -13,6 +13,7 @@ def add_todo_view(request:HttpRequest,user_id):
             new_todo =ToDoList(
                 user=user,  
                 todo=request.POST["todo"],
+                checked=request.POST.get(default=False),
             )
             new_todo.save()
             return redirect("todo_list:all_todo_view",user_id=user.id)# تعديل
@@ -44,6 +45,7 @@ def update_todo_view(request:HttpRequest,todo_id,user_id):
     if request.method == "POST":
         try:
            todo.todo = request.POST["todo"]
+           todo.checked=request.POST["checked"]
            todo.save()
            return redirect("todo_list:all_todo_view",user_id=user.id)
         except Exception as e:
