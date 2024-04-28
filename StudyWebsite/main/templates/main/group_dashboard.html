@@ -135,7 +135,7 @@
         </div>
         <div class="sid-buttons">
           <button type="submit" class="b shadow"><a href="{% url 'attachments:all_attachment_view' group.id %}" class="text-decoration-none">attachments</a></button>
-          <button type="submit" class="b shadow"><a href="{% url 'review_sets:all_sets_view'  %}" class="text-decoration-none">All Flashcard sets</a></button>
+          <button type="submit" class="b shadow"><a href="{% url 'review_sets:all_sets_view' group.id  %}" class="text-decoration-none">All Flashcard sets</a></button>
           <button type="submit" class="b2 shadow  " data-bs-toggle="modal" data-bs-target="#add_member" >اضافة عضو</button>
 
 <!--member leave group button-->
