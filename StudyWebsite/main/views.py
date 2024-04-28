@@ -3,6 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from .models import StudyGroup ,MembershipeRequesite , Discussion
 from django.contrib.auth.models import User
 from django.contrib import messages
+from todo_list .models import ToDoList
 
 
 # Create your views here.
@@ -31,9 +32,9 @@ def group_dashboard(request:HttpRequest , group_id , user_id):
 def user_dashboard(request:HttpRequest , user_id):
   user=User.objects.get(pk=user_id)
   user_requests=MembershipeRequesite.objects.filter(member=user_id)
-  
+  todo_list=ToDoList.objects.all
 
-  return render(request,"main/user_dashboard.html" ,{"user":user , "user_requests":user_requests })
+  return render(request,"main/user_dashboard.html" ,{"user":user , "user_requests":user_requests , "todo_list":todo_list })
 
 
 
@@ -66,50 +67,69 @@ def create_group(request:HttpRequest,user_id):
 
 
 def delete_group(request:HttpRequest , group_id):
-  try:
-    group=StudyGroup.objects.get(pk=group_id)
-    group.delete()
-  except StudyGroup.DoesNotExist:
-    group=None
-  except Exception as e:
-    print(e)
-  return redirect('main:all_groups_view')
-
-
-
-def member_request_view(request:HttpRequest , group_id):   
-  group=StudyGroup.objects.get(id=group_id)
-  if request.method =="POST":
+  if StudyGroup.objects.filter(creator=request.user.id) or request.user.is_superuser: 
     try:
-      group_request=StudyGroup.objects.get(pk=group_id)
-
-      email = request.POST.get("user_name")
-      if User.objects.filter(username=email).exists():
-        specific_member=User.objects.get(username=email)
-
-        if MembershipeRequesite.objects.filter(member=specific_member , group=group).exists() :
-          messages.error(request, "request already send to this user ")
-          return redirect("main:group_dashboard_view" ,group_id=group_id,user_id=specific_member.id)
-        
-        membership=MembershipeRequesite(
-              group=group_request,
-              member=specific_member,
-              status=request.POST.get("status" ,default="Pending"),
-          )
-        membership.save() 
-        messages.success(request, "request sent successfully ")
-        return redirect('main:group_dashboard_view', group_id=group_request.id , user_id=request.user.id)
-      else:
-         #send email as an invite
-         
-         
-         messages.error(request, "User Not found. Invitation email is sent.")
-         return  redirect("main:group_dashboard_view" ,group_id=group_id,user_id=request.user.id)
+      group=StudyGroup.objects.get(pk=group_id)
+      group.delete()
+    except StudyGroup.DoesNotExist:
+      return redirect('main:not_found_view')
     except Exception as e:
-            print(e)
-            messages.error(request, "username not found ")
+      print(e)
+    return redirect('main:all_groups_view')
   
-    return redirect("main:group_dashboard_view" ,group_id=group_id,user_id=request.user.id)
+
+
+
+def creator_delete_group_view(request:HttpRequest , group_id):
+  if StudyGroup.objects.filter(creator=request.user.id) or request.user.is_superuser: 
+    try:
+      group=StudyGroup.objects.get(pk=group_id)
+      group.delete()
+    except StudyGroup.DoesNotExist:
+      return redirect('main:not_found_view')
+    except Exception as e:
+      print(e)
+    return redirect('main:user_dashboard_view' , user_id=request.user.id)
+
+
+
+def member_request_view(request:HttpRequest , group_id): 
+  if StudyGroup.objects.filter(creator=request.user.id) or request.user.is_superuser:  
+    group=StudyGroup.objects.get(id=group_id)
+    if request.method =="POST":
+      try:
+        group_request=StudyGroup.objects.get(pk=group_id)
+
+        email = request.POST.get("user_name")
+        if User.objects.filter(username=email).exists():
+          specific_member=User.objects.get(username=email)
+
+          if MembershipeRequesite.objects.filter(member=specific_member , group=group).exists() :
+            messages.error(request, "request already send to this user ")
+            return redirect("main:group_dashboard_view" ,group_id=group_id,user_id=specific_member.id)
+          
+          membership=MembershipeRequesite(
+                group=group_request,
+                member=specific_member,
+                status=request.POST.get("status" ,default="Pending"),
+            )
+          membership.save() 
+          messages.success(request, "request sent successfully ")
+          return redirect('main:group_dashboard_view', group_id=group_request.id , user_id=request.user.id)
+        else:
+          #send email as an invite
+          
+          
+          messages.error(request, "User Not found. Invitation email is sent.")
+          return  redirect("main:group_dashboard_view" ,group_id=group_id,user_id=request.user.id)
+      except Exception as e:
+              print(e)
+              messages.error(request, "username not found ")
+              return redirect("main:group_dashboard_view" ,group_id=group_id,user_id=request.user.id)
+    else:
+      return redirect('main:not_allowed_view')
+    
+      
 
 
 
@@ -161,6 +181,21 @@ def discussion_view(request:HttpRequest , group_id):
   return redirect('main:group_dashboard_view' , group_id=member_msg.id ,user_id=request.user.id )
 
 
+def edit_discussion_view(request:HttpRequest , group_id , msg_id):
+  if request.method == "POST":
+    member_msg=StudyGroup.objects.get(pk=group_id)
+    msg=Discussion.objects.get(pk=msg_id)
+    try:
+      msg.message=request.POST["message"],
+      msg.save()
+    except Discussion.DoesNotExist:
+      msg=None
+      return redirect('main:not_found_view')
+    except Exception as e:
+      print(e)
+    return redirect('main:group_dashboard_view' , group_id=member_msg.id ,user_id=request.user.id)
+
+
 def delete_discussion_view(request:HttpRequest , group_id , msg_id):
   try:
     member_msg=StudyGroup.objects.get(pk=group_id)
@@ -168,6 +203,7 @@ def delete_discussion_view(request:HttpRequest , group_id , msg_id):
     msg.delete()
   except Discussion.DoesNotExist:
     msg=None
+    return redirect('main:not_found_view')
   except Exception as e:
     print(e)
   return redirect('main:group_dashboard_view' , group_id=member_msg.id ,user_id=request.user.id)

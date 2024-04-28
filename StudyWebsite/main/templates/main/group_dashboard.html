@@ -1,13 +1,39 @@
 {% extends 'main/dashboard_base.html' %}
 {% load static %}
 
+{% block style %}
+
+.btn {
+    width: 40px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    border: none !important;
+     
+    
+}
+.dropdown-menu {
+    min-width: 100px !important;
+}
+
+.dropdown-item {
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+}
+
+{% endblock %}
+
  {% block content %}
+
 {% if messages %}
-       
-          {% for message in messages %}
-                <div class="alert alert-danger" role="alert">{{ message }}</div>
-          {% endfor %}
-      {% endif %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
 
 <div class="row">
 <div class="col-2">
@@ -25,28 +51,49 @@
   </div>
 
   <!-- Discussion -->
-  <div class="row mt-5">
+  <div class="row mt-1">
     <div class="col">
       <h2 class="d-flex flex-column align-items-end">المناقشة</h2>
       <div class="disction-box">
         <div class="message-box">
-          <!-- Messages go here -->
+          <!--Messages go here -->
           {% for message in discussion %}
           {% if message.group_id == group.id %}
-          {{message.message}}
+          <div class="member_message">
+          <div class="msg_button">
+            
+            <div class="dropdown">
+    <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <svg width="15" height="15" fill="currentColor"  class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+        </svg>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark bg-dark">
+        <li><a data-bs-toggle="modal" data-bs-target="#edit_msg{{ message.id }}" class="dropdown-item" href="{% url 'main:edit_discussion_view' group.id message.id %}">edit</a></li>
+        <li><hr class="dropdown-divider border-top border-secondary"></li>
+        <form action="{% url 'main:delete_discussion_view' group.id message.id %}" method="post">
+        {% csrf_token %}
+        <li><a class="dropdown-item text-danger" href="{% url 'main:delete_discussion_view' group.id message.id %}">delete</a></li>
+        </form>
+    </ul>
+</div>
 
-            <form action="{% url 'main:delete_discussion_view' group.id message.id %}" method="post">
-                {% csrf_token %}
-                <input type="hidden" name="message" value="delete">
-                <button class="b"type="submit">delete</button>
-            </form>
+
+            </div><!--end button-->
+          <h6 class="msg_user_info">{{message.user.first_name}} {{message.user.last_name}} <img class="member-img" src="{{message.user.profile.avatar.url}}"></h6>
+          <p class="msg_user_msg" >{{message.message}}</p>
+            
+            </div><!--user msg-->
           {% endif %}
           {% endfor %}
-        </div>
+          
+        </div><!--msg box-->
         <form  action="{% url 'main:discussion_view' group.id %}" method="post" class="discussion-form">
            {% csrf_token %}
-          <textarea name="message" placeholder="اكتب تعليقك هنا .." class="message" required></textarea>
-          <input type="submit" value="ارسال" class="b4" />
+           <div class="msg_">
+        <input  name="message" placeholder="اكتب رسالتك هنا" type="text">
+        <button type="submit">ارسال</button>
+      </div>
         </form>
       </div>
     </div>
@@ -62,22 +109,63 @@
         <div class="group-name">
           <h3>{{group.name}} </h3>
         </div>
+        <h5 class="member-titl">القائد</h5>
+        <div class="leader_box">
+        <p>{{ group.creator.first_name }} {{ group.creator.last_name }} <img class="member-img" src="{{group.creator.profile.avatar.url}}"></p>
+        </div>
         <h5 class="member-titl">الاعضاء</h5>
         <div class="member-box1">
+        {% if user.id == group.creator_id %}<div class="fixed_icon"><button type="submit" class="b5 shadow  " data-bs-toggle="modal" data-bs-target="#add_member" >+</button></div>{% endif %}
           <div class="members">
-            {% for member in members %}
-            {% if member.status == 'Accept' %}
-            <p>{{ member.member.first_name }} {{ member.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
-            {% endif %}
-            {% endfor %}
+            <!--delete members for leader-->
+{% for request in user_requests %}
+{% if request.group_id == group.id and request.status == 'Accept' and request.group.creator != request.member %}
+{% if user.id == request.group.creator_id %}
+<form action="{% url 'main:remove_member_view' user.id request.id group.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="remove"type="submit">Remove</button>
+</form>
+{% endif %}
+<div class="col"></div>
+<p>{{ request.member.first_name }} {{ request.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
+{% endif %}
+{% endfor %}
           </div>
         </div>
         <div class="sid-buttons">
           <button type="submit" class="b shadow"><a href="{% url 'attachments:all_attachment_view' group.id %}" class="text-decoration-none">attachments</a></button>
-          <button type="submit" class="b shadow"><a href="{% url 'review_sets:all_sets_view'  %}" class="text-decoration-none">All Flashcard sets</a></button>
-          <button type="submit" class="b2 shadow" data-bs-toggle="modal" data-bs-target="#add_member" >اضافة عضو</button>
-        </div>
+          <button type="submit" class="b shadow"><a href="{% url 'review_sets:all_sets_view' group.id  %}" class="text-decoration-none">All Flashcard sets</a></button>
+          <button type="submit" class="b2 shadow  " data-bs-toggle="modal" data-bs-target="#add_member" >اضافة عضو</button>
+
+<!--member leave group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator != request.member %}
+<form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="leave"type="submit">Leave group</button>
+</form>
+{% endif %}
+{% endfor %}
+
+<!--leader delete group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator == request.member %}
+<form action="{% url 'main:creator_delete_group_view' group.id %}" method="post">
+{% csrf_token %}
+<button class="leave"type="submit">Delete group</button>
+</form>
+{% endif %}
+{% endfor %}
+
+        </div><!--sid buttons-->
       </div>
+    
+    
+    
+    
+    
     </div><!-- sid bar end-->
   </div>
 
@@ -109,33 +197,32 @@
             </div>
 
 
-<!--delete members for leader-->
-{% for request in user_requests %}
-{% if request.group_id == group.id and request.status == 'Accept' and request.group.creator != request.member %}
-{{request.member}}
-<form action="{% url 'main:remove_member_view' user.id request.id group.id %}" method="post">
-{% csrf_token %}
-<input type="hidden" name="status" value="Reject">
-<button type="submit">Remove</button>
-</form>
-{% endif %}
+
+
+                <!-- edit Modal -->
+                {% for msg in discussion %}
+                {% if msg.id == msg.id %}
+        <div class="modal fade" id="edit_msg{{ msg.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit_msg{{ msg.id }}">{{ msg.title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'main:edit_discussion_view' group.id msg.id %}" method="POST" class="d-flex flex-column gap-2">
+                            {% csrf_token %}
+                            <label for="message">Edit your message:</label>
+                            <input type="text" name="message" value="{{ msg.message }}" class="form-control" required />
+                            <br>
+                            <input type="submit" value="edit" class="btn btn-primary" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
 {% endfor %}
-
-<br><br>
-
-<!--member leave group button-->
-{% for request in user_requests %}
-{% if request.member_id == user.id and request.group_id == group.id and request.group.creator != request.member %}
-{{request.member}}
-<form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
-{% csrf_token %}
-<input type="hidden" name="status" value="Reject">
-<button class="b"type="submit">Leave group</button>
-</form>
-{% endif %}
-{% endfor %}
-
-
 
 
   {% endblock %}
