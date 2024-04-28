@@ -4,6 +4,15 @@
 
 {% block content %}
 
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
 <section class="bg-dark" style="width: 100%; height: 300px;"></section>
 
 <section>

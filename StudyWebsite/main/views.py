@@ -67,16 +67,16 @@ def create_group(request:HttpRequest,user_id):
 
 
 
-def delete_group(request:HttpRequest , group_id):
-  if StudyGroup.objects.filter(creator=request.user.id) or request.user.is_superuser: 
+def admin_delete_group(request:HttpRequest , group_id):
+  if request.user.is_superuser: 
     try:
       group=StudyGroup.objects.get(pk=group_id)
       group.delete()
     except StudyGroup.DoesNotExist:
-      return redirect('main:not_found_view')
+      return redirect('main:not_allowed_view')
     except Exception as e:
       print(e)
-    return redirect('main:all_groups_view')
+    return redirect('main:admin_dashboard_view',request.user.id)
   
 
 
@@ -222,3 +222,10 @@ def not_found_view(request:HttpRequest):
 
 def not_allowed_view(request:HttpRequest):
    return render(request,"main/not_allowed.html")
+
+
+
+def admin_dashboard_view(request:HttpRequest,user_id):
+   user=User.objects.get(pk=user_id)
+   all_group_admin=StudyGroup.objects.all
+   return render(request,"main/admin_dashboard.html",{"all_group_admin":all_group_admin })
