@@ -1,13 +1,9 @@
 {% extends 'main/base.html' %}
 {% load static %}
-{% block title %} All Events {% endblock %}
+{% block title %} جميع الفعاليات {% endblock %}
 
 {% block content %}
-
-<!-- hero عشان اللون بس -->   
-<section class="bg-dark" style="width: 100%; height: 300px;">
-
-</section>
+<section class="bg-dark" style="width: 100%; height: 300px;"></section>
 
 <section>
     <div class="container mt-5 px-5">  
@@ -15,103 +11,127 @@
             <h2>{{ review_set.title }}</h2>
             <p>{{ review_set.description }}</p>
 
-            <div class="row">
+            <!-- المودال حق التحديث -->
+            <button type="button" class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#updateAttachmentModal{{ review_set.id }}">
+                تحديث المجموعة
+            </button>
 
-                <div class="col-md-6">
-                    <div class="row mt-4">
-                        {% for card in cards %}
-                            <div class="col-6 mb-3">
-                                <div class="PL d-flex flex-column gap-3 border border-1 shadow p-2 rounded-3 h-100 mb-4">
-                                    <p>السؤال:{{ card.question }}</p>
-                                    <p>الجواب: {{ card.answer }}</p>
-                                    
-
-                                    <!-- Update  -->
-                                    <button type="button" class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#updateCardModal{{ card.id }}">
-                                        تحديث البطاقة
-                                    </button>
-                                    
-                                    <!-- Modal -->
-                                    <div class="modal fade" id="updateCardModal{{ card.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="exampleModalLabel">تحديث البطاقة</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="{% url 'review_sets:update_card_view' review_set.id card.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                                        {% csrf_token %}
-                                                        <div class="row">
-                                                            <div class="col-md-6">
-                                                                <h4> السؤال</h4>
-                                                                <input name="question" type="text" class="form-control" value="{{ card.question }}" />
-                                                            </div>
-                                                            <div class="col-md-6">
-                                                                <h4> الجواب</h4>
-                                                                <input name="answer" type="text" class="form-control" value="{{ card.answer }}" />
-                                                            </div>
-                                                        </div>
-                                                       
-                                                        <input type="submit" class="btn btn-dark" value="حفظ التعديلات" />
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
+            <div class="modal fade" id="updateAttachmentModal{{ review_set.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">تحديث المجموعة</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{% url 'review_sets:update_set_view' review_set.id group.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                {% csrf_token %}
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="title" class="form-label">عنوان المجموعة</label>
+                                        <input name="title" type="text" value="{{ review_set.title }}" placeholder="عنوان المجموعة" class="form-control" minlength="5" />     
                                     </div>
-                                    <!-- نهاية تحديث  -->
-
-
-
-                                    <a href="{% url 'review_sets:delete_card_view' review_set.id card.id %}" class="btn btn-dark"> حذف البطاقة </a>
+                                    <div class="col-12">
+                                        <label for="description" class="form-label">الوصف</label>
+                                        <textarea name="description" class="form-control" minlength="20">{{ review_set.description }}</textarea>
+                                    </div>
+                                    <div class="col-12 ">
+                                        <input type="submit" class="btn btn-success w-100 " value="تحديث المجموعة" />
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                </div>
-
-
-                <!-- هنا زر الاضافة  -->
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addCardModal">
-                        اضافة بطاقة 
-                    </button>
-
-                    <!-- Modal -->
-                    <div class="modal fade" id="addCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">إضافة بطاقة</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="{% url 'review_sets:add_card_view' review_set.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                        {% csrf_token %}
-                                        <div class="row">
-                                            
-                                            <div class="col-md-6">
-                                                <h4>السؤال </h4>
-                                                <input name="question" type="text" placeholder="question" class="form-control" required minlength="2" />
-                                            </div>
-                                            <div class="col-md-6">
-                                                <h4>الجواب </h4>
-                                                <input name="answer" type="text" placeholder="answer" class="form-control" required minlength="2" />
-                                            </div>
-                                        </div>
-                                      
-                                        <input type="submit" class="btn btn-dark" value=" حفظ البطاقة" />
-                                    </form>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
+          
+
+            <a href="{% url 'review_sets:delete_set_view' review_set.id group.id %}" class="btn btn-dark">حذف المجموعة </a>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="row mt-4">
+                    {% for card in cards %}
+                        <div class="col-6 mb-3">
+                            <div class="PL d-flex flex-column gap-3 border border-1 shadow p-2 rounded-3 h-100 mb-4">
+                                <p>السؤال:{{ card.question }}</p>
+                                <p>الجواب: {{ card.answer }}</p>
+
+                                <!--تحديث الكارد-->
+                                <button type="button" class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#updateCardModal{{ card.id }}">
+                                    تحديث البطاقة
+                                </button>
+                                <div class="modal fade" id="updateCardModal{{ card.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">تحديث البطاقة</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="{% url 'review_sets:update_card_view' review_set.id card.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                                    {% csrf_token %}
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <h4> السؤال</h4>
+                                                            <input name="question" type="text" class="form-control" value="{{ card.question }}" />
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <h4> الجواب</h4>
+                                                            <input name="answer" type="text" class="form-control" value="{{ card.answer }}" />
+                                                        </div>
+                                                    </div>
+                                                    <input type="submit" class="btn btn-dark" value="حفظ التعديلات" />
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+
+                                <a href="{% url 'review_sets:delete_card_view' review_set.id card.id %}" class="btn btn-dark"> حذف البطاقة </a>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+      <!-- حق اضافة الكارد-->
+            <div class="col-md-6">
+                <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addCardModal">
+                    اضافة بطاقة 
+                </button>
+
+                <div class="modal fade" id="addCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">إضافة بطاقة</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{% url 'review_sets:add_card_view' review_set.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h4>السؤال </h4>
+                                            <input name="question" type="text" placeholder="سؤال" class="form-control" required minlength="2" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h4>الجواب </h4>
+                                            <input name="answer" type="text" placeholder="جواب" class="form-control" required minlength="2" />
+                                        </div>
+                                    </div>
+                                    <input type="submit" class="btn btn-dark" value=" حفظ البطاقة" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--وبس-->
+            </div>
         </div>
     </div>
-
-
-    
 </section>
 {% endblock %}
+

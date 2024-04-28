@@ -23,7 +23,8 @@
                                 <p class="">{{ r_set.description }}</p>
                                 <p class="">{{ r_set.created_at }}</p>
                                 <p class="">{{ r_set.created_by }}</p>
-                                <a href="{% url 'review_sets:delete_set_view' r_set.id group.id %}" class="text-decoration-none know-more">Delete</a>
+                                <a href="{% url 'review_sets:delete_set_view' r_set.id group.id %}" class="text-decoration-none know-more">حذف</a>
+                                <a href="{% url 'review_sets:full_set_view' r_set.id group.id %}" class="text-decoration-none know-more">مراجعة</a>
                             </div>
                         </div>
                     </div>
