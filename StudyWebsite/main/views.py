@@ -4,7 +4,8 @@ from .models import StudyGroup ,MembershipeRequesite , Discussion
 from django.contrib.auth.models import User
 from django.contrib import messages
 from todo_list .models import ToDoList
-
+from django.core.mail import send_mail
+from django.conf import settings
 
 # Create your views here.
 def index_view(request: HttpRequest):
@@ -118,7 +119,13 @@ def member_request_view(request:HttpRequest , group_id):
           return redirect('main:group_dashboard_view', group_id=group_request.id , user_id=request.user.id)
         else:
           #send email as an invite
-          
+          if request.method == 'POST':
+           subject = 'دعوة للانضمام إلى موقع دراسي'
+           message = 'نود دعوتك للانضمام إلى موقعنا الدراسي الذي يقدم مجموعة متنوعة من الخدمات التعليمية والموارد القيمة للطلاب والمهتمين بالتعلم.'
+           sender_email = settings.EMAIL_HOST_USER
+           recipient_email = email
+
+           send_mail(subject, message, sender_email, [recipient_email])
           
           messages.error(request, "User Not found. Invitation email is sent.")
           return  redirect("main:group_dashboard_view" ,group_id=group_id,user_id=request.user.id)
