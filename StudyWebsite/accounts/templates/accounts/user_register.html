@@ -7,10 +7,10 @@
 
 <!-- hero عشان اللون بس -->   
 <section >
-    <div class="container-fluid" style="margin-top: 98px;">
-        <div class="row">
+    <div class="container mt-5 pt-3">
+        <div class="row align-items-center mt-5 pt-5">
             <div class="col-12 col-md-6 justify-content-center d-flex align-items-center">
-                <div style="padding-left: 50px; padding-right:50px; width: 80%; height: 100vh; align-items: center; padding-top: 150px;">
+                <div>
                     <h2 class="display-5 fw-bold text-center">تسجيل جديد</h2>
                     <p class="text-center mb-3">هل لديك حساب بالفعل ؟ <a href="{% url 'accounts:user_login_view' %}" class="link-primary text-decoration-none">تسجيل الدخول</a></p>
                     <form action="{% url 'accounts:user_register_view' %}" method="POST" class="d-flex flex-column gap-2" enctype="multipart/form-data">
@@ -64,8 +64,8 @@
                 </div>
                 
             </div>
-            <div class="col-12 col-md-6 bg-dark" style="height: 100vh;">
-                <img src="{% static 'images/reg.jpg' %}" alt="login img" class="log-img" style="width: 100%; background-color: palegoldenrod ;">
+            <div class="col-12 col-md-6 ">
+                <img src="{% static 'images/Signup.png' %}" alt="login img" class="log-img" style="width: 100%;">
             </div>
         </div>
         

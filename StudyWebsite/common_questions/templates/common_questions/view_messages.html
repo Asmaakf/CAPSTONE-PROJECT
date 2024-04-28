@@ -1,56 +1,63 @@
 {% extends 'main/base.html' %}
-
-{% block title %} الدعم {% endblock %}
+{% load static %}
+{% block title %} الأسئلة الشائعة {% endblock %}
 
 {% block content %}
+<section style="height: 100px; background-color: rgba(61, 61, 60, 0.976);">
 
-<div class="container my-5">
-   
-    <div class="text-center mb-4">
-        <h2 class="fw-bold">مرحباً! كيف يمكنني مساعدتك؟</h2>
-    </div>
+</section>
 
-    
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-6">
-            <form method="GET">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="ابحث عن سؤال" value="{{ search_query }}">
-                    <button type="submit" class="btn btn-primary">بحث</button>
+
+<section>
+    <div class="container py-5 mt-4 rounded-4 px-4">
+        <div class="row text-center g-2 d-flex justify-content-center">
+            <h1 class="display-5 fw-bold">كيف نقدر نساعدك؟</h1>
+            <p>كيف نقدر نساعدك هنا مع محزم عندك اهم الاسئلة الشائعة </p>
+            <div class="w-75">
+                <form method="GET">
+                    <div class="input-group border rounded-pill p-1">
+                        <input name="q" value="{{ search_query }}" type="search" placeholder="ابحث عن سؤالك هنا" aria-describedby="button-addon3" class="form-control border-0 rounded-pill">
+                        <div class="input-group-append border-0">
+                        <button id="button-addon3" type="submit" class="btn btn-link text-success"><i class="fa fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12 col-md-6 d-flex justify-content-center mb-5">
+                <div class="accordion" id="accordionFlushExample">
+                    {% for q in questions_answers %}
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-{{ forloop.counter }}">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse-{{ forloop.counter }}">
+                                    <h6>{{ q.question }} </h6>
+                                </button>
+                            </h2>
+                            <div id="collapse-{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ forloop.counter }}" data-bs-parent="#accordionFlushExample">
+                                <div class="accordion-body">
+                                    <p>{{ q.answer }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <p>لا توجد أسئلة.</p>
+                    {% endfor %}
+                    <div class="mt-5 d-flex justify-content-center flex-column text-center align-items-center">
+                        <p>
+                            إذا لم تجد الإجابة على استفسارك، لا تتردد في التواصل مع فريق الدعم الفني. نحن هنا لمساعدتك في أي وقت.
+                       </p>
+                       <a href="{% url 'contact:contact_view' %}" class="btn btn-primary rounded-pill w-50 justify-content-center">تواصل معنا</a>
+                    </div>
+                   
                 </div>
-            </form>
+            </div>  
+            <div class="col-12 col-md-6 d-flex justify-content-center mb-5">
+                <img src="{% static 'images/faq.jpg' %}" alt="FAQ img" style="width: 90%; object-fit: cover;">   
+            </div>
         </div>
     </div>
-
-   
-    <div class="accordion" id="faqAccordion">
-        {% for qa in questions_answers %}
-            <div class="accordion-item mb-4">
-                <h2 class="accordion-header" id="heading-{{ forloop.counter }}">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ forloop.counter }}" aria-expanded="false" aria-controls="collapse-{{ forloop.counter }}">
-                        <strong></strong> {{ qa.question }}
-                    </button>
-                </h2>
-                <div id="collapse-{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="heading-{{ forloop.counter }}" data-bs-parent="#faqAccordion">
-                    <div class="accordion-body">
-                        <strong></strong> {{ qa.answer }}
-                    </div>
-                </div>
-            </div>
-        {% empty %}
-            <p>لا توجد أسئلة.</p>
-        {% endfor %}
-    </div>
-
-    
-    <div class="text-center mt-5">
-        <p class="lead">
-            إذا لم تجد الإجابة على استفسارك، لا تتردد في التواصل مع فريق الدعم الفني. نحن هنا لمساعدتك في أي وقت.
-            <a href="{% url 'contact:contact_view' %}" class="btn btn-outline-primary">تواصل معنا</a>
-        </p>
-    </div>
-</div>
-
-
+</section>
 
 {% endblock %}
