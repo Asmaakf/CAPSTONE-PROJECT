@@ -95,23 +95,30 @@ label{
 <div class="line2"></div>
 		<div class="">
 			
-        
-        <div class="list_t">
-        <li>
-					<input type="checkbox" id="check-1" >
-					<label for="check-1">Shop</label>
+       <ol class="list_t">
+      {% for todo in todo_list %}
+      {% if todo.user_id == user.id%}
+				<li>
+					<input type="checkbox" id="check-{{ todo.id }}" {% if todo.check == "True" %} checked {% endif %}>
+					<label calss="task1"for="check-1">{{todo.todo}} </label>
           <span class="todo-icons">
-          <a href="/"><i class=" icon_ fas fa-edit"></i></a></span>
-         <span class=""> <a href="/"><i class=" icon_ fas fa-trash-alt"></i></a></span>
+          <a data-bs-toggle="modal" data-bs-target="#todo{{ todo.id }}" href="{% url 'todo_list:update_todo_view' todo.id user.id %}"><i class="fas fa-edit"></i></a>
+          <a href="{% url 'todo_list:delete_todo_view' todo.id user.id %}"><i class="fas fa-trash-alt"></i></a>
+          </span>
           
-          </li>
-          </div>
+				</li>
+        {% endif%}
+        {% endfor %}
+        
 				
 			</ol>
 		</div>
     <div class="todo">
-        <input  name="message" placeholder="اكتب مهمتك هنا" type="text">
+     <form action="{% url 'todo_list:add_todo_view' user.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+        {% csrf_token %}
+        <input  name="todo" placeholder="اكتب مهمتك هنا" type="text">
         <button type="submit">اضافة</button>
+        </form>
       </div>
 	</div>
 </div><!--col end-->
@@ -192,7 +199,7 @@ label{
  <br><br>
 
  <div class="profile-userbuttons">
-<a href="{% url 'accounts:update_user_profile_view' user.id %}" class="btn1 btn-primary">Edit profile info</a>
+<a href="{% url 'accounts:update_user_profile_view' user.id  %}" class="btn1 btn-primary">Edit profile info</a>
 </div>
 <br>
  <div class="profil-lin"></div>
@@ -269,4 +276,32 @@ ffvdvvf,l
 
 
 
+
+ <!-- todo Modal -->
+                    {% for to in todo_list %}
+                    {% if todo.user_id == user.id%}
+                    <div class="modal fade" id="todo{{to.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="todo{{to.id }}">تحديث الملف</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="{% url 'todo_list:update_todo_view' to.id user.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                        {% csrf_token %}
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <h4>اسم الملف</h4>
+                                                <input name="todo" type="text" placeholder="Science" class="form-control" value="{{to.todo }}" />
+                                            </div>
+                                        </div>
+                                        <input type="submit" class="btn btn-dark" value="إرسال" />
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor%}
   {% endblock %}
