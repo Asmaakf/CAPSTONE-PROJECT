@@ -128,7 +128,7 @@ def update_user_profile_view(request: HttpRequest ,user_id):
                 profile.save()
 
                 
-                return redirect("accounts:user_profile_view", user_name=user.username)
+                return redirect("main:user_dashboard_view", user_name=user.username)
 
         except Exception as e:
             msg = f"حدث خطأ ما: {e}"

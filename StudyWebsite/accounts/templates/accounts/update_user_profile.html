@@ -4,7 +4,7 @@
 
 {% block content %}
 
-<section class="pt-2">
+<section>
     <div class="container mt-5 mb-5">
 		<div class="main-body">  
             
@@ -85,7 +85,7 @@
                             
 							<div class="d-flex gap-4 justify-content-center my-4">
 								<input type="submit" class="btn btn-primary rounded-5 px-3" value="حفظ التعديلات" />
-								<a class="btn btn-secondary rounded-5 px-3" href="{% url 'accounts:user_profile_view' user.username %}">إلغاء</a>
+								<a class="btn btn-secondary rounded-5 px-3" href="{% url 'main:user_dashboard_view' user.id %}">إلغاء</a>
 							</div>	
 						</div>
 					</div>

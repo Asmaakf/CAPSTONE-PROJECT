@@ -14,13 +14,11 @@
             {% csrf_token %}  
             <div class="form-group">
                 <label for="question">السؤال:</label>
-                <input type="text" name="question" class="form-control" value="{{ question.question }}" required>  <!-- إدخال السؤال الحالي -->
-            </div>
+                <input type="text" name="question" class="form-control" value="{{ question.question }}" required>  
             <div class="form-group mt-3">
                 <label for="answer">الإجابة:</label>
-                <textarea name="answer" class="form-control" rows="4" required>{{ question.answer }}</textarea>  <!-- إدخال الإجابة الحالية -->
+                <textarea name="answer" class="form-control" rows="4" required>{{ question.answer }}</textarea> 
             </div>
-            
             
             <div class="text-center mt-4"> 
                 <button type="submit" class="btn btn-primary">حفظ التغييرات</button>
