@@ -228,4 +228,5 @@ def not_allowed_view(request:HttpRequest):
 def admin_dashboard_view(request:HttpRequest,user_id):
    user=User.objects.get(pk=user_id)
    all_group_admin=StudyGroup.objects.all
-   return render(request,"main/admin_dashboard.html",{"all_group_admin":all_group_admin })
+   todo_list=ToDoList.objects.all
+   return render(request,"main/admin_dashboard.html",{"all_group_admin":all_group_admin ,"todo_list":todo_list})
