@@ -6,9 +6,14 @@ from main.models import StudyGroup
 
 # Create your views here.
 def all_attachment_view(request:HttpRequest , group_id):
-    group=StudyGroup.objects.get(pk=group_id)
-    attachments= Attachment.objects.filter(group=group)
-    return render(request, "main/attachment.html", {"attachments": attachments ,"group":group} )
+    if request.user.is_authenticated:    
+      try:
+          group=StudyGroup.objects.get(pk=group_id)
+          attachments= Attachment.objects.filter(group=group)
+      except Exception as e:
+          return render(request, "main/not_allowed.html") # no permission page
+      
+      return render(request, "main/attachment.html", {"attachments": attachments ,"group":group} )
 
 
 def add_attachment_view(request:HttpRequest,group_id):

@@ -27,7 +27,6 @@ urlpatterns = [
     path("contact/", include("contact.urls")),
     path("attachments/", include("attachments.urls")),
     path("common_questions/", include("common_questions.urls")),
-    path("student_dashboard/", include("student_dashboard.urls")),
     path("zoom/", include("zoom.urls")),
     path("todo_list/", include("todo_list.urls")),
 
