@@ -8,6 +8,7 @@ from django.shortcuts import render, redirect
 from .models import ZoomMeeting
 from main.models import StudyGroup
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 
@@ -27,52 +28,58 @@ def create_zoom_meeting(payload):
 
 
 
-def create_zoom_meeting_view(request:HttpRequest,user_id, group_id):
-    #create the meeting
+
+def create_zoom_meeting_view(request: HttpRequest, user_id, group_id):
+    
     if request.method == 'POST':
         topic = request.POST["topic"]
         agenda = request.POST["agenda"]
         start_time = request.POST["start_time"].replace("T", " ")
         password = request.POST["password"]
 
-        #ensure the all required values are valid and formated as per zoom documentation
         data = {
             'topic': topic,
             'agenda': agenda,
             'start_time': datetime.strptime(start_time, "%Y-%m-%d %H:%M"),
             'type': 2,
-            'password' : password,
-            'timezone' : "Asia/Riyadh",
+            'password': password,
+            'timezone': "Asia/Riyadh",
             'user_id': "me",
         }
 
         try:
             response = create_zoom_meeting(data)
+            start_url = response.get("start_url", "")
+            join_url = response.get("join_url", "")
 
-        except TypeError as e:
-            print("حدث خطأ:", e)
+            user = User.objects.get(pk=user_id)
+            group = StudyGroup.objects.get(pk=group_id)
 
-        start_url = response.get("start_url", "")
-        join_url = response.get("join_url", "")
-
-        user = User.objects.get(pk=user_id)
-        group = StudyGroup.objects.get(pk=group_id)
-
-        try:
-            session = ZoomMeeting(
-                topic = topic,
-                agenda = agenda,
-                start_time = start_time,
-                password = password,
-                user = user,
-                study_group =group,
-                start_url = start_url,
-                join_url = join_url
+            
+            ZoomMeeting.objects.create(
+                topic=topic,
+                agenda=agenda,
+                start_time=start_time,
+                password=password,
+                user=user,
+                study_group=group,
+                start_url=start_url,
+                join_url=join_url
             )
-            session.save()
+
+            
+            messages.success(request, "تم إنشاء الاجتماع بنجاح!")
+           
+            return redirect('main:group_dashboard_view', group_id=group_id, user_id=user_id)
+
         except Exception as e:
-            print(e)
-    return render(request, "zoom/schedule_session.html")
+            messages.error(request, f"حدث خطأ: {e}")
+            
+            return redirect('main:not_found')  
+
+    
+    return render(request, "zoom/schedule_session.html", {"group_id" : group_id})
+
       
 
     
