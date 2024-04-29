@@ -16,8 +16,14 @@
                 <div class="col-3 col-md-2 mb-5">
                         <div class="card-body">
                             <div class="d-flex flex-column align-items-center text-center gap-2">
-                                
+                                {% if attachment.media.url %}
+                                {% if attachment.media.url|lower|slice:'-4:' == '.jpg' or attachment.media.url|lower|slice:'-5:' == '.jpeg' or attachment.media.url|lower|slice:'-4:' == '.png' %}
+                                    <img src="{{ attachment.media.url }}" width="100%">
+                                {% else %}
                                 <img src="{% static 'images/pdf.png' %}" width="100%">
+                                {% endif %}
+                            {% endif %}
+                                
                                 <div>
                                     <h5><a href="{{ attachment.media.url }}" target="_blank">{{ attachment.title }}</a></h5>
                                     <p style="font-size: 12px; color: grey;">{{ attachment.uploaded_at }}</p>
