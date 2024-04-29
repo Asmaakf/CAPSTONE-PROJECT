@@ -81,12 +81,16 @@ def user_logout_view(request:HttpRequest):
     
     return redirect('accounts:user_login_view')
 
+
+
 # profile
 def user_profile_view(request:HttpRequest, user_name):
 
     user = User.objects.get(username=user_name)
     
     return render(request, "accounts/user_profile.html", {"user" : user})
+
+
 
 # update profile
 from django.http import HttpRequest
@@ -131,18 +135,4 @@ def update_user_profile_view(request: HttpRequest ,user_id):
             print(f"Error for user ID {user_id}: {e}")
 
     return render(request, "accounts/update_user_profile.html", {"msg": msg})
-
-# delete
-@login_required
-def delete_user_profile(request):
-    if request.method == "POST":
-        try:
-            user = request.user  
-            user.delete() 
-            return redirect('accounts:user_login_view')  
-        except Exception as e:
-           
-            return HttpResponseForbidden("حدث خطأ أثناء محاولة حذف الحساب.")
-    else:
-        return HttpResponseForbidden("طريقة الطلب غير مدعومة.")
 
