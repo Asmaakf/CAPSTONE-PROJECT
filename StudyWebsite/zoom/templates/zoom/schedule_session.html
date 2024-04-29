@@ -1,35 +1,54 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <title>جدولة اجتماع زوم</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %} جدولة اجتماع زوم {% endblock %}
+
+{% block content %}
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8 text-center">
-                <h1>جدولة اجتماع زوم</h1>
-                <h2 class="text-success">تم الحجز بنجاح</h2>
+                <h2 class="text-success">جدولة اجتماع زوم</h2>
 
-                <form action="{% url 'zoom:create_zoom_meeting_view' 4 2 %}" method="post" class="form-group">
+                <form action="{% url 'zoom:create_zoom_meeting_view' request.user.id group_id %}" method="post" class="form-group">
                     {% csrf_token %}
                     <input type="text" class="form-control mb-3" placeholder="عنوان الاجتماع" name="topic" required>
                     <input type="text" class="form-control mb-3" placeholder="قائمة الأعمال" name="agenda">
                     <input type="number" class="form-control mb-3" placeholder="كلمة المرور" name="password">
                     <input type="datetime-local" class="form-control mb-3" placeholder="وقت بدء الاجتماع" name="start_time" required>
-                    <button type="submit" class="btn btn-primary btn-block">إنشاء الاجتماع</button>
+                    
+                    <button type="submit" class="btn btn-primary" >
+                        إنشاء الاجتماع
+                    </button>
+                   
+<div class="modal fade" id="meetingModal" tabindex="-1" aria-labelledby="meetingModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered"> 
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="meetingModalLabel">اجتماع زوم</h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="إغلاق"></button> <!-- زر الإغلاق -->
+        </div>
+        <div class="modal-body text-center">
+          <div class="alert alert-success"> 
+            <strong>نجاح:</strong> تم إنشاء الاجتماع بنجاح.
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-center"> 
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إغلاق</button> 
+        </div>
+      </div>
+    </div>
+  </div>
+  
                 </form>
 
                 <div class="mt-4">
-                    <a href="{{ start_url }}" target="_blank" class="btn btn-success mr-3">بدء الاجتماع</a>
+                    <a href="{{ response.start_url }}" target="_blank" class="btn btn-success mr-3">بدء الاجتماع</a>
                     <a href="{{ join_url }}" target="_blank" class="btn btn-info">الانضمام إلى الاجتماع</a>
                 </div>
             </div>
         </div>
     </div>
-</body>
-</html>
+{% endblock %}
 
 
 
