@@ -3,7 +3,6 @@
 {% block title %} جميع الفعاليات {% endblock %}
 
 {% block css %}
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <style>
 .card {
   margin: 10px 10px;
@@ -101,8 +100,7 @@ input[type='checkbox']:checked + .card-container .card-flip {
   color: #309df0;
 }
 
-.solution_card .so_top_icon {
-}
+
 
 .solution_card .solu_title h3 {
   color: #212121;
@@ -138,8 +136,7 @@ input[type='checkbox']:checked + .card-container .card-flip {
   margin-bottom: 1rem;
   font-size: 2.5rem;
 }
-.our_solution_content p {
-}
+
 
 .hover_color_bubble {
   position: absolute;
@@ -204,98 +201,6 @@ input[type='checkbox']:checked + .card-container .card-flip {
 
 {% block content %}
 <section>
-   
-    <div class="container">
-        <div class="row">
-            <!-- Card 1 -->
-
-          <input type="checkbox" id="card-1"/>
-          <label class="col-md-12 card-container" for="card-1">
-            {% for card in cards %}
-            <div class="card-flip">
-                <!-- Card 1 Front -->
-
-                <div class="card front text-center pt-3">
-                    <span class="fa fa-4x fa-smile-o text-center"></span>   
-                    
-                    <div class="col-12 col-md-12">
-                        <div class="our_solution_category">
-                            <div class="solution_cards_box">
-                                <div class="solution_card justify-content-center">
-                                    <div class="hover_color_bubble">
-                                    </div>
-                                    <div class="solu_description">
-                                        <button type="button" class="read_more_btn">تعديل</button>
-                                    </div>
-    
-                                    <div class="solu_title mt-4">
-                                        <h3>السؤال</h3>
-                                    </div>
-                                    <div class="solu_description mt-4">
-                                        <p>
-                                            {{ card.question }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-
-               
-                <!-- End Card 1 Front -->
-      
-                <!-- Card 1 Back -->
-                <div class="card back text-center pt-3">
-                    <span class="fa fa-4x fa-smile-o text-center"></span>
-                    <div class="col-12 col-md-12">
-                        <div class="our_solution_category">
-                            <div class="solution_cards_box">
-                                <div class="solution_card justify-content-center">
-                                    <div class="hover_color_bubble">
-                                    </div>
-                                    <div class="solu_description">
-                                        <button type="button" class="read_more_btn">تعديل</button>
-                                    </div>
-    
-                                    <div class="solu_title mt-4">
-                                        <h3>الجواب</h3>
-                                    </div>
-                                    <div class="solu_description mt-4">
-                                        <p>
-                                            {{ card.answer }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                
-                </div>
-
-                
-                <!-- End Card 1 Back -->
-            </div>
-          </label>
-          {% endfor %}
-          <!-- End Card 1 -->
-        </div>
-        <div class="row mt-5">
-            <div class="col">
-                {% for page in pages_count %}
-                    <a href="?page={{page}}" class="btn border {% if request.GET.page == page %} btn-primary {% elif page == '1' and 'page' not in request.GET %} btn-primary {% endif %}">{{page}}</a>
-                {% endfor %}
-            </div>
-    
-        </div>
-    </div>
-</section>
-
-
-
-<section>
     <div class="container mt-5 px-5">  
         <div class="row g-5">
             <h2>{{ review_set.title }}</h2>
@@ -340,52 +245,7 @@ input[type='checkbox']:checked + .card-container .card-flip {
         </div>
 
         <div class="row">
-            <div class="col-md-6">
-                <div class="row mt-4">
-                    {% for card in cards %}
-                        <div class="col-6 mb-3">
-                            <div class="PL d-flex flex-column gap-3 border border-1 shadow p-2 rounded-3 h-100 mb-4">
-                                <p>السؤال:{{ card.question }}</p>
-                                <p>الجواب: {{ card.answer }}</p>
-
-                                <!--تحديث الكارد-->
-                                <button type="button" class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#updateCardModal{{ card.id }}">
-                                    تحديث البطاقة
-                                </button>
-                                <div class="modal fade" id="updateCardModal{{ card.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">تحديث البطاقة</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="{% url 'review_sets:update_card_view' review_set.id card.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                                    {% csrf_token %}
-                                                    <div class="row">
-                                                        <div class="col-md-6">
-                                                            <h4> السؤال</h4>
-                                                            <input name="question" type="text" class="form-control" value="{{ card.question }}" />
-                                                        </div>
-                                                        <div class="col-md-6">
-                                                            <h4> الجواب</h4>
-                                                            <input name="answer" type="text" class="form-control" value="{{ card.answer }}" />
-                                                        </div>
-                                                    </div>
-                                                    <input type="submit" class="btn btn-dark" value="حفظ التعديلات" />
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                               
-
-                                <a href="{% url 'review_sets:delete_card_view' review_set.id card.id %}" class="btn btn-dark"> حذف البطاقة </a>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
+           
       <!-- حق اضافة الكارد-->
             <div class="col-md-6">
                 <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addCardModal">
@@ -418,42 +278,138 @@ input[type='checkbox']:checked + .card-container .card-flip {
                         </div>
                     </div>
                 </div>
-                <!--وبس-->
             </div>
         </div>
     </div>
 </section>
 
-<section>
-    <div class="section_our_solution">
-        <div class="row">
-            {% for card in cards %}
-                <div class="col-12 col-md-12">
-                    <div class="our_solution_category">
-                        <div class="solution_cards_box">
-                            <div class="solution_card justify-content-center">
-                                <div class="hover_color_bubble">
-                                </div>
-                                <div class="solu_description">
-                                    <button type="button" class="read_more_btn">تعديل</button>
-                                </div>
 
-                                <div class="solu_title mt-4">
-                                    <h3>السؤال</h3>
-                                </div>
-                                <div class="solu_description mt-4">
-                                    <p>
-                                        {{ card.question }}
-                                    </p>
+
+
+<section>
+   
+    <div class="container">
+        <div class="row">
+            <!-- Card 1 -->
+
+          <input type="checkbox" id="card-1"/>
+          <label class="col-md-12 card-container" for="card-1">
+            {% for card in cards %}
+            <div class="card-flip">
+                <!-- Card 1 Front -->
+
+                <div class=" front text-center pt-3">
+                    <span class="fa fa-4x fa-smile-o text-center"></span>   
+                    
+                    <div class="col-12 col-md-12">
+                        <div class="our_solution_category">
+                            <div class="solution_cards_box">
+                                <div class="solution_card justify-content-center">
+                                    <div class="hover_color_bubble">
+                                    </div>
+                                    <div class="solu_title mt-4">
+                                        <h3>السؤال</h3>
+                                    </div>
+                                    <div class="solu_description mt-4">
+                                        <p>
+                                            {{ card.question }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            {% endfor %}
+
+               
+                <!-- End Card 1 Front -->
+      
+                <!-- Card 1 Back -->
+                <div class=" back text-center pt-3">
+                    <span class="fa fa-4x fa-smile-o text-center"></span>
+                    <div class="col-12 col-md-12">
+                        <div class="our_solution_category">
+                            <div class="solution_cards_box">
+                                <div class="solution_card justify-content-center">
+                                    <div class="hover_color_bubble">
+                                    </div>
+                                    <div class="solu_description">
+                                        <!-- ألمفروض مافي زر هنا -->
+                                    </div>
+    
+                                    <div class="solu_title mt-4">
+                                        <h3>الجواب</h3>
+                                    </div>
+                                    <div class="solu_description mt-4">
+                                        <p>
+                                            {{ card.answer }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+
+                
+                <!-- End Card 1 Back -->
+            </div>
+          </label>
+
+
+          <div class="solu_description ">
+                                       
+            <button type="button" class="btn btn-dark mt-auto" data-bs-toggle="modal" data-bs-target="#updateCardModal{{ card.id }}">
+                تحديث البطاقة
+            </button>
+            <a href="{% url 'review_sets:delete_card_view' review_set.id card.id %}" class="btn btn-dark"> حذف البطاقة </a>
+
+           
+        </div>
+        
+<!--تحديث الكارد-->
+
+<div class="modal fade" id="updateCardModal{{ card.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">تحديث البطاقة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="{% url 'review_sets:update_card_view' review_set.id card.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4> السؤال</h4>
+                            <input name="question" type="text" class="form-control" value="{{ card.question }}" />
+                        </div>
+                        <div class="col-md-6">
+                            <h4> الجواب</h4>
+                            <input name="answer" type="text" class="form-control" value="{{ card.answer }}" />
+                        </div>
+                    </div>
+                    <input type="submit" class="btn btn-dark" value="حفظ التعديلات" />
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+          {% endfor %}
+          <!-- End Card 1 -->
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center align-items-center">
+                {% for page in pages_count %}
+                    <a href="?page={{page}}" class="btn border {% if request.GET.page == page %} btn-primary {% elif page == '1' and 'page' not in request.GET %} btn-primary {% endif %}">{{page}}</a>
+                {% endfor %}
+            </div>
+    
         </div>
     </div>
 </section>
+
 
 <script>
    $(".flippable").click(function(){
