@@ -3,6 +3,7 @@ from django.http import HttpRequest, HttpResponse
 from datetime import date, timedelta
 from .models import ReviewSet, FlashCard
 from main.models import StudyGroup
+import math
 
 
 # Create your views here.
@@ -74,12 +75,20 @@ def full_set_view(request: HttpRequest, set_id, group_id): #  set detail
         review_set = ReviewSet.objects.get(pk=set_id)
         cards = FlashCard.objects.filter(review_set=review_set)
 
+        limit = 1
+        pages_count = [str(n) for n in range(1, math.ceil(cards.count()/limit)+1)] #use list comprehension to convert number to string number
+        start = (int(request.GET.get("page", 1))-1)*limit
+        end = (start)+limit
+
+        #apply the limit/slicing
+        cards = cards[start:end]
+
     except ReviewSet.DoesNotExist:
         review_set = None
     except Exception as e:
         print(e)
 
-    return render(request, "review_sets/full_set.html", {"review_set" : review_set, "cards" : cards,"group":group})
+    return render(request, "review_sets/full_set.html", {"review_set" : review_set, "cards" : cards,"group":group, "pages_count":pages_count})
 
 
 

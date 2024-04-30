@@ -3,6 +3,7 @@
 {% block title %} جميع الفعاليات {% endblock %}
 
 {% block css %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 <style>
 .card {
   margin: 10px 10px;
@@ -44,6 +45,160 @@ input[type='checkbox']:checked + .card-container .card-flip {
   transform: rotateY(180deg);
 }
 
+
+.section_our_solution .row {
+  align-items: center;
+}
+
+.our_solution_category {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.our_solution_category .solution_cards_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.solution_cards_box .solution_card {
+  flex: 0 50%;
+  background: #fff;
+  box-shadow: 0 2px 4px 0 rgba(136, 144, 195, 0.2),
+    0 5px 15px 0 rgba(37, 44, 97, 0.15);
+  border-radius: 15px;
+  margin: 8px;
+  padding: 10px 15px;
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+  min-height: 265px;
+  transition: 0.7s;
+}
+
+
+
+.solution_cards_box .solution_card:hover::before {
+  background: rgb(85 108 214 / 10%);
+}
+
+
+
+.solution_cards_box .solution_card:before {
+  content: "";
+  position: absolute;
+  background: rgb(85 108 214 / 5%);
+  width: 170px;
+  height: 400px;
+  z-index: -1;
+  transform: rotate(42deg);
+  right: -56px;
+  top: -23px;
+  border-radius: 35px;
+}
+
+.solution_cards_box .solution_card:hover .solu_description button {
+  background: #fff !important;
+  color: #309df0;
+}
+
+.solution_card .so_top_icon {
+}
+
+.solution_card .solu_title h3 {
+  color: #212121;
+  font-size: 1.3rem;
+  display: flex;
+  justify-content: center;
+ 
+}
+
+.solution_card .solu_description p {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.solution_card .solu_description button {
+  border: 0;
+  border-radius: 15px;
+  background: linear-gradient(
+    140deg,
+    #42c3ca 0%,
+    #42c3ca 50%,
+    #42c3cac7 75%
+  ) !important;
+  color: #fff;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 5px 16px;
+}
+
+.our_solution_content h1 {
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  font-size: 2.5rem;
+}
+.our_solution_content p {
+}
+
+.hover_color_bubble {
+  position: absolute;
+  background: rgb(54 81 207 / 15%);
+  width: 100rem;
+  height: 100rem;
+  left: 0;
+  right: 0;
+  z-index: -1;
+  top: 16rem;
+  border-radius: 50%;
+  transform: rotate(-36deg);
+  left: -18rem;
+  transition: 0.7s;
+}
+
+.solution_cards_box .solution_card:hover .hover_color_bubble {
+  top: 0rem;
+}
+
+
+.solution_cards_box .solution_card .so_top_icon img {
+  width: 40px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/*start media query*/
+@media screen and (min-width: 320px) {
+  .sol_card_top_3 {
+    position: relative;
+    top: 0;
+  }
+
+  .our_solution_category {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .our_solution_category .solution_cards_box {
+    flex: auto;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .our_solution_category .solution_cards_box {
+    flex: 1;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .sol_card_top_3 {
+    position: relative;
+    top: -3rem;
+  }
+  .our_solution_category {
+    width: 50%;
+    margin: 0 auto;
+  }
+}
+
 </style>
 {% endblock %}
 
@@ -52,38 +207,90 @@ input[type='checkbox']:checked + .card-container .card-flip {
    
     <div class="container">
         <div class="row">
-                <!-- Card 1 -->
-                {% for card in cards %}
+            <!-- Card 1 -->
 
           <input type="checkbox" id="card-1"/>
-          <label class="col-md-4 card-container" for="card-1">
+          <label class="col-md-12 card-container" for="card-1">
+            {% for card in cards %}
             <div class="card-flip">
-              <!-- Card 1 Front -->
-              <div class="card front text-center pt-3">
-                <span class="fa fa-4x fa-smile-o text-center"></span>
-                <div class="card-block">
-                  <h4 class="card-title text-center">السؤال</h4>
-                  <h6 class="card-text">{{ card.question }}</h6>
-                </div>
-              </div>
-              <!-- End Card 1 Front -->
-      
-              <!-- Card 1 Back -->
-              <div class="card back text-center pt-3">
-                <span class="fa fa-4x fa-smile-o text-center"></span>
+                <!-- Card 1 Front -->
 
-                <div class="card-block">
-                  <h4 class="card-title text-center">الجواب</h4>
-                  <h6 class="card-text">{{ card.answer }}</h6>
+                <div class="card front text-center pt-3">
+                    <span class="fa fa-4x fa-smile-o text-center"></span>   
+                    
+                    <div class="col-12 col-md-12">
+                        <div class="our_solution_category">
+                            <div class="solution_cards_box">
+                                <div class="solution_card justify-content-center">
+                                    <div class="hover_color_bubble">
+                                    </div>
+                                    <div class="solu_description">
+                                        <button type="button" class="read_more_btn">تعديل</button>
+                                    </div>
+    
+                                    <div class="solu_title mt-4">
+                                        <h3>السؤال</h3>
+                                    </div>
+                                    <div class="solu_description mt-4">
+                                        <p>
+                                            {{ card.question }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
-              </div>
-              <!-- End Card 1 Back -->
+
+               
+                <!-- End Card 1 Front -->
+      
+                <!-- Card 1 Back -->
+                <div class="card back text-center pt-3">
+                    <span class="fa fa-4x fa-smile-o text-center"></span>
+                    <div class="col-12 col-md-12">
+                        <div class="our_solution_category">
+                            <div class="solution_cards_box">
+                                <div class="solution_card justify-content-center">
+                                    <div class="hover_color_bubble">
+                                    </div>
+                                    <div class="solu_description">
+                                        <button type="button" class="read_more_btn">تعديل</button>
+                                    </div>
+    
+                                    <div class="solu_title mt-4">
+                                        <h3>الجواب</h3>
+                                    </div>
+                                    <div class="solu_description mt-4">
+                                        <p>
+                                            {{ card.answer }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+
+                
+                <!-- End Card 1 Back -->
             </div>
           </label>
           {% endfor %}
           <!-- End Card 1 -->
         </div>
-      </div>
+        <div class="row mt-5">
+            <div class="col">
+                {% for page in pages_count %}
+                    <a href="?page={{page}}" class="btn border {% if request.GET.page == page %} btn-primary {% elif page == '1' and 'page' not in request.GET %} btn-primary {% endif %}">{{page}}</a>
+                {% endfor %}
+            </div>
+    
+        </div>
+    </div>
 </section>
 
 
@@ -213,6 +420,37 @@ input[type='checkbox']:checked + .card-container .card-flip {
                 </div>
                 <!--وبس-->
             </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="section_our_solution">
+        <div class="row">
+            {% for card in cards %}
+                <div class="col-12 col-md-12">
+                    <div class="our_solution_category">
+                        <div class="solution_cards_box">
+                            <div class="solution_card justify-content-center">
+                                <div class="hover_color_bubble">
+                                </div>
+                                <div class="solu_description">
+                                    <button type="button" class="read_more_btn">تعديل</button>
+                                </div>
+
+                                <div class="solu_title mt-4">
+                                    <h3>السؤال</h3>
+                                </div>
+                                <div class="solu_description mt-4">
+                                    <p>
+                                        {{ card.question }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
 </section>

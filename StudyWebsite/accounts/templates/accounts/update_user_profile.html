@@ -12,7 +12,7 @@
 			<div class="alert alert-danger">{{msg}}</div>
 			{% endif %}
 		
-            <form action="{% url 'accounts:update_user_profile_view' user_id=request.user.id %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+            <form action="{% url 'accounts:update_user_profile_view' user_info.id %}" method="post" class="d-flex flex-column gap-2" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="row g-4">
 					<div class="col-md-4">	
@@ -50,7 +50,7 @@
 								</div>
 								<div class="col-10">
 									<input type="date" name="birthdate"
-										value="{{user.profile.birthdate|date:'YYYY-mm-dd' }}"
+										value="{{user.profile.birthdate|date:'YYYY-mm-dd'}}"
                                         class="form-control"
 									/>
 								</div>

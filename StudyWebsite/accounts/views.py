@@ -29,16 +29,17 @@ def user_register_view(request:HttpRequest):
 
     if request.method == "POST":
         try:
-            #create new user
-            new_user = User.objects.create_user(
-                username=request.POST["email"],  
-                first_name=request.POST["first_name"], 
-                last_name=request.POST["last_name"], 
-                password=request.POST["password"]
-            )
-            new_user.save()
-            profile = Profile(user=new_user,birthdate = request.POST["birthdate"])
-            profile.save()
+            with transaction.atomic():
+                #create new user
+                new_user = User.objects.create_user(
+                    username=request.POST["email"],  
+                    first_name=request.POST["first_name"], 
+                    last_name=request.POST["last_name"], 
+                    password=request.POST["password"]
+                )
+                new_user.save()
+                profile = Profile(user=new_user,birthdate = request.POST["birthdate"])
+                profile.save()
 
             #redirect to login page
             return redirect("accounts:user_login_view")
@@ -99,14 +100,18 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from accounts.models import Profile
 
-def update_user_profile_view(request: HttpRequest ,user_id):
+def update_user_profile_view(request: HttpRequest, user_id):
     msg = None
 
     if not request.user.is_authenticated:
         return redirect("accounts:user_login_view")
     
+    try:
+        user_info = User.objects.get(pk=user_id)
+    except:
+        return render(request,'main/not_found.html')
+    
     if request.method == "POST":
-        user_id = request.user.id  
         
         try:
             with transaction.atomic():
@@ -121,18 +126,18 @@ def update_user_profile_view(request: HttpRequest ,user_id):
                     profile = Profile(user=user)
 
                 profile.avatar = request.FILES.get("avatar", profile.avatar)
-                profile.birthdate = request.POST["birthdate"]
+                profile.birthdate = request.POST.get("birthdate")
                 profile.bio = request.POST["bio"]
                 profile.linkedin_link = request.POST["linkedin_link"]
                 profile.github_link = request.POST["github_link"]
                 profile.save()
 
                 
-                return redirect("main:user_dashboard_view", user_name=user.username)
+                return redirect("main:user_dashboard_view", user_id=user.id)
 
         except Exception as e:
             msg = f"حدث خطأ ما: {e}"
             print(f"Error for user ID {user_id}: {e}")
 
-    return render(request, "accounts/update_user_profile.html", {"msg": msg})
+    return render(request, "accounts/update_user_profile.html", {"user_info":user_info,"msg": msg})
 
