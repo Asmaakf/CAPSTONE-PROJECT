@@ -7,7 +7,7 @@
 
 # DESCRIPTION 
 Are you looking an easier way to collaborate on studies with your peers online? Explore our platform, 
-"Fateen (فطين)" where we facilitate interactive and innovative lesson sharing. Effortlessly engage with a
+"مِحزم" where we facilitate interactive and innovative lesson sharing. Effortlessly engage with a
 group of your classmates in simultaneous video and audio sessions, using interactive tools like short quizzes,
 file sharing, discussions among students, session scheduling, and much more.
 
