@@ -29,7 +29,7 @@ def create_zoom_meeting(payload):
 
 
 
-def create_zoom_meeting_view(request: HttpRequest, user_id, group_id):
+def create_zoom_meeting_view(request: HttpRequest, group_id, user_id):
     
     if request.method == 'POST':
         topic = request.POST["topic"]
@@ -73,9 +73,10 @@ def create_zoom_meeting_view(request: HttpRequest, user_id, group_id):
             return redirect('main:group_dashboard_view', group_id=group_id, user_id=user_id)
 
         except Exception as e:
+            print(e)
             messages.error(request, f"حدث خطأ: {e}")
             
-            return redirect('main:not_found')  
+            return redirect('main:not_found_view')  
 
     
     return render(request, "zoom/schedule_session.html", {"group_id" : group_id})
