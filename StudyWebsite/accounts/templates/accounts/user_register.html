@@ -13,7 +13,7 @@
             <div class="col-12">
                 <div class="mb-5">
                     <h2 class="display-5 fw-bold text-center">تسجيل جديد</h2>
-                    <p class="text-center m-0">هل لديك حساب بالفعل؟<a href="{% url 'accounts:user_login_view' %}" class="link-primary text-decoration-none">تسجيل الدخول</a></p>
+                    <p class="text-center m-0">عندك حساب من قبل؟<a href="{% url 'accounts:user_login_view' %}" class="link-primary text-decoration-none">تسجيل الدخول</a></p>
                     {% if msg %} <!-- pop up -->
                     <div class="alert alert-danger">
                       {{msg}}
@@ -62,7 +62,7 @@
                                 <div class="col-12">
                                     <div class="form-floating mb-3">
                                         <input type="password" class="form-control border-0 border-bottom rounded-0" name="password" id="password" minlength="8" placeholder="كلمة المرور" required>
-                                        <label for="password" class="form-label">كلمة المرورو</label>
+                                        <label for="password" class="form-label">كلمة المرور</label>
                                     </div>
                                 </div>
 

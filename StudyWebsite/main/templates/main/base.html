@@ -88,7 +88,7 @@
             {% else %}
               <li class="nav-item dropdown ">
                 <a class="nav-link dropdown-toggle bg-primary rounded-5 px-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Log in
+                  تسجيل الدخول
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                   <li><a class="dropdown-item" href="{% url 'accounts:user_register_view' %}"><i class=""></i>تسجيل جديد</a></li>
@@ -159,7 +159,7 @@
         <div class="col-md-4 mb-4 mb-md-0">
           <ul class="list-unstyled mb-0">
             <li>
-              <a class="text-body" href="#!">Link 1</a>
+              <a class="text-body" href="{% url 'contact:contact_view' %}">تواصل معنا</a>
             </li>
           </ul>
         </div>
@@ -169,7 +169,7 @@
         <div class=" col-md-4 mb-4 mb-md-0">
           <ul class="list-unstyled mb-0">
             <li>
-              <a class="text-body" href="#!">Link 1</a>
+              <a class="text-body" href="{% url 'common_questions:view_messages' %}">الاسئلة والأجوبة</a>
             </li>
           </ul>
         </div>
