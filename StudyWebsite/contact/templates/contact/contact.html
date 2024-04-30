@@ -1,55 +1,70 @@
 {% extends 'main/base.html' %}
+{% load static %}
 
-{% block title%} contact {% endblock %}
+{% block title %}
+    تواصل معنا
+{% endblock %}
 
 {% block content %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <div class="alert alert-success" role="alert">{{ message }}</div>
+            {% elif message.tags == 'error' %}
+                <div class="alert alert-danger" role="alert">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
 
-{% if messages %}
-    {% for message in messages %}
-        {% if message.tags == 'success' %}
-            <div class="alert alert-success" role="alert">{{ message }}</div>
-        {% elif message.tags == 'error' %}
-            <div class="alert alert-danger" role="alert">{{ message }}</div>
-        {% endif %}
-    {% endfor %}
-{% endif %}
 <section class="bg-dark" style="width: 100%; height: 300px;"></section>
-
-<section>
-    <div class="container mt-5">
+<section >
+    <div class="container my-5 py-4 px-5 rounded-4" style="background-color: white;">
         <div class="row">
-            <div class="col-md-10 offset-md-3">
-                <div class="card" style="margin-left:150px ;">
-                    <div class="card-body">
-                        <h5 class="card-title">تواصل معنا</h5>
+            <div class="col-12">
+                <div class="mb-5">
+                    <h2 class="display-5 fw-bold text-center">تواصل معنا</h2> 
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex justify-content-center align-items-center mb-3">
+            <div class="col-12 ">
+                <div class="row gy-5 justify-content-center">
+                    <div class="col-12 col-lg-5">
                         <form action="{% url 'contact:contact_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             {% csrf_token %}
                             <div class="mb-3">
                                 <label for="name" class="form-label">اسمك</label>
-                                <input name="name" type="text" placeholder="مثل:احمد" class="form-control" required minlength="2"  value="{% if request.user.is_authenticated %} {{ request.user.username}}{% endif %}"  />
+                                <input name="name" type="text" placeholder="مثل: احمد" class="form-control" required minlength="2"  value="{% if request.user.is_authenticated %} {{ request.user.first_name}}{% endif %}"  />
                             </div>
                             <div class="mb-3">
-                                <label for="email" class="form-label">البريد الالكتروني</label>
-                                <input name="email" type="email" placeholder="email@example.com" class="form-control" required minlength="5" onclick="document.querySelector('a[href=\'mailto:email@example.com\']').click();"  value="{% if request.user.is_authenticated %} {{ request.user.email}}{% endif %}" />
+                                <label for="email" class="form-label">البريد الإلكتروني</label>
+                                <input name="email" type="email" placeholder="email@example.com" class="form-control" required minlength="5" onclick="document.querySelector('a[href=\'mailto:email@example.com\']').click();"  value="{% if request.user.is_authenticated %} {{ request.user.username}}{% endif %}" />
                             </div>
                             <div class="mb-3">
                                 <label for="message" class="form-label">الرسالة</label>
                                 <textarea name="message" placeholder="محتوى الرسالة"  class="form-control" required minlength="3"></textarea>
                             </div>
-                            <input type="submit" class="btn btn-dark" value="إرسال" />
+                            <input type="submit" class="btn btn-success" value="إرسال" />
                         </form>
                     </div>
+                    <div class="col-12 col-md-1 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
+                        <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
+                        <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
+                    </div>
+                    <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+                        <img src="{% static 'images/contact.png' %}" alt="صورة التواصل" class="log-img" style="width: 100%;">
+                    </div>
+                    <div class="row mt-5" style="margin: 300px;">
+                        <div class="col-md-10 offset-md-3 mb-4" >
+                         {% if request.user.is_superuser %}
+                             <a class="text-dark text-decoration-none" href="{% url 'contact:message_view' %}">عرض الرسائل المرسلة <span class="material-symbols-outlined align-middle">arrow_forward</span></a>
+                         {% endif %}
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="row mt-5" style="margin: 300px;">
-            <div class="col-md-10 offset-md-3 mb-4" >
-             {% if request.user.is_superuser %}
-                 <a class="text-dark text-decoration-none" href="{% url 'contact:message_view' %}">عرض الرسائل المرسلة <span class="material-symbols-outlined align-middle">arrow_forward</span></a>
-             {% endif %}
             </div>
         </div>
     </div>
 </section>
 
-{% endblock %}
+{% endblock%}
