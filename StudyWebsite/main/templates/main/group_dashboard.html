@@ -77,7 +77,6 @@
 </form>
 {% endif %}
 <div class="col"></div>
-<a data-bs-toggle="modal" data-bs-target="#user_info{{ member.user.id }}" href="/">{{ request.member.first_name }} </a>
 <p>{{ request.member.first_name }} {{ request.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
 {% endif %}
 {% endfor %}
@@ -179,7 +178,7 @@
 team_dashboard
 </span><a><br><br>
     <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class="fa-solid fa-folder"></i><a><br><br>
-    <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class="fa-solid fa-book"></i><a><br><br>
+    <a href="{% url 'review_sets:all_sets_view' group.id %}"><i class="fa-solid fa-book"></i><a><br><br>
     
     <!--member leave group button-->
 {% for request in user_requests %}

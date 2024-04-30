@@ -215,7 +215,7 @@ color: #ffffff;
 
 .members{
     margin-top: 2vw;
-    justify-content: end;
+    justify-content: space-between;
     display: flex;
     flex-direction: row;
 }

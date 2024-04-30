@@ -51,11 +51,7 @@
                   <div class="d-flex justify-content-center gap-3"> 
                       <a href="{% url 'accounts:update_user_profile_view' user_id=request.user.id %}" class="btn btn-outline-dark">تحديث</a> 
                       
-                      <form method="POST" action="{% url 'accounts:delete_user_profile' %}"> 
-                          {% csrf_token %}  
-                          <button type="submit" class="btn btn-outline-danger" 
-                                  onclick="return confirm('هل أنت متأكد من رغبتك في حذف الحساب؟ هذا الإجراء نهائي.')">حذف</button>
-                      </form>
+                     
                   </div>
                   {% endif %}
               </div>
