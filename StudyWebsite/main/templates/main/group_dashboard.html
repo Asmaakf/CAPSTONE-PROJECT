@@ -47,13 +47,13 @@
             <div class="requests_card">
                 {{ session.topic }}
                 {{ session.start_time }}
-                <a href="{{ start_url }}" target="_blank" class="btn btn-success mr-3">بدء الاجتماع</a>
+                <a href="{{ session.start_url }}" target="_blank" class="btn btn-success mr-3">بدء الاجتماع</a>
             </div>
         {% else %}
             <div class="requests_card">
                 {{ session.topic }}
                 {{ session.start_time }}
-                <a href="{{ join_url }}" target="_blank" class="btn btn-info">الانضمام إلى الاجتماع</a>
+                <a href="{{ session.join_url }}" target="_blank" class="btn btn-info">الانضمام إلى الاجتماع</a>
             </div>
         {% endif %}
     {% endif %}
@@ -77,10 +77,11 @@
 </form>
 {% endif %}
 <div class="col"></div>
-<a data-bs-toggle="modal" data-bs-target="#user_info{{ member.user.id }}" href="/">{{ request.member.first_name }}</a>
+<a data-bs-toggle="modal" data-bs-target="#user_info{{ member.user.id }}" href="/">{{ request.member.first_name }} </a>
 <p>{{ request.member.first_name }} {{ request.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
 {% endif %}
 {% endfor %}
+
           </div>
         </div>
 
@@ -264,7 +265,7 @@ team_dashboard
                 <!-- user_informations Modal -->
         {% for request in user_requests %}
         
-        <div class="modal fade" id="#user_info{{ request.member.user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="user_info{{ request.member.user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{request.member.user.id}}" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -278,7 +279,7 @@ team_dashboard
             </div>
         </div>
   
-{% endfor %}
+        {% endfor %}
 
 
   {% endblock %}

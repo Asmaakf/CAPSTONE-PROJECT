@@ -215,7 +215,7 @@ color: #ffffff;
 
 .members{
     margin-top: 2vw;
-    justify-content: space-between;
+    justify-content: end;
     display: flex;
     flex-direction: row;
 }
@@ -336,7 +336,11 @@ color: #ffffff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
 
 }
-
+.member_name a{
+    text-decoration: none;
+    color: #000;
+    font-size: 20px;
+}
 .banner-box{
     text-align: right;
     margin-left: 2vw;
