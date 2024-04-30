@@ -2,8 +2,91 @@
 {% load static %}
 {% block title %} جميع الفعاليات {% endblock %}
 
+{% block css %}
+<style>
+.card {
+  margin: 10px 10px;
+}
+
+input[type='checkbox'] {
+  display: none;
+}
+
+/* Flip Cards CSS */
+.card-container {
+  display: grid;
+  perspective: 700px;
+}
+
+.card-flip {
+  display: grid;
+  grid-template: 1fr / 1fr;
+  grid-template-areas: "frontAndBack";
+  transform-style: preserve-3d;
+  transition: all 0.7s ease;
+}
+
+.card-flip div {
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+}
+
+.front {
+  grid-area: frontAndBack;
+}
+
+.back {
+  grid-area: frontAndBack;
+  transform: rotateY(-180deg);
+}
+
+input[type='checkbox']:checked + .card-container .card-flip {
+  transform: rotateY(180deg);
+}
+
+</style>
+{% endblock %}
+
 {% block content %}
-<section class="bg-dark" style="width: 100%; height: 300px;"></section>
+<section>
+   
+    <div class="container">
+        <div class="row">
+                <!-- Card 1 -->
+                {% for card in cards %}
+
+          <input type="checkbox" id="card-1"/>
+          <label class="col-md-4 card-container" for="card-1">
+            <div class="card-flip">
+              <!-- Card 1 Front -->
+              <div class="card front text-center pt-3">
+                <span class="fa fa-4x fa-smile-o text-center"></span>
+                <div class="card-block">
+                  <h4 class="card-title text-center">السؤال</h4>
+                  <h6 class="card-text">{{ card.question }}</h6>
+                </div>
+              </div>
+              <!-- End Card 1 Front -->
+      
+              <!-- Card 1 Back -->
+              <div class="card back text-center pt-3">
+                <span class="fa fa-4x fa-smile-o text-center"></span>
+
+                <div class="card-block">
+                  <h4 class="card-title text-center">الجواب</h4>
+                  <h6 class="card-text">{{ card.answer }}</h6>
+                </div>
+              </div>
+              <!-- End Card 1 Back -->
+            </div>
+          </label>
+          {% endfor %}
+          <!-- End Card 1 -->
+        </div>
+      </div>
+</section>
+
+
 
 <section>
     <div class="container mt-5 px-5">  
@@ -133,5 +216,11 @@
         </div>
     </div>
 </section>
+
+<script>
+   $(".flippable").click(function(){
+  $(this).toggleClass("flipme");
+    });
+</script>
 {% endblock %}
 
