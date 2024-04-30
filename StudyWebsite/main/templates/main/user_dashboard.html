@@ -2,7 +2,7 @@
 {% load static %}
 {% block style %} 
 
-
+ <style>
 body{
   user-select: none;
 }
@@ -49,7 +49,7 @@ label{
 	width: 95%;
 	transition: all .3s ease;
 }
-
+ </style>
 
 {% endblock%}
  {% block content %}
@@ -57,12 +57,7 @@ label{
 
 <div class="row">
 <div class="col-3 col-sm-3">
-<div class="back_box"> 
-<div class="banner-title">
-<h1> {{user.first_name}}     مرحبا بك </h1>
-<h4>اي عباره ترحيبيه</h4>
-</div>
-</div>
+
 <div class="groups_box3">
 <h4 class="user_dash_title">التنبيهات</h4>
 <div class="line2"></div>
@@ -124,66 +119,66 @@ label{
 </div><!--col end-->
 
 <div class="col-6 col-sm-6 d-flex flex-column align-items-end">
-<div class="back_box1"></div>
-<div class="groups_box">
 
+<div class="groups_box">
+<div class="fixed_title">
+<div><button type="submit" class="b3 shadow"> <a  href="{% url 'main:create_group_view' user.id   %}"> انشاء مجموعة </a> </button> </div>
 <h4 class="user_dash_title">المجموعات</h4>
 <div class="line"></div>
 
+</div>
 <div class="row">
 <div class="col-md-2">
-<button type="submit" class="b3 shadow"> <a  href="{% url 'main:create_group_view' user.id   %}"> انشاء مجموعة </a> </button> 
 </div>
 </div>
 <!--groups user is a member-->
-<div class="row">
+<div class="row mt-3">
 {% for i in user_requests%}
 {% if i.status == 'Accept' and i.group.creator != i.member %}
-<div class="col-6 mt-4">
-<div class="ag-courses_item">
-  <a class="ag-courses-item_link" href="{% url 'main:group_dashboard_view' i.group.id user.id  %}">
-    <div class="ag-courses-item_bg"></div>
-    <div class="ag-courses-item_title">
-   {{i.group.name}}
-    
-    </div>
-    <div class="ag-courses-item_date-box">
-      <div calss="member-img_card"> <img class="member-img" src="{{i.group.icon.url}}"> </div>
-      <span class="ag-courses-item_date"> {{i.group.creator.first_name}} {{i.group.creator.last_name}} </span>
-    </div>
-  </a>
+<div class="col-4">
+<div class="card10">
+<div class="header10"> <img class="card_group_img" src="{{i.group.icon.url}}"> </div>
+<div class="info10">
+  <p class="title10">{{i.group.name}}</p>
+  <p>{{i.group.description}}</p>
 </div>
-</div><!--col-->
-
+<div class="footer10">
+  <button type="submit" class=" show_g shadow"> <a  href="{% url 'main:group_dashboard_view' i.group.id user.id  %}"> عرض</a> </button> 
+</div>
+</div>
+</div>
 
 {% endif %}
 {% endfor %}
+</div>
 
-</div><!--end row-->
-</div><!--end box-->
+<div class="title_bottom">
+<h4 class="user_dash_title-group">مجموعاتي</h4>
+
+</div>
 <div class="groups_box2">
 
-<h4 class="user_dash_title-group">مجموعاتي</h4>
-<div class="line3"></div>
 
-<div class="row mt-4">
-</div>
 <!--groups user is a member-->
 
 <div class="row">
   {% for i in user_requests %}
     {% if i.status == 'Accept' and i.group.creator == i.member %}
-      <div class="col-3">
+      <div class="col-4">
         <div class="leader_group">
-          <img class="member-img" src="{{ i.group.icon.url }}"> 
           <span class="name-group"><a class ="text-decoration-none"href="{% url 'main:group_dashboard_view' i.group.id user.id  %}" class="gap">{{i.group.name}} </a></span>
+          <img class="member-img" src="{{ i.group.icon.url }}"> 
         </div>
       </div><!-- col -->
     {% endif %}
   {% endfor %}
 
 </div><!--end row-->
+
+
+</div><!--col end-->
 </div><!--end box-->
+
 
 </div><!--col end-->
 
@@ -268,7 +263,7 @@ label{
 
 </div><!--col end-->
 <div class="col-9 d-flex ">
-ffvdvvf,l
+
 </div><!--col end-->
 
 </div><!--end row-->

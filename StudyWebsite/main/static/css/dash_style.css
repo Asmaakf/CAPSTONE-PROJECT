@@ -3,6 +3,7 @@
     padding: 0%;
     font-family: "Almarai", sans-serif;
     
+    
 }
 
 .body {
@@ -87,7 +88,7 @@ color: #ffffff;
     }
 
 .group_name{
-        font-size: 30px;
+        font-size: 17px;
     }
 .name{
     
@@ -171,7 +172,7 @@ color: #ffffff;
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 190px;
+    width: 118px;
     background-color: #3e914d;
     border-radius: 200px 0 0 0;
     
@@ -266,7 +267,18 @@ color: #ffffff;
     font-size: 22px;
     
 }
-
+.show_g{
+    background-color: rgb(6, 185, 105);
+    width: 120px;
+    height: 30px;
+    border: none;
+    border-radius: 30px;
+    margin-left: 2vw;
+    font-size: 15px;
+}
+.show_g:hover{
+    background-color: #b5d5bb;
+}
 .b3 a {
     color: #121212;
     text-decoration: none;
@@ -345,7 +357,7 @@ color: #ffffff;
     text-align: right;
     margin-left: 2vw;
     padding-right: 4vw;
-    width: 990px;
+    width: 1120px;
     height: 200px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -358,7 +370,7 @@ color: #ffffff;
     text-align: right;
     margin-top: 1vw;
     margin-left: 3vw;
-    width: 800px;
+    width: 1000px;
     height: 470px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -368,9 +380,10 @@ color: #ffffff;
 }
 
 .disction-box{
+    justify-content: right;
     margin-left: 2vw;
     margin-top: 1vw;
-    width: 990px;
+    width: 1120px;
     height: 610px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -484,11 +497,12 @@ button {
     text-align: right;
     margin-top: 3vw;
     width: 830px;
-    min-height: 500px;
+    min-height: 840px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
     overflow: scroll;
+    position: relative;
    
 }
 .groups_box_ad{
@@ -547,15 +561,77 @@ button {
     margin-top: 8px;
 }
 
-.groups_box2{
+.title_bottom{
+  position: absolute;
+  bottom: 150px;
+  width: 100%;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.card10 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-radius: 0.75rem;
+    background-color: white;
+    width: 250px;
+    height: 370px;
+    box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),
+    0 2px 4px -2px rgba(0,0,0,.1);
+  }
+  .card_group_img{
+    width: 11rem;
+    height: 12rem;
+    object-fit: cover;
+    border-radius: 0.75rem;
     
+  }
+  .header10 {
+    position: relative;
+    background-clip: border-box;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 0.75rem;
+    background-color: transparent;
+    box-shadow: 0 10px 15px -3px rgba(33, 243, 135, 0.4),0 4px 6px -4px rgba(33, 243, 86, 0.4);
+    height: 14rem;
+  }
+  
+  .info10 {
+    border: none;
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .title10{
+    color: rgb(38 50 56);
+    letter-spacing: 0;
+    line-height: 1.375;
+    font-weight: 600;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .footer10 {
+    padding: 0.75rem;
+    border: 1px solid rgb(236 239 241);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: rgba(0, 140, 255, 0.082);
+  }
+.groups_box2{
+ position: absolute;
+  padding-left: 2vw;
+  bottom: 0;
+  width: 100%;
     text-align: right;
     margin-top: 3vw;
-    width: 800px;
-    min-height: 200px;
-    border-radius: 30px;
+    height: 150px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
+    overflow-y: auto;
+    overflow-x: hidden;
     
     
     
@@ -625,7 +701,7 @@ button {
     margin-left: 25px;
     padding-right: 4vw;
     margin-top: 2vw;
-    width: 350px;
+    width: 370px;
     height: 200px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -639,7 +715,7 @@ button {
     padding-right: 30px;
     text-align: right;
     margin-top: 1vw;
-    width: 350px;
+    width: 370px;
     min-height:610px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -741,12 +817,25 @@ margin-right: 2vw;
     
 }
   .leader_group{
+    padding-top: 4px;
     margin-top: 1vw;
     text-align: center;
     color: #121212;
+    background: rgba(190, 207, 184, 0.2);
+    box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
+    border: #ccf0d2 solid 1px;
+    max-width: 222px;
+    height: 50px;
+    border-radius: 30px;
+    padding-right: 1vw;
+    
     
   }
 
+  .leader_group:hover{
+    background-color: #b5d5bb;
+
+  }
 
 .requests_card {
     margin-left: 18px;
@@ -940,6 +1029,8 @@ ul {
   }
   
 .fixed_title {
+    display: flex;
+    gap: 26vw;
     justify-content: space-between;
     padding-bottom: 5px;
     position: sticky;
@@ -1017,15 +1108,16 @@ background-color: rgb(63, 128, 169);
 
 }
 .member_message{
-    
+    margin-left: 10vw;
     padding-right: 20px;
+    margin-left: 10vw;
     margin: 1vw;
     width: 765px;
     min-height: 90px;
     background-color:transparent;
     border: #c4c4c4 solid 1px ;
     text-align: right;
-    justify-content: right;
+    justify-content: end;
     border-radius: 10px;
     overflow-y: auto;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -1140,4 +1232,3 @@ background-color: rgb(63, 128, 169);
      
     
 }
-

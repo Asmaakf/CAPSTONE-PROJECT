@@ -1,41 +1,232 @@
-{% extends 'main/base.html' %}
-{% block title %} attachment {% endblock %}
-{% block content %}
+{% extends 'main/dashboard_base.html' %}
+
 {% load static %}
 
-<section class="bg-dark" style="width: 100%; height: 300px;"></section>
-<section>
-    <div class="container align-items-center">
-        <div class="row mt-5 gap-3 align-items-center">
-                
-            <div class="text-center mb-4">
-                <h1>المرفقات ( ملفات وصور )</h1>
+{% block style %}
+ <style>
+body{
+  overflow-x: hidden;
+ 
+}
+.btn {
+    width: 40px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    border: none !important;
+     
+    
+}
+.dropdown-menu {
+    min-width: 100px !important;
+}
+
+.dropdown-item {
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+}
+
+ </style>
+
+{% endblock %}
+
+ {% block content %}
+
+
+
+<div class="row ">
+<div class="col-2 mt-3">
+
+<div class="group-info">
+
+<h6 class="disctions_title2">الجلسات </h6>
+{% for session in sessions %}
+    {% if session.study_group_id == group.id %}
+        {% if session.user_id == user.id %}
+            <div class="requests_card">
+                {{ session.topic }}
+                {{ session.start_time }}
+                <a href="{{ session.start_url }}" target="_blank" class="btn btn-success mr-3">بدء الاجتماع</a>
             </div>
+        {% else %}
+            <div class="requests_card">
+                {{ session.topic }}
+                {{ session.start_time }}
+                <a href="{{ session.join_url }}" target="_blank" class="btn btn-info">الانضمام إلى الاجتماع</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+
+</div>
+<div class="sidbar2_box">
+<h5 class="member-titl">الاعضاء</h5>
+ {% if user.id == group.creator_id %}<div class="fixed_icon"><button type="submit" class="b5 shadow  " data-bs-toggle="modal" data-bs-target="#add_member" >+</button></div>{% endif %}
+<div class="member-box1">
+          <div class="members">
+            <!--delete members for leader-->
+{% for request in user_requests %}
+{% if request.group_id == group.id and request.status == 'Accept' and request.group.creator != request.member %}
+{% if user.id == request.group.creator_id %}
+<form action="{% url 'main:remove_member_view' user.id request.id group.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="remove"type="submit">Remove</button>
+</form>
+{% endif %}
+<div class="col"></div>
+<p>{{ request.member.first_name }} {{ request.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
+{% endif %}
+{% endfor %}
+
+          </div>
+        </div>
+
+</div>
+ </div>
+
+
+
+<!-- contant -->
+  <div class="col-md-9 mt-5 d-flex flex-column align-items-end">
+  <div class="row">
+    <div class="col">
+      
+
+  <div class="banner-box">
+<div class="banner-title">
+<h1> {{group.name}}</h1>
+<h4>{{group.description}}</h4>
+</div>
+
+</div>
+
+
+
+ 
+
        
-            {% for attachment in attachments %}
-                <div class="col-3 col-md-2 mb-5">
-                        <div class="card-body">
-                            <div class="d-flex flex-column align-items-center text-center gap-2" >
-                                {% if attachment.media.url %}
-                                    {% if attachment.media.url|lower|slice:'-4:' == '.jpg' or attachment.media.url|lower|slice:'-5:' == '.jpeg' or attachment.media.url|lower|slice:'-4:' == '.png' %}
-                                        <img src="{{ attachment.media.url }}" width="100%" height="200px">
-                                    {% else %}
-                                    <img src="{% static 'images/pdf.png' %}" width="100%" height="200px" >
-                                    {% endif %}
-                                {% endif %}
-                                
-                                <div>
-                                    <h5><a href="{{ attachment.media.url }}" target="_blank">{{ attachment.title }}</a></h5>
-                                    <p style="font-size: 12px; color: grey;">{{ attachment.uploaded_at }}</p>
-                                </div>
+      
+    </div>
+  </div>
 
-                                <div class="d-flex justify-content-center align-items-center gap-2">
-                                    <button type="button" class="btn btn-danger text-decoration-none rounded-pill"><a href="{% url 'attachments:delete_attachment_view' attachment.id group.id %}" class="text-decoration-none text-white">حذف</a></button>
-                                    <button type="button" class="btn btn-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#updateAttachmentModal{{ attachment.id }}">
-                                        تحديث
-                                    </button>
+  <!-- Discussion -->
+  <div class="row ">
+    <div class="col">
+      
+      <div class="disction-box">
+       <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addAttachmentModal">
+                    إضافة ملف
+                </button>
+      <h2 class="disctions_title">الملفات</h2>
+        <div class="message-box">
+    
+       </div>
+       </div>
+       </div>
+       </div>
+</div><!-- col end -->
 
-                                    <!-- update modal -->
+
+
+
+  <div class="col-md-1 d-flex flex-column ">
+    <div class="sid_bar2">
+    <div class="sid-info2">
+     <a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"><img class="profile-img"src="{{user.profile.avatar.url}}"></a>
+     <a class="plus_icon" href="{% url 'zoom:create_zoom_meeting_view' group.id user.id %}"><i class="fa-solid fa-plus"></i><a><br><br>
+
+    <a class="dash_icon"href="{% url 'main:group_dashboard_view' group.id user.id %}"><span class="material-symbols-outlined">
+team_dashboard
+</span><a><br><br>
+    <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class="fa-solid fa-folder"></i><a><br><br>
+    <a href="{% url 'review_sets:all_sets_view' group.id %}"><i class="fa-solid fa-book"></i><a><br><br>
+           
+            
+    
+    <!--member leave group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator != request.member %}
+<form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="leave"type="submit"> <i class="fa-solid fa-arrow-right-from-bracket"></i> </button>
+</form>
+{% endif %}
+{% endfor %}
+
+<!--leader delete group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator == request.member %}
+<form action="{% url 'main:creator_delete_group_view' group.id %}" method="post">
+{% csrf_token %}
+<button class="leave"type="submit"><i class="fa-solid fa-trash"></i></button>
+</form>
+{% endif %}
+{% endfor %}
+    </div>
+    </div>
+  </div>
+
+  
+</div><!--end row -->
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="add_member" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="add_member"> </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                               <form action="{% url 'main:member_request_view' group.id %}"  method="POST"  class="d-flex flex-column gap-2" >
+                                {% csrf_token %}
+                                <label for="user-select">invaite a user:</label>
+                                <input type="text" name="user_name" placeholder="ahamd@gmail.com" class="form-control" required  />
+                                <br>
+                                <input type="submit" value="send"  class="b btn btn-primary"/>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+                <!-- edit Modal -->
+                {% for msg in discussion %}
+                {% if msg.id == msg.id %}
+        <div class="modal fade" id="edit_msg{{ msg.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="edit_msg{{ msg.id }}">{{ msg.title }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{% url 'main:edit_discussion_view' group.id msg.id %}" method="POST" class="d-flex flex-column gap-2">
+                            {% csrf_token %}
+                            <label for="message">Edit your message:</label>
+                            <input type="text" name="message" value="{{ msg.message }}" class="form-control" required >
+                            <br>
+                            <input type="submit" value="edit" class="btn btn-primary" />
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+
+
+ <!-- update modal -->
+                                    {% for attachment in attachments %}
                                     <div class="modal fade" id="updateAttachmentModal{{ attachment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
                                             <div class="modal-content">
@@ -69,22 +260,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    {% endfor %}
                                     <!-- نهاية تحديث  -->
 
-                                </div>        
-                            </div>    
-                        </div>
-                </div>
-            {% endfor %}
-        </div>
-        <div class="row">
-            <!-- هنا زر الاضافة للميديا -->
-            <div class="col-md-6">
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addAttachmentModal">
-                    إضافة ملف
-                </button>
 
-                <!-- Modal -->
+                <!-- add Modal -->
                 <div class="modal fade" id="addAttachmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -116,15 +296,4 @@
             </div>
         </div>
     </div>
-</section>
-
-<section>
-    <div class="container">
-        <div class="row">
-            
-
-            
-        </div>
-    </div>
-</section>
-{% endblock %}
+  {% endblock %}
