@@ -16,11 +16,11 @@ def add_todo_view(request:HttpRequest,user_id):
                 checked=request.POST.get("checked",default=False),
             )
             new_todo.save()
-            return redirect("todo_list:all_todo_view",user_id=user.id)# تعديل
+            return redirect("main:user_dashboard_view",user_id=user.id)
          except Exception as e:
                     print(e)
    
-    return render(request, "todo_list/todo.html")
+    return redirect("main:user_dashboard_view",user_id=user.id)
 
 def all_todo_view(request:HttpRequest,user_id):
      user=User.objects.get(pk=user_id)
@@ -36,7 +36,7 @@ def delete_todo_view(request:HttpRequest,todo_id,user_id):
      todo=None
   except Exception as e:
     print(e)
-  return redirect("todo_list:all_todo_view",user_id=user.id)
+  return redirect("main:user_dashboard_view",user_id=user.id)
 
 def update_todo_view(request:HttpRequest,todo_id,user_id):
     user=User.objects.get(pk=user_id)
@@ -45,9 +45,12 @@ def update_todo_view(request:HttpRequest,todo_id,user_id):
     if request.method == "POST":
         try:
            todo.todo = request.POST["todo"]
-           todo.checked=request.POST["checked"]
+           todo.checked=request.POST.get("checked",default=False)
            todo.save()
            return redirect("main:user_dashboard_view",user_id=user.id)
         except Exception as e:
             print(e)
-    return render(request, 'todo_list/todo.html',{"todo":todo,"user":user})
+    return redirect("main:user_dashboard_view",user_id=user.id)
+
+
+

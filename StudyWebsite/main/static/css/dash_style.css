@@ -1,7 +1,7 @@
 *{
     margin: 0;
     padding: 0%;
-    font-family: "Marhey", sans-serif;
+    font-family: "Almarai", sans-serif;
     
 }
 
@@ -14,13 +14,15 @@
 .header{
     
     padding: 0px 40px;
-    background-color:rgb(255, 255, 255);
+    background-color:transparent;
     display: flex;
     justify-content: left;
     flex-direction: row;
     align-items: center;
-    z-index: 100;
+    
     font-size: 20px;
+    position: relative;
+    z-index: 1000;
     
 }
 
@@ -84,6 +86,9 @@ color: #ffffff;
  background-color: #58a1c9;
     }
 
+.group_name{
+        font-size: 30px;
+    }
 .name{
     
     margin-left: 2vw;
@@ -143,16 +148,33 @@ color: #ffffff;
 }
 
 .member-titl{
+    margin-top: 10px;
+    text-align: center;
     font-size: 20px;
-    font-weight: 500;
-    font-family: "Marhey", sans-serif;
+    font-weight: 800;
+    
 }
 .sidbar{
+    margin-top: 20px;
+    border-radius: 20px;
     justify-content: right;
     margin-left: 3vw;
     width: 350px;
-    height: 1100px;
+    height: 870px;
+    margin-right: 10px;
     background-color: #ffffff;
+    
+}
+
+
+.sid_bar2{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 190px;
+    background-color: #3e914d;
+    border-radius: 200px 0 0 0;
+    
     
 }
 
@@ -161,11 +183,32 @@ color: #ffffff;
     align-items: center;
     text-align: center;
 }
+.plus_icon{
+    font-size: 40px;
+}
+.dash_icon{
+    font-size: 30px;
+}
+.sid-info2{
+    margin-left: 2vw;
+    margin-top: 9vw;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 25px;
+    color: #ffffff;
+}
+.sid-info2 a{
+    color: #ffffff;
+}
 
+.sid-info2 a:hover{
+    color: #ffd941;
+}
 .group-name{
     font-weight: 500;
-    padding-top: 3vw;
-    padding-bottom: 2vw;
+    padding-top: 2vw;
+    
     color: rgb(236, 161, 90);
     
 }
@@ -184,11 +227,11 @@ color: #ffffff;
 }
 
 .sid-buttons{
-    margin-top: 5vw;
+    margin-top: 2vw;
 }
 
 .b{
-    background-color: rgb(242, 199, 147);
+    background-color: rgb(19, 139, 150);
     width: 200px;
     height: 40px;
     border: none;
@@ -230,13 +273,15 @@ color: #ffffff;
 }
 
 .b4{
-    background-color: bisque;
+    background-color: rgb(255, 172, 47);
     width: 200px;
     height: 40px;
     border: none;
     border-radius: 30px;
+    margin-bottom: 1vw;
 
 }
+
 .b2:hover{
     background-color: rgb(63, 128, 169);
 }
@@ -252,13 +297,13 @@ color: #ffffff;
     text-align: right;
     padding-right: 1vw;
     margin-top: 2vw;
-    margin-left: 2vw;
-    width: 290px;
-    height: 400px;
+    
+    width: 340px;
+    height: 370px;
     border-radius: 30px;
     padding-top: 1vw;
-    background-color: rgba(233, 236, 234, 0.5);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    background-color: transparent;
+    
     overflow: scroll;
 }
 
@@ -277,12 +322,40 @@ color: #ffffff;
     overflow: scroll;
 }
 
+
+
+
+
+.circle{
+    margin-left: 2vw;
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+
+}
+
+.banner-box{
+    text-align: right;
+    margin-left: 2vw;
+    padding-right: 4vw;
+    width: 990px;
+    height: 200px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    background-color: rgba(230, 241, 236, 0.5);
+
+}
+
 .message-box{
     text-align: right;
     margin-top: 1vw;
     margin-left: 3vw;
     width: 800px;
-    height: 500px;
+    height: 470px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: transparent;
@@ -292,26 +365,37 @@ color: #ffffff;
 
 .disction-box{
     margin-left: 2vw;
-    margin-top: 2vw;
-    width: 900px;
-    height: 600px;
+    margin-top: 1vw;
+    width: 990px;
+    height: 610px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     
    
 }
 
+button a{
+    color: #ededed;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+button {
+    color: #ededed;
+    font-size: 20px;
+}
 .leader_box{
-    margin-top: 30px;
+    text-align: center;
+    margin-top: 20px;
     margin-bottom: 30px;
     width: 320px;
     height: 50px;
     padding-top: 5px;
     border-radius: 10px;
-    background-color: rgba(255, 211, 144, 0.5);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    background-color: rgba(255, 211, 144, 0.2);
+    border: #b5b3b3 solid .5px;
     margin-left: 1vw;
 }
 
@@ -512,6 +596,51 @@ color: #ffffff;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
+    overflow-y: auto;
+    
+   
+}
+
+.groups_box7{
+    margin-left: 25px;
+    padding-right: 30px;
+    text-align: right;
+    width: 990px;
+    height:200px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    
+   
+}
+.group-info{
+    
+    text-align: right;
+    margin-left: 25px;
+    padding-right: 4vw;
+    margin-top: 2vw;
+    width: 350px;
+    height: 200px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: scroll;
+}
+.sidbar2_box{
+    margin-top: 10vw;
+    margin-left: 25px;
+    padding-right: 30px;
+    text-align: right;
+    margin-top: 1vw;
+    width: 350px;
+    min-height:610px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
     
    
@@ -851,25 +980,45 @@ background-color: rgb(63, 128, 169);
 }
 
 .leave{
-    margin-top: 1.5vw;
+    margin-top: 15vw;
     background-color: rgb(225, 62, 62);
-    width: 200px;
+    width: 50px;
     height: 40px;
     border: none;
     border-radius: 30px;
     margin-bottom: 1vw;
+    font-size: 20px;
 }
 .leave:hover{
     background-color: #ff0000;
 }
 
+.disctions_title{
+    align-items:end;
+    display: flex;
+    margin-left: 44vw;
+    margin-top: 1vw;
+    font-size: 22px;
+    font-weight: 700;
+
+}
+
+.disctions_title2{
+    align-items:end;
+    display: flex;
+    margin-left: 13vw;
+    margin-top: 1vw;
+    font-size: 22px;
+    font-weight: 700;
+
+}
 .member_message{
     
     padding-right: 20px;
     margin: 1vw;
     width: 765px;
-    min-height: 150px;
-    background-color:rgba(199, 199, 199, 0.2);
+    min-height: 90px;
+    background-color:transparent;
     border: #c4c4c4 solid 1px ;
     text-align: right;
     justify-content: right;

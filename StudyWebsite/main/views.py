@@ -4,8 +4,10 @@ from .models import StudyGroup ,MembershipeRequesite , Discussion
 from django.contrib.auth.models import User
 from django.contrib import messages
 from todo_list .models import ToDoList
+from zoom .models import ZoomMeeting
 from django.core.mail import send_mail
 from django.conf import settings
+from datetime import datetime ,timedelta 
 
 # Create your views here.
 def index_view(request: HttpRequest):
@@ -18,6 +20,8 @@ def all_groups_view(request: HttpRequest):
    return render(request, "main/all_groups.html",{"all_group":all_group})
 
 def group_dashboard(request:HttpRequest , group_id , user_id):
+  
+  
   user=User.objects.get(pk=user_id)
   group=StudyGroup.objects.get(pk=group_id)
   member=MembershipeRequesite.objects.filter(member=user)
@@ -25,9 +29,10 @@ def group_dashboard(request:HttpRequest , group_id , user_id):
   users = User.objects.all()
   user_requests=MembershipeRequesite.objects.all
   discussion=Discussion.objects.all
-  
+  sessions=ZoomMeeting.objects.all
+ 
 
-  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests , "discussion":discussion } )
+  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests , "discussion":discussion ,"sessions":sessions} )
 
 
 def user_dashboard(request:HttpRequest , user_id):
@@ -82,7 +87,7 @@ def admin_delete_group(request:HttpRequest , group_id):
 
 
 def creator_delete_group_view(request:HttpRequest , group_id):
-  if StudyGroup.objects.filter(creator=request.user.id) or request.user.is_superuser: 
+  if StudyGroup.objects.filter(creator_id=request.user.id) or request.user.is_superuser: 
     try:
       group=StudyGroup.objects.get(pk=group_id)
       group.delete()
@@ -193,7 +198,7 @@ def edit_discussion_view(request:HttpRequest , group_id , msg_id):
     member_msg=StudyGroup.objects.get(pk=group_id)
     msg=Discussion.objects.get(pk=msg_id)
     try:
-      msg.message=request.POST["message"],
+      msg.message=request.POST["message"]
       msg.save()
     except Discussion.DoesNotExist:
       msg=None
