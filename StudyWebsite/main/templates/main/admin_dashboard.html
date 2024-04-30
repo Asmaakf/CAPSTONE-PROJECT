@@ -26,19 +26,7 @@
 <div class="line2"></div>
 		<div class="">
 			
-       <ol class="list">
-      {% for todo in todo_list %}
-      {% if todo.user.id == user.id %}
-				<li>
-					<input type="checkbox" id="check-{{ todo.id }}" {% if todo.check == "True" %} checked {% endif %}>
-					<label calss="task1"for="check-1">{{todo.todo}} </label>
-          <span class="todo-icons">
-          <a href="{% url 'update_todo' todo.id user.id %}"><i class="fas fa-edit"></i></a>
-          <a href="{% url 'delete_todo' todo.id user.id %}"><i class="fas fa-trash-alt"></i></a>
-          </span>
-				</li>
-        {% endif%}
-        {% endfor %}
+      
         <div class="list_t">
         <li>
 					<input type="checkbox" id="check-1" >

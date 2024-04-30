@@ -14,9 +14,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Marhey:wght@300..700&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Phudu:wght@300..900&family=Quicksand:wght@300..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&family=Archivo+Black&family=Phudu&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Varela+Round&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<script src="https://kit.fontawesome.com/eca4513fdf.js" crossorigin="anonymous"></script>
+
     <title>{% block title %}{% endblock %}</title>
 
     <style>{% block style %}{% endblock %}</style>
@@ -34,8 +32,8 @@
 
         <header class="header">
         
-          <a href="{% url 'accounts:user_logout_view' %}" class=" nav_a text-decoration-none ">الخروج</a>
-          <a href="/" class=" nav_a2 text-decoration-none ">الرئيسية</a>
+          
+          
           <div>
           
             <div class="btn-group shadow-0">
@@ -52,7 +50,9 @@
             
            
             <nav class="navbar">
-               
+            <a href="/" ><i class="fas fa-home"></i></a>
+               <a href="{% url 'accounts:user_logout_view' %}" class=" nav_a text-decoration-none "></a>
+                <a href="/" class=" nav_a2 text-decoration-none "> الملفات</a>
                 
             </nav>
 
@@ -69,6 +69,22 @@
 
     <!-- End Navbar -->
 
+<div class="sid_bar2">
+      <div class="sid-info">
+        <div class="group-name">
+  <div>
+
+
+
+        </div><!--sid buttons-->
+      </div>
+    
+    
+    
+    
+    
+    </div><!-- sid bar end-->
+  </div>
 
 
     <!-- Content Container -->
@@ -79,9 +95,6 @@
 
 
 
-    <!-- Footer --> 
-
-    <!-- End Footer -->
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
