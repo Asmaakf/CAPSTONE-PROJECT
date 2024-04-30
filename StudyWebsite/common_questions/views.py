@@ -6,6 +6,9 @@ from django.db.models import Q  # Importing Q for conditional filtering in searc
 
 # Function to create or retrieve support questions and answers
 def support_question_answer(request: HttpRequest ):
+    if not request.user.is_superuser:
+        return render(request, "main/not_allowed.html") # no permission page
+
     if request.method == "POST":
         try:
             # Collecting data from POST and saving it to the database
@@ -54,23 +57,39 @@ def view_messages(request):
 
 # Function to delete a question
 def delete_question(request, pk):
-    # Retrieve the question based on the primary key
-    question = get_object_or_404(QuestionAnswer, pk=pk)
-    question.delete()  # Delete the record from the database
+
+    if not request.user.is_superuser:
+        return render(request, "main/not_allowed.html") # no permission page
+    
+    try:
+         # Retrieve the question based on the primary key
+        question=QuestionAnswer.objects.get(pk=pk)
+        question.delete()  # Delete the record from the database
+    except QuestionAnswer.DoesNotExist:
+        return render(request, "main/not_found.html")
+    except Exception as e:
+        print(e)
+
     return redirect('common_questions:support_question_answer')  # Redirect to the list of questions
 
 
 # Function to edit a question
 def edit_question(request, pk):
-    # Retrieve the question based on the primary key
-    question = get_object_or_404(QuestionAnswer, pk=pk)
+
+    if not request.user.is_superuser:
+        return render(request, "main/not_allowed.html") # no permission page
+    
+    question =QuestionAnswer.objects.get(pk=pk)
     
     if request.method == 'POST':
-        # Retrieve the updated data from POST
-        question.question = request.POST.get('question', '')  # Update the question
-        question.answer = request.POST.get('answer', '')  # Update the answer
-        question.save()  # Save the changes
-        
+        try:
+             # Retrieve the updated data from POST
+            question.question = request.POST.get('question', '')  # Update the question
+            question.answer = request.POST.get('answer', '')  # Update the answer
+            question.save()  # Save the changes
+        except Exception as e:
+            print(e)
+    
         # Redirect to the same edit page
         return redirect('common_questions:support_question_answer')  
     

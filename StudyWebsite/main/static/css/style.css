@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-size: 100%;
-    font-family: "Almarai", sans-serif;
+    font-family: "Alexandria", sans-serif;
     font-weight: 400;
     line-height:2;
 }
@@ -15,62 +15,53 @@ a{
     font-weight: 700;
 }
 
-/* color */
+/* Navbar */
 
-.green{background-color:#41b853;}
-
-.blue{color:#43bee5;}
-
-/* navbar style */
-.nav-setting{
-  display:flex;
-  position: relative;
-  align-items: center;
-  column-gap: 5px;
-  width: 200px;
-  height: 100%;
-  margin-right: 10px;
+/* Profile Picture */
+.profile-pic{
+  display: inline-block;
+  vertical-align: middle;
+   width: 50px;
+   height: 50px;
+   overflow: hidden;
+  border-radius: 50%;
 }
 
-#navbarNav{
-  justify-content: center;
+.profile-pic img{
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.profile-menu .dropdown-menu {
+ right: 0;
+ left: unset;
+}
+.profile-menu .fa-fw {
+ margin-right: 10px;
 }
 
-.navbar-nav{
-  flex-direction: column;
-  text-align:center;
-  justify-content:center;
-  column-gap: 80px;
+.toggle-change::after {
+ border-top: 0;
+ border-bottom: 0.3em solid;
 }
 
-.navbar{
-    transition: all 0.5s;
-}
 
-.navbar-scrolled{
-    background-color: white;
-    box-shadow:rgba(0, 0, 0, 0.15);    
-}
+/* counter */
 
-.navbar-scrolled .icon-color{
-  color: #70777f;
-}
+.counter-section i { display:block; margin:0 0 10px}
+.counter-section span.counter { font-size:40px; color:#000; line-height:60px; display:block; font-family: "Oswald",sans-serif; letter-spacing: 2px}
+.counter-title{ font-size:12px; letter-spacing:2px; text-transform: uppercase}
+.counter-icon {top:25px; position:relative}
+.counter-style2 .counter-title {letter-spacing: 0.55px; float: left;}
+.counter-style2 span.counter {letter-spacing: 0.55px; float: left; margin-right: 10px;}
+.counter-style2 i {float: right; line-height: 26px; margin: 0 10px 0 0}
+.counter-subheadline span {float: right;}  
 
-.navbar-scrolled a{
-  color: #70777f;
-}
+.medium-icon {
+    font-size: 40px !important;
+    margin-bottom: 15px !important;
+} 
 
-.navbar-scrolled a:hover{
-  color: rebeccapurple;
-}
-
-svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-top: -250px;
-  margin-left: -400px;
-}
 .message-box {
   height: 200px;
   width: 380px;
@@ -124,31 +115,5 @@ svg {
   animation-delay: .8s; 
 }
 
-@keyframes float {
-	100% {
-    transform: translateY(20px);
-  }
-}
-@media (max-width: 450px) {
-  svg {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    margin-top: -250px;
-    margin-left: -190px;
-  }
-  .message-box {
-    top: 50%;
-    left: 50%;
-    margin-top: -100px;
-    margin-left: -190px;
-    text-align: center;
-  }
-}
 
-
-/* hero */
-
-
-/**/
-
+/* footer */

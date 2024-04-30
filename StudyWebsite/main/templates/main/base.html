@@ -17,9 +17,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     
-    <!-- Footer -->
-    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.2/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/bs-brain@2.0.3/components/footers/footer-6/assets/css/footer-6.css">
     
     <!-- Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,6 +25,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Alkalami&family=Almarai:wght@300;400;700;800&family=Archivo+Black&family=Gulzar&family=Jost:ital,wght@0,100..900;1,100..900&family=Madimi+One&family=Marhey:wght@300..700&family=Phudu&family=Reem+Kufi:wght@400..700&family=RocknRoll+One&family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Varela+Round&family=Yusei+Magic&display=swap" rel="stylesheet">
     
+    <!-- navbar -->
+
     <!-- CSS files -->
     <link rel="stylesheet" href="{% static 'css/style.css' %}" >
     {% block css %}
@@ -40,71 +39,69 @@
   </head>
 
   <body>
+
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg fixed-top navbar-dark py-3 shadow ">
-        <div class="container py-2 nav-parts">
-
-          <img src="#" alt="logo" width="180" height="50"/>
-          
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="material-symbols-outlined icon-color">notes</span>          
-          </button>
-
-
-          <div class="collapse navbar-collapse " id="navbarNav">
-            <ul class="navbar-nav">
-                {% if request.user.is_authenticated %} 
-                    <div class="d-flex gap-1 justify-content-center ">
-                    <a class="nav-link" href="#">مرحبًا، {{request.user.username }}</a>
-                    </div>
-                {% endif %}
-               
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle pt-2" href="#" role="button" data-bs-toggle="dropdown">دروب داون</a>
-                    <ul class="dropdown-menu text-center">
-                    {% if request.user.is_authenticated %} 
-                      <li><a class="dropdown-item" href="{% url 'accounts:user_profile_view' request.user.username %}"> الصفحة الشخصية</a></li>
-                      {% endif %}
-                       <li><a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"> ملفي الشخصي</a></li>
-                    <li><a class="dropdown-item" href="#">اثنين </a></li>
-                    <li><a class="dropdown-item" href="#">ثلاثة </a></li>
-                    <li><a class="dropdown-item" href="#">اربعه</a></li>
-
-                    </ul>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link pt-2" href="{% url 'accounts:user_login_view' %}">تسجيل الدخول</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link pb-2" href="{% url 'accounts:user_register_view' %}">تسجيل جديد</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link pb-2" href="{% url 'accounts:user_logout_view' %}">تسجيل الخروج</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a class="nav-link pb-2" href="/">الرئيسية</a>
-                </li>
-
-               
-            </ul>
-          </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top  d-flex justify-content-center align-items-center shadow ">
+      <div class="container-fluid mx-5 px-5 py-3">
+        <div class="logo-s">
+          <img src="{% static 'images/logo1.png' %}" alt="logo" class="logo mx-2" style="width: 50px;">
+          <a class="navbar-brand" href="#">مِحزم</a>
         </div>
-      </nav>
-      <script>
-        const navEl = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY >= 56){
-                navEl.classList.add('navbar-scrolled');
-            } else if (window.scrollY < 56){
-                navEl.classList.remove('navbar-scrolled')
-            }
-        })
-      </script>
-    <!-- End Navbar -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse text-center justify-content-end" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/">الرئيسية</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'contact:contact_view' %}">تواصل معنا</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'common_questions:view_messages' %}">اسئلة وأجوبة</a>
+            </li>
+          </ul>
+
+          
+          <ul class="navbar-nav ms-auto mb-2 mb-lg-0 profile-menu d-flex align-items-center gap-4"> 
+            
+            {% if request.user.is_authenticated %} 
+            <div class="d-flex gap-1 justify-content-center ">
+              <a class="nav-link" href="{% url 'main:user_dashboard_view' user.id %}">يا هلا, {{request.user.first_name }}</a>
+            </div>
+              
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="profile-pic">
+                      <img src="{{user.profile.avatar.url}}" alt="Profile Picture">
+                  </div>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}">الملف الشخصي</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:update_user_profile_view' user.id %}">تعديل الملف الشخصي</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:user_logout_view' %}"><i class="fas fa-sign-out-alt fa-fw"></i>تسجيل الخروج</a></li>
+                </ul>
+              </li>
+            {% else %}
+              <li class="nav-item dropdown ">
+                <a class="nav-link dropdown-toggle bg-primary rounded-5 px-4" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Log in
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <li><a class="dropdown-item" href="{% url 'accounts:user_register_view' %}"><i class=""></i>تسجيل جديد</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item" href="{% url 'accounts:user_login_view' %}"><i class=""></i>تسجيل الدخول</a></li>
+                </ul>
+              </li>
+            {% endif %}
+          </ul>     
+        </div>
+      </div>
+    </nav>
+    <!-- End Navbar -->    
 
 
     <!-- Content Container -->
@@ -114,105 +111,110 @@
     <!--End Content Container -->
 
 
-    <!-- Footer --> 
-      <!-- <div>
-       
-        <img src="{% static 'images/footer.png' %}" alt="footer" style="width: 100%; object-fit: cover;">
+    <!-- Footer -->
+<footer class=" text-center bg-body-tertiary">
+  <!-- Grid container -->
+  <div class="container p-4">
+    <!-- Section: Social media -->
+    <section class="mb-4">
+      <!-- Facebook -->
+      <a data-mdb-ripple-init class="btn btn-outline btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-facebook-f"></i
+      ></a>
 
-      </div> -->
-               
-<!-- Footer 6 - Bootstrap Brain Component -->
-<section>
+      <!-- Twitter -->
+      <a data-mdb-ripple-init class="btn btn-outline btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-twitter"></i
+      ></a>
 
-  <!-- Widgets - Bootstrap Brain Component -->
-  <div class="bg-light py-3 py-md-5 py-xl-8 border-top border-light-subtle">
-    <div class="container overflow-hidden">
-      <div class="row gy-3 gy-md-5 gy-xl-0 align-items-sm-center">
-        <div class="col-xs-12 col-sm-6 col-xl-3 order-0 order-xl-0">
-          <div class="footer-logo-wrapper text-center text-sm-start">
-            <a href="#!">
-              <img src="./assets/img/bsb-logo.svg" alt="BootstrapBrain Logo" width="175" height="57">
-            </a>
-          </div>
-        </div>
+      <!-- Google -->
+      <a data-mdb-ripple-init class="btn btn-outline btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-google"></i
+      ></a>
 
-        <div class="col-xs-12 col-xl-6 order-2 order-xl-1">
-          <ul class="nav justify-content-center">
-            <li class="nav-item">
-              <a class="nav-link link-secondary px-2 px-md-3" href="#!">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-secondary px-2 px-md-3" href="#!">Contact</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-secondary px-2 px-md-3" href="#!">Advertise</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-secondary px-2 px-md-3" href="#!">Terms</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-secondary px-2 px-md-3" href="#!">Privacy</a>
-            </li>
-          </ul>
-        </div>
+      <!-- Instagram -->
+      <a data-mdb-ripple-init class="btn btn-outline btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-instagram"></i
+      ></a>
 
-        <div class="col-xs-12 col-sm-6 col-xl-3 order-1 order-xl-2">
-          <ul class="nav justify-content-center justify-content-sm-end">
-            <li class="nav-item">
-              <a class="nav-link link-dark px-3" href="#!">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-facebook" viewBox="0 0 16 16">
-                  <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z" />
-                </svg>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-dark px-3" href="#!">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-youtube" viewBox="0 0 16 16">
-                  <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z" />
-                </svg>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-dark px-3" href="#!">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-twitter" viewBox="0 0 16 16">
-                  <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z" />
-                </svg>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link link-dark px-3" href="#!">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-linkedin" viewBox="0 0 16 16">
-                  <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
-                </svg>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
+      <!-- Linkedin -->
+      <a data-mdb-ripple-init class="btn btn-outline btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-linkedin-in"></i
+      ></a>
 
-  <!-- Copyright - Bootstrap Brain Component -->
-  <div class="bg-light py-3 py-md-5 border-top border-light-subtle">
-    <div class="container overflow-hidden">
+      <!-- Github -->
+      <a data-mdb-ripple-init class="btn btn-outline btn-floating m-1" href="#!" role="button"
+        ><i class="fab fa-github"></i
+      ></a>
+    </section>
+    <!-- Section: Social media -->
+
+    
+
+    <!-- Section: Links -->
+    <section class="">
+      <!--Grid row-->
       <div class="row">
-        <div class="col">
-          <div class="footer-copyright-wrapper text-center">
-            &copy; 2024. All Rights Reserved.
-          </div>
-          <div class="credits text-secondary text-center mt-2 fs-7">
-            Built by <a href="https://bootstrapbrain.com/" class="link-secondary text-decoration-none">BootstrapBrain</a> with <span class="text-primary">&#9829;</span>
-          </div>
+        <!--Grid column-->
+        <div class="col-md-4 mb-4 mb-md-0">
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a class="text-body" href="#!">Link 1</a>
+            </li>
+          </ul>
         </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class=" col-md-4 mb-4 mb-md-0">
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a class="text-body" href="#!">Link 1</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+        <!--Grid column-->
+        <div class=" col-md-4 mb-4 mb-md-0">
+
+          <ul class="list-unstyled mb-0">
+            <li>
+              <a class="text-body" href="#!">Link 1</a>
+            </li>
+          </ul>
+        </div>
+        <!--Grid column-->
+
+     
       </div>
-    </div>
+      <!--Grid row-->
+    </section>
+    <!-- Section: Links -->
   </div>
+  <!-- Grid container -->
 
-</section>
-      
-
-    <!-- End Footer -->
-
+  <!-- Copyright -->
+  <div class="text-center bg-body-tertiary">
+    © 2020 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+    <script>
+      document.querySelectorAll('.dropdown-toggle').forEach(item => {
+      item.addEventListener('click', event => {
+    
+        if(event.target.classList.contains('dropdown-toggle') ){
+          event.target.classList.toggle('toggle-change');
+        }
+        else if(event.target.parentElement.classList.contains('dropdown-toggle')){
+          event.target.parentElement.classList.toggle('toggle-change');
+        }
+      })
+    });
+    </script>
   </body>
 
 </html>
