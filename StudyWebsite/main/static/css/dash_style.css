@@ -15,12 +15,12 @@
 .header{
     
     padding: 0px 40px;
-    background-color:transparent;
+    background-color:rgb(27, 27, 27);
     display: flex;
     justify-content: left;
     flex-direction: row;
     align-items: center;
-    
+    height: 100px;
     font-size: 20px;
     position: relative;
     z-index: 1000;
@@ -174,14 +174,16 @@ color: #ffffff;
 
 
 .sid_bar2{
+    margin-top: 7vw;
     position: absolute;
     top: 0;
     bottom: 0;
+   
     width: 110px;
-    background-color: rgba(37, 175, 99, 0.3);
+    background-color: rgba(122, 132, 126, 0.3);
     border-radius: 200px 0 0 0;
     margin-left: 1vw;
-    border: #8cc596 solid 1.5px;
+    border: #a1a1a1 solid 1.5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.50);
     
 }
@@ -220,7 +222,7 @@ color: #ffffff;
     color: #ffffff;
 }
 .sid-info2 a{
-    color: #009144;
+    color: #434343;
     
 }
 
@@ -402,7 +404,7 @@ color: #ffffff;
 }
 
 .banner-title{
-    margin-right: 2vw;
+  margin-left: 33vw;
     color: #c0c0c0;
 }
 
@@ -411,13 +413,24 @@ color: #ffffff;
     margin-top: 10px;
     width: 290px;
     height: 290px;
+    object-fit: cover;
     border-radius: 50%;
     object-fit: cover;
     background-color:  #ededed;
 
 
 }
+.circle3{
+    
+    margin-left: 5vw;
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    background-color:  #ededed;
 
+
+}
 
 .circle{
 
@@ -454,13 +467,14 @@ color: #ffffff;
 }
 .banner-box2{
    
+   display: flex;
     text-align: right;
     margin-left: 2vw;
     padding-right: 4vw;
     width: 1120px;
     height: 200px;
     border-radius: 30px 120px 30px 30px;
-    padding-top: 1vw;
+    padding-top: 10px;
     background-color: rgba(0, 123, 68, 0.5);
     
 
@@ -474,7 +488,20 @@ color: #ffffff;
     height: 470px;
     border-radius: 30px;
     padding-top: 1vw;
-    background-color: transparent;
+    background-color:transparent;
+    overflow: scroll;
+   
+}
+
+.file-box2{
+    text-align: right;
+    margin-top: 1vw;
+    margin-left: 1vw;
+    width: 1450px;
+    height: 470px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    background-color:transparent;
     overflow: scroll;
    
 }
@@ -483,8 +510,21 @@ color: #ffffff;
     justify-content: right;
     margin-left: 2vw;
     margin-top: 1vw;
-    width: 1120px;
-    height: 610px;
+    width: 1110px;
+    height: 600px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    
+   
+}
+.file-box{
+    justify-content: right;
+    margin-left: 2vw;
+    margin-top: 1vw;
+    width: 1510px;
+    height: 600px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
@@ -839,7 +879,7 @@ margin-bottom: 7vw;
     padding-right: 4vw;
     margin-top: 2vw;
     width: 370px;
-    height: 200px;
+    height: 190px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
@@ -1252,7 +1292,7 @@ background-color: rgb(63, 128, 169);
 }
 
 .leave{
-    margin-top: 13vw;
+    margin-top: 5vw;
     background-color: rgb(225, 62, 62);
     width: 40px;
     height: 40px;
