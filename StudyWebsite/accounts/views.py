@@ -38,7 +38,12 @@ def user_register_view(request:HttpRequest):
                     password=request.POST["password"]
                 )
                 new_user.save()
-                profile = Profile(user=new_user,birthdate = request.POST["birthdate"])
+                profile = Profile(
+                    user=new_user,
+                    birthdate = request.POST["birthdate"],
+                    avatar=request.FILES.get("avatar", Profile.avatar.field.get_default())
+        
+                            )
                 profile.save()
 
             #redirect to login page
@@ -85,9 +90,9 @@ def user_logout_view(request:HttpRequest):
 
 
 # profile
-def user_profile_view(request:HttpRequest, user_name):
+def user_profile_view(request:HttpRequest, user_id):
 
-    user = User.objects.get(username=user_name)
+    user = User.objects.get(pk=user_id)
     
     return render(request, "accounts/user_profile.html", {"user" : user})
 
@@ -126,7 +131,6 @@ def update_user_profile_view(request: HttpRequest, user_id):
                     profile = Profile(user=user)
 
                 profile.avatar = request.FILES.get("avatar", profile.avatar)
-                profile.birthdate = request.POST.get("birthdate")
                 profile.bio = request.POST["bio"]
                 profile.linkedin_link = request.POST["linkedin_link"]
                 profile.github_link = request.POST["github_link"]
