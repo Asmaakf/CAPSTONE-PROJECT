@@ -8,20 +8,24 @@
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
   />
-<section class="" style="background-image:url('/static/images/hero.png'); width: 100%; height: 100vh; object-fit: cover; ">
-  <div class="container pt-5">
-    <div class="row d-flex justify-content-center align-items-center pt-5">
-      <div class="col-12 col-md-12 d-flex flex-column align-items-center justify-content-center gap-3 pt-5">
-        <h1 class="text-center fw-bold mb-4 pt-5 animate__animated animate__fadeInUp animate__slow" style="font-family: Marhey, sans-serif; color: white; font-size: 180px;">مِحزم</h1>
-        <p class="col-12 col-sm-10 col-md-8 col-xxl-7 text-center animate__animated animate__fadeInUp animate__slow" style="font-family: Marhey, sans-serif; color: white; font-size: 35px;">  منصة دراسية ما تخذلك أبد! تساعدك, نعين ونعاون
-        </p>
-        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
-          <a href="{% url 'accounts:user_login_view' %}" class="btn bg-white rounded-pill px-4 py-2 animate__animated animate__fadeInUp animate__slow" style="color:#41b853; font-size: 20px;">انشئ مجموعتك الأن</a>
+  <section class="" style="background-image:url('/static/images/hero.png'); width: 100%; height: 100vh; object-fit: cover; ">
+    <div class="container pt-5">
+      <div class="row d-flex justify-content-center align-items-center pt-5">
+        <div class="col-12 col-md-12 d-flex flex-column align-items-center justify-content-center gap-3 pt-5">
+          <h1 class="text-center fw-bold mb-4 pt-5" style="font-family: Marhey, sans-serif; color: white; font-size: 180px;">مِحزم</h1>
+          <p class="col-12 col-sm-10 col-md-8 col-xxl-7 text-center" style="font-family: Marhey, sans-serif; color: white; font-size: 35px;">  منصة دراسية ما تخذلك أبد! تساعدك, نعين ونعاون
+          </p>
+          {% if request.user.is_authenticated %}
+          <a href="{% url 'main:user_dashboard_view' user.id %}" class="btn bg-white rounded-pill px-4 py-2" style="color:#41b853; font-size: 20px;">انشئ مجموعتك الأن</a>
+          <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+          {% else %}
+          <a href="{% url 'accounts:user_register_view' %}" class="btn bg-white rounded-pill px-4 py-2" style="color:#41b853; font-size: 20px;">انشئ مجموعتك الأن</a>
+          </div>
+          {% endif %}
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
 
