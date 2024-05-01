@@ -16,54 +16,67 @@
         {% endfor %}
     {% endif %}
 
-<section >
-    <div class="container mt-5 mb-5 pt-5">
-        <div class="row">
-            <div class="col-12">
-                <div class="mb-5">
-                    <h2 class="display-5 fw-bold text-center">تواصل معنا</h2> 
+    <section>
+        <div class="container mt-5 mb-5 pt-5">
+            <div class="row">
+                <div class="col-12">
+                    <div class="mb-5">
+                        <h2 class="display-5 fw-bold text-center">تواصل معنا</h2> 
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row d-flex justify-content-center align-items-center mb-3">
-            <div class="col-12 ">
-                <div class="row gy-5 justify-content-center">
-                    <div class="col-12 col-lg-5">
-                        <form action="{% url 'contact:contact_view' %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                            {% csrf_token %}
-                            <div class="mb-3">
-                                <label for="name" class="form-label">اسمك</label>
-                                <input name="name" type="text" placeholder="مثل: احمد" class="form-control" required minlength="2"  value="{% if request.user.is_authenticated %} {{ request.user.first_name}}{% endif %}"  />
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label">البريد الإلكتروني</label>
-                                <input name="email" type="email" placeholder="email@example.com" class="form-control" required minlength="5" onclick="document.querySelector('a[href=\'mailto:email@example.com\']').click();"  value="{% if request.user.is_authenticated %} {{ request.user.username}}{% endif %}" />
-                            </div>
-                            <div class="mb-3">
-                                <label for="message" class="form-label">الرسالة</label>
-                                <textarea name="message" placeholder="محتوى الرسالة"  class="form-control" required minlength="3"></textarea>
-                            </div>
-                            <input type="submit" class="btn btn-success" value="إرسال" />
-                        </form>
-                    </div>
-                    <div class="col-12 col-md-1 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
-                        <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
-                        <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
-                    </div>
-                    <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
-                        <img src="{% static 'images/contact.png' %}" alt="صورة التواصل" class="log-img" style="width: 100%;">
-                    </div>
-                    <div class="row mt-5" style="margin: 300px;">
-                        <div class="col-md-10 offset-md-3 mb-4" >
-                         {% if request.user.is_superuser %}
-                             <a class="text-dark text-decoration-none" href="{% url 'contact:message_view' %}">عرض الرسائل المرسلة <span class="material-symbols-outlined align-middle">arrow_forward</span></a>
-                         {% endif %}
+
+            <div class="row d-flex justify-content-center align-items-center mb-3">
+                <div class="col-12">
+                    <div class="row gy-5 justify-content-center">
+                        <div class="col-12 col-lg-5">
+                            <form action="{% url 'contact:contact_view' %}" method="POST" class="d-flex flex-column gap-2" enctype="multipart/form-data">
+                                {% csrf_token %}                
+
+                                <div class="row gy-3 overflow-hidden">
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="name" class="form-control border-0 border-bottom rounded-0" name="name" id="name" placeholder="أحمد" required>
+                                            <label for="name" class="form-label">اسمك</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
+                                            <label for="email" class="form-label">البريد الإلكتروني</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <input type="message" class="form-control border-0 border-bottom rounded-0" name="message" id="message" placeholder="أحمد" required>
+                                            <label for="message" class="form-label">الرسالة</label>
+                                        </div>
+                                    </div>                             
+
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <input type="submit" class="btn btn-primary rounded-5" value="إرسال" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col-12 col-md-1 d-flex align-items-center justify-content-center gap-3 flex-lg-column">
+                            <div class="bg-dark h-100 d-none d-lg-block" style="width: 1px; --bs-bg-opacity: .1;"></div>
+                            <div class="bg-dark w-100 d-lg-none" style="height: 1px; --bs-bg-opacity: .1;"></div>
+                        </div>
+                        <div class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+                            <img src="{% static 'images/contact.png' %}" alt="صورة التواصل" class="log-img" style="width: 100%;">
                         </div>
                     </div>
+                    {% if request.user.is_superuser %}
+                        <a class="text-dark text-decoration-none" href="{% url 'contact:message_view' %}">عرض الرسائل المرسلة <span class="material-symbols-outlined align-middle">arrow_forward</span></a>
+                    {% endif %}
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+{% endblock %}
 
-{% endblock%}
