@@ -34,11 +34,19 @@
 
         <header class="header">
         
-          <a href="{% url 'accounts:user_logout_view' %}" class=" nav_a text-decoration-none ">الخروج</a>
-          <a href="/" class=" nav_a2 text-decoration-none ">الرئيسية</a>
+         
           <div>
           
+            <div class="btn-group shadow-0">
+            <button type="button" class="drop btn  dropdown-toggle" data-bs-toggle="dropdown" >
+            <img class="profile-img"src="{{user.profile.avatar.url}}"> </button>
+                <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"> ملفي الشخصي</a></li>
+            <li><a class="dropdown-item" href="{% url 'accounts:user_logout_view' %}"> تسجيل الخروج </a></li>
+            </ul>
+            <p class="name">{{user.first_name}}</p>
             
+            </div>
             </div>
             
            
@@ -48,8 +56,10 @@
             </nav>
 
             <div class="logo">
-            <img class="logoimg" src="https://www.raed.net/img?id=761332" />
-               <div> <span><p class="logo-text" href="/"><strong>  </strong></p></span></div>
+            <div> <span><p class="logo-text" href="/"><strong>مِحزم  </strong></p></span></div>
+            <img class="logoimg" src="{% static 'images/logo1.png' %}" />
+               
+             
             </div>
 
         </header>
