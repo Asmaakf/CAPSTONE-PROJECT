@@ -36,14 +36,14 @@
                                 <div class="row gy-3 overflow-hidden">
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
-                                            <input type="name" class="form-control border-0 border-bottom rounded-0" name="name" id="name" placeholder="أحمد" required>
+                                            <input type="name" class="form-control border-0 border-bottom rounded-0" name="name" id="name" placeholder="أحمد" required  value="{% if request.user.is_authenticated %} {{ request.user.first_name}}{% endif %}">
                                             <label for="name" class="form-label">اسمك</label>
                                         </div>
                                     </div>
 
                                     <div class="col-12">
                                         <div class="form-floating mb-3">
-                                            <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required>
+                                            <input type="email" class="form-control border-0 border-bottom rounded-0" name="email" id="email" placeholder="name@example.com" required  value="{% if request.user.is_authenticated %} {{ request.user.username}}{% endif %}">
                                             <label for="email" class="form-label">البريد الإلكتروني</label>
                                         </div>
                                     </div>
