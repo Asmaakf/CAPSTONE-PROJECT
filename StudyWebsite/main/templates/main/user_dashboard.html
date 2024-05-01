@@ -66,7 +66,7 @@ label{
 <div class="row mt-5">
 <div class="col-9 "><div class="banner-box"> 
 <div class="banner-info">
-<h1 class="info-title">{{user.first_name}} {{user.first_name}} اهلا</h1> 
+<h1 class="info-title">{{user.first_name}} {{user.last_name}} اهلا</h1> 
 <div class="line_profile"></div>
 <div class="banner-info2">
  <div class="pro_left"> 
@@ -121,8 +121,9 @@ label{
  
  </div><!--left info end-->
 <div class="pro_right">
- <p class="mail"><a class="text-decoration-none mail "  href="mailto:{{user.username}}">{{ user.username }} </a>البريد الالكتروني</p>
-<p> {{user.profile.bio}}</p>
+ <p class="mail"><a class="text-decoration-none mail "  href="mailto:{{user.username}}">{{ user.username }} </a>: البريد الالكتروني</p>
+<p> {{user.profile.bio}} : عن نفسك </p>
+<p>{{user.profile.birthdate}}</p>
   <div><button type="submit" class="edit "> <a  href="{% url 'accounts:update_user_profile_view' user.id  %}" >  تعديل الملف الشخصي </a> </button> </div>
  </div>
 </div>
@@ -132,14 +133,15 @@ label{
 
 
 </div>  </div>
-<div class="col-3 "><div class="circle2"> <image class ="circle"src="{{user.profile.avatar.url}}"> </div></div>
+<div class="col-3 ">
+ <image class ="circle"src="{{user.profile.avatar.url}}"> </div>
 
 </div><!--row end -->
 
 <div class="row">
 <div class="col-3 ">
 <div class="groups_box3">
-<h4 class="user_dash_title">التنبيهات</h4>
+<h4 class="user_dash_title">الدعوات</h4>
 <div class="line2"></div>
 
 {% for request in user_requests %}
@@ -165,49 +167,19 @@ label{
 
 </div><!--end box3-->
 <!--todo list-->
-<div class="groups_box6">
-<h4 class="user_dash_title">المهام</h4>
-<div class="line2"></div>
-		<div class="">
-			
-       <ol class="list_t">
-      {% for todo in todo_list %}
-      {% if todo.user_id == user.id%}
-      <span class="list">
-				<li>
-					<input type="checkbox" id="check-{{ todo.id }}" >
-					<label calss="task1"for="check-1">{{todo.todo}} </label>
-          <span class="todo-icons">
-          <a data-bs-toggle="modal" data-bs-target="#todo{{ todo.id }}" href="{% url 'todo_list:update_todo_view' todo.id user.id %}"><i class="fas fa-edit"></i></a>
-          <a href="{% url 'todo_list:delete_todo_view' todo.id user.id %}"><i class="fas fa-trash-alt"></i></a>
-          </span>
-				</li>
-        {% endif%}
-        {% endfor %}
-        </span>
-				
-			</ol>
-		</div>
-    <div class="todo">
-     <form action="{% url 'todo_list:add_todo_view' user.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-        {% csrf_token %}
-        <input  name="todo" placeholder="اكتب مهمتك هنا" type="text">
-        <button type="submit">اضافة</button>
-        </form>
-      </div>
-	</div>
+
 </div><!--col endjjjjjjj-->
 <div class="col-6  ">
 
 
 <div class="groups_box">
-<div class="fixed_title">
-<div><button type="submit" class="b3 "> <a  href="{% url 'main:create_group_view' user.id   %}"> انشاء مجموعة </a> </button> </div>
-<h4 class="user_dash_title">المجموعات</h4>
-<div class="line"></div>
 
-</div>
+<h4 class="user_dash_title">المجموعات</h4>
+<div class="line3"></div>
+
+
 <div class="admin_groups">
+<button type="submit" class="b3 "> <a  href="{% url 'main:create_group_view' user.id   %}"> انشاء مجموعة </a> </button> 
 <div class="row">
 <div class="col-md-2">
 </div>

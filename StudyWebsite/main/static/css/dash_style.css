@@ -17,7 +17,7 @@
     padding: 0px 40px;
     background-color:rgb(27, 27, 27);
     display: flex;
-    justify-content: left;
+    justify-content: space-between;
     flex-direction: row;
     align-items: center;
     height: 100px;
@@ -42,19 +42,27 @@
 }
 
 .logo-text{
-    font-size: 20px;
-    color: rgb(45, 110, 30);
+    margin-top: 10px;
+    font-family: "Alexandria", sans-serif;
+    font-size:20px;
+    color: rgb(224, 229, 223);
+    margin-right: 10px;
 }
 
 .navbar a{
     
     position: relative;
+    margin-left: 20px;
     font-size: 20px;
-    color: rgb(40, 24, 46);
+    color: rgb(239, 239, 239);
     text-decoration: none;
     display: flex;
     justify-content: center;
     
+}
+
+.navbar a:hover{
+    color: #c4c4c4;
 }
 
 .nav_a{
@@ -92,10 +100,10 @@ color: #ffffff;
     }
 .name{
     
-    margin-left: 2vw;
+    margin-left: 3vw;
     padding-top: 17px;
     align-items: center;
-    color:#58a1c9;
+    color:#dbdbdb;
 }
 .gap{
     margin-left: 3vw;
@@ -108,27 +116,12 @@ color: #ffffff;
     margin-left: 1vw;
 }
 
-.navbar a::before{
-    content: '';
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: rgb(40, 24, 46);
-    transition: .3s;
-    
-}
 
-.navbar a:hover:before{
-    width: 100%;
+
+
     
     
-    
-}
-.navbar a:hover{
-    color: #5fbb79;
-}
+
 
 .drop{
     border: none;
@@ -249,6 +242,13 @@ color: #ffffff;
     border-radius: 50%;
     object-fit: cover;
 }
+.member-img2{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-left:44vw;
+}
 
 .sid-buttons{
     margin-top: 2vw;
@@ -281,7 +281,7 @@ color: #ffffff;
 }
 .b3 {
     margin-top: 1vw;
-    background-color: rgb(23, 197, 110);
+    background-color: rgb(28, 28, 28);
     width: 200px;
     height: 40px;
     border: none;
@@ -293,7 +293,7 @@ color: #ffffff;
 .star{
     margin-top: 7px;
     font-size: 20px;
-    color: #3e914d;
+    color: #171717;
 }
 .star2{
     margin-top: 7px;
@@ -324,19 +324,19 @@ color: #ffffff;
     color: #c0c0c0;
 }
 .show_g{
-    background-color: rgb(6, 185, 105);
+    background-color: rgb(28, 28, 28);
     width: 120px;
     height: 30px;
     border: none;
     border-radius: 30px;
-    margin-left: 3vw;
+    margin-left: 4.5vw;
     font-size: 15px;
 }
 .show_g:hover{
-    background-color: #b5d5bb;
+    background-color: #007015;
 }
 .b3 a {
-    color: #121212;
+    color: #d6d6d6;
     text-decoration: none;
 }
 
@@ -354,7 +354,7 @@ color: #ffffff;
     background-color: rgb(63, 128, 169);
 }
 .b3:hover{
-    background-color: rgb(251, 213, 115);
+    background-color: #007015;
 }
 
 .b4:hover{
@@ -404,13 +404,14 @@ color: #ffffff;
 }
 
 .banner-title{
+   
   margin-left: 33vw;
-    color: #c0c0c0;
+    color: #171717;
 }
 
 .circle2{
-    margin-left: 5vw;
-    margin-top: 10px;
+    
+    margin-top: 30px;
     width: 290px;
     height: 290px;
     object-fit: cover;
@@ -427,14 +428,14 @@ color: #ffffff;
     height: 180px;
     border-radius: 50%;
     object-fit: cover;
-    background-color:  #ededed;
+    
 
 
 }
 
 .circle{
 
-    margin-top: 10px;
+    margin-top: 0px;
     margin-left: 10px;
     width: 270px;
     height: 270px;
@@ -445,7 +446,7 @@ color: #ffffff;
 
 }
 .info-title{
-    color: #ffffff;
+    color: #131313;
 }
 .member_name a{
     text-decoration: none;
@@ -458,10 +459,12 @@ color: #ffffff;
     margin-left: 2vw;
     padding-right: 4vw;
     width: 1540px;
-    height: 240px;
+    height: 280px;
     border-radius: 30px 120px 30px 30px;
     padding-top: 1vw;
-    background-color: rgba(0, 123, 68, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    background-color: rgba(247, 247, 247, 0.5);
+    border:#d8d8d8 solid 1px
     
 
 }
@@ -475,16 +478,17 @@ color: #ffffff;
     height: 200px;
     border-radius: 30px 120px 30px 30px;
     padding-top: 10px;
-    background-color: rgba(0, 123, 68, 0.5);
+    background-color: rgba(205, 205, 205, 0.5);
     
 
 }
 
 .message-box{
     text-align: right;
+    display: flex;
     margin-top: 1vw;
     margin-left: 3vw;
-    width: 1000px;
+    width: 1100px;
     height: 470px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -492,7 +496,17 @@ color: #ffffff;
     overflow: scroll;
    
 }
-
+.file-box33{
+    justify-content: right;
+    margin-left: 2vw;
+    margin-top: 1vw;
+    width: 1510px;
+    min-height: 600px;
+    border-radius: 30px;
+    padding-top: 1vw;
+    background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 .file-box2{
     text-align: right;
     margin-top: 1vw;
@@ -600,7 +614,7 @@ margin-bottom: 7vw;
     height: 1px;
     background-color: #cecece;
     border-radius: 30px;
-    margin-left: 38vw;
+    margin-left: 58vw;
 }
 
 .line_r{
@@ -650,15 +664,16 @@ margin-bottom: 7vw;
 }
 
 .groups_box{
-    margin-left: 3vw;
+    margin-left: 1vw;
     text-align: right;
     margin-top: 1vw;
     width: 1140px;
-    height: 840px;
+    height: 800px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
-    
+    margin-bottom: 3vw;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     position: relative;
    
 }
@@ -733,19 +748,20 @@ margin-bottom: 7vw;
     margin-left: 6.5vw;
 }
 .card10 {
-    margin-left: 5px;
+    margin-left: 30px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     border-radius: 0.75rem;
+    margin-top: 20px;
     background-color: white;
-    width: 250px;
+    width: 290px;
     height: 400px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),
     0 2px 4px -2px rgba(0,0,0,.1);
   }
   .card_group_img{
-    width: 14rem;
+    width: 16rem;
     height: 12rem;
     object-fit: cover;
     border-radius: 0.75rem;
@@ -787,8 +803,7 @@ margin-bottom: 7vw;
   }
   .admin_groups{
     text-align: right;
-    margin-top: 3vw;
-    width: 830px;
+    width: 1130px;
     height: 640px;
     border-radius: 30px;
     padding-top: 1vw;
@@ -833,11 +848,12 @@ margin-bottom: 7vw;
     margin-left: 25px;
     text-align: right;
     margin-top: 1vw;
-    width: 380px;
-    min-height: 300px;
+    width: 390px;
+    min-height: 800px;
     border-radius: 30px;
     padding-top: 1vw;
     background-color: rgba(255, 255, 255, 0.5);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     overflow-y: auto;
     
    
@@ -906,6 +922,11 @@ margin-bottom: 7vw;
 margin-top: 1vw;
 margin-right: 2vw;
 }
+.user_dash_title2{
+    margin-top: 1vw;
+    margin-left: 50vw;
+    
+    }
 .user_dash_title-group{
     margin-top: 1vw;
     margin-right: 2vw;
@@ -1068,14 +1089,14 @@ margin-right: 2vw;
 
 .accept:hover{
     
-    background-color: rgb(67, 232, 155);
+    background-color: rgb(0, 78, 3);
 }
 
 .accept{
     border-radius: 30px;
     width: 70px;
     border: none;
-    background-color: rgb(255, 172, 47);
+    background-color: rgb(28, 28, 28);
 }
 
 .reject{
@@ -1324,13 +1345,15 @@ background-color: rgb(63, 128, 169);
     font-weight: 700;
 
 }
+
+
 .member_message{
     margin-left: 10vw;
     padding-right: 20px;
     margin-left: 10vw;
     margin: 1vw;
-    width: 765px;
-    min-height: 90px;
+    width: 80%;
+    min-height: 110px;
     background-color:transparent;
     border: #c4c4c4 solid 1px ;
     text-align: right;

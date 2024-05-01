@@ -156,5 +156,73 @@
     </div>
 </section>
 
+      </div><!---->
+    </div>
+  </div>
+  </div>
+</div><!-- col end -->
+
+
+
+
+  <div class="col-md-1 d-flex flex-column ">
+    <div class="sid_bar2">
+    <div class="sid-info2">
+     <a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"><img class="profile-img2"src="{{user.profile.avatar.url}}"></a><br><br>
+     <a class=" " href="{% url 'zoom:create_zoom_meeting_view' group.id user.id %}"><i class="sid_icon fa-solid fa-plus"></i> </a><br><strong class="sid_font ">جلسة </strong><br><br>
+
+    <a href="{% url 'main:group_dashboard_view' group.id user.id %}"><i class=" sid_icon fa-solid fa-table-columns"></i><a><br><strong class="sid_font ">المجموعة </strong><br><br>
+    <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class=" sid_icon fa-solid fa-folder"></i><a><br><strong class="sid_font ">ملفات </strong><br><br>
+    <a href="{% url 'review_sets:all_sets_view' group.id %}"><i class=" sid_icon fa-solid fa-book"></i><a><br><strong class="sid_font ">مراجعة </strong><br><br>
+           
+            
+    
+    <!--member leave group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator != request.member %}
+<form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="leave"type="submit"> <i class="fa-solid fa-arrow-right-from-bracket"></i> </button>
+</form>
+{% endif %}
+{% endfor %}
+
+<!--leader delete group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator == request.member %}
+<form action="{% url 'main:creator_delete_group_view' group.id %}" method="post">
+{% csrf_token %}
+<button class="leave"type="submit"><i class="fa-solid fa-trash"></i></button>
+</form>
+{% endif %}
+{% endfor %}
+    </div>
+    </div>
+  </div>
+
+  
+</div><!--end row -->
+
+
+                
+              
+
+
+
+
+
+
+               
+
+
+              
+         
+           
+    
+  {% endblock %}
+
+
+
 
 {% endblock %}
