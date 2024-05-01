@@ -1,25 +1,57 @@
 {% extends 'main/dashboard_base.html' %}
 {% load static %}
+{% block style %}
+ <style>
 
+body{
+  overflow-x: hidden;
+ 
+}
+
+
+  </style>
+
+{% endblock %}
  {% block content %}
 
 
+<div class="row mt-5">
+<div class="col-6 mt-5"> 
 
- <form action="{% url 'main:create_group_view' user.id%}"  method="POST"  enctype="multipart/form-data" class="d-flex flex-column gap-2" >
-    {% csrf_token %}
+<img  src="{% static 'images/teamwork.png' %}" style="width: 90%;">
 
-     <label for="text">Group name:</label>
-    <input type="text" name="name" placeholder="ex:Ahamd" class="form-control" required minlength="12" />
-    <br>
-    <label for="email">Group description:</label>
-    <input type="text" name="description" placeholder="description" class="form-control" required />
-    <br>
-    <h5>Choose Image:</h5>
-  <div class="form-group ">
-     <input name="icon"  type="file"  accept="image/*" class="form-control" />
-      </div>
-    <br>
-    <input type="submit" value="send"  class="b btn btn-primary"/>
-    </form>
+
+</div>
+<div class="col-6 mt-5">
+<div class="add_form">
+ <form action="{% url 'main:create_group_view' user.id%}"  method="POST" enctype="multipart/form-data" class="form_main">
+ {% csrf_token %}
+    <p class="heading">انشاء مجموعة</p>
+    <div class="inputContainer">
+  <label for="text">اسم المجموعة</label>
+       <input type="text" name="name" class="inputField" required minlength="4" />
+    </div>
+    
+<div class="inputContainer">
+    <label for="text"> وصف المجموعة</label>
+    <input type="text" class="inputField" name="description"  required />
+</div>
+                 
+<div class="inputContainer">
+<label for="text">اختيار الصورة</label>
+     <input name="icon"  type="file"  accept="image/*" class="inputField" />
+    
+</div>
+              
+           
+<button id="button">انشاء</button>
+   
+</form>
+</div>
+
+
+</div>
+
+
 
    {% endblock %}
