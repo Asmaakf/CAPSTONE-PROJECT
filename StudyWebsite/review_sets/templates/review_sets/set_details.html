@@ -11,8 +11,8 @@
 {% block content %}
 
 <section>
-    <div class="container mt-5 px-4">  
-        <div class="row g-5 mt-5">
+    <div class="container mt-5">  
+        <div class="row g-5 d-flex mt-5">
             <div class="col-6 text-start">
                 <a href="{% url 'review_sets:full_set_view' review_set.id group.id %}" class="btn btn-dark">العودة</a>
             </div>
@@ -21,14 +21,12 @@
             </div>
         </div>
 
-
-
-        <div class="row mt-5">
-
+        <div class="row mt-5 mb-5 bg-light py-4 rounded-1">
             <form action="{% url 'review_sets:update_set_view' review_set.id group.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                 {% csrf_token %}
+
                     <div class="col-12">
-                        <label for="title" class="form-label">عنوان المجموعة</label>
+                        <label for="title" class="form-label ">عنوان المجموعة</label>
                         <input name="title" type="text" value="{{ review_set.title }}" placeholder="عنوان المجموعة" class="form-control" minlength="5" />     
                     </div>
                     <div class="col-12">
@@ -37,25 +35,10 @@
                     </div>
                     <div class="col-12 ">
                         <input type="submit" class="btn btn-success w-100 " value="تحديث المجموعة" />
-                    </div>
+                    </div>                    
                 </div>
-
-
-
-
-                
             </form>
         </div>
-
-
-
-
-
-
-
-
-
-
     </div>
     
 </section>
@@ -66,11 +49,11 @@
 
 <section> 
     <div class="container">
-        <div class="row">
             <!-- Card 1 -->
 
-          <label class="col-md-12 card-container" for="card-1">
             {% for card in cards %}
+
+            <div class="row mt-4  bg-light py-4 rounded-1">
 
             <form action="{% url 'review_sets:update_card_view' review_set.id card.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                 {% csrf_token %}
@@ -95,19 +78,19 @@
 
            
         </div>
-        
+    </div>
+
           {% endfor %}
           <!-- End Card 1 -->
         </div>
         
-    </div>
 </section>
 
 <section>
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addCardModal">
+        <div class="row mt-4 mb-5">
+            <div class="col-md-12 d-flex justify-content-center">
+                <button type="button" class="btn btn-success px-5 py-2 rounded-pill" data-bs-toggle="modal" data-bs-target="#addCardModal">
                     اضافة بطاقة 
                 </button>
           
