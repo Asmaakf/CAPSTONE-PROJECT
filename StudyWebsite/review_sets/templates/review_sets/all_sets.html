@@ -34,7 +34,7 @@
   z-index: 5;
 
   width: 100%;
-  height: 8rem;
+  height: 10rem;
   background-color: var(--primary-800);
 
   border-radius: 0.5rem;
@@ -108,10 +108,7 @@
   
  
 }
-.know-more{
-    margin-right: 900px;
-   
-}
+
 
 
 
@@ -121,23 +118,24 @@
 
 <section>
     <div class="container mt-5 px-5">  
+      <div class="row d-flex text-end">
         <p><a href="{% url 'review_sets:add_set_view' group.id %}" class="text-decoration-none know-more"><span class="material-symbols-outlined">add_to_photos</span></a></p>      
+
+      </div>
         <div class="row g-5" style="display: flex; flex-wrap: wrap;">
            
            {% for r_set in sets %}
-           <div class="col-12 col-md-3">
-
-         
+           <div class="col-12 col-md-4 text-center">
            <div class="card">
             <div class="image_container">
                 <img src="{% static 'images/card.png' %}" alt="">
             </div>
             <div class="title">
-                <h4><a href="{% url 'review_sets:full_set_view' r_set.id group.id %}" style="text-decoration: none; color: #363636;">{{r_set.title}}</a></h4>
+                <h5><a href="{% url 'review_sets:full_set_view' r_set.id group.id %}" style="text-decoration: none; color: #363636;">{{r_set.title}}</a></h5>
                 <p style="font-size: 0.75rem;"> {{ r_set.created_at }}</p> 
             </div>
           
-            <div class="action gap-2">
+            <div class="action gap-2 d-flex justify-content-center">
                 {% if request.user.id == r_set.created_by.id  %}
                 <a href="{% url 'review_sets:delete_set_view' r_set.id group.id %}" class="btn btn-danger rounded-pill">حذف</a>
                 {% endif %}
