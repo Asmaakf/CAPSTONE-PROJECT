@@ -305,6 +305,43 @@ input[type='checkbox']:checked + .card-container .card-flip {
     
         </div>
     </div>
+
+    <div class="col-md-6">
+      <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addCardModal">
+          اضافة بطاقة 
+      </button>
+
+      <div class="modal fade" id="addCardModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">إضافة بطاقة</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                      <form action="{% url 'review_sets:add_card_view' review_set.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                          {% csrf_token %}
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <h4>السؤال </h4>
+                                  <input name="question" type="text" placeholder="سؤال" class="form-control" required minlength="2" />
+                              </div>
+                              <div class="col-md-6">
+                                  <h4>الجواب </h4>
+                                  <input name="answer" type="text" placeholder="جواب" class="form-control" required minlength="2" />
+                              </div>
+                          </div>
+                          <input type="submit" class="btn btn-dark" value=" حفظ البطاقة" />
+                      </form>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+
+
+
+
 </section>
 
 
