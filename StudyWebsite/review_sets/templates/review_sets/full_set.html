@@ -207,7 +207,7 @@ input[type='checkbox']:checked + .card-container .card-flip {
             <p>{{ review_set.description }}</p>
         </div>
         <div>
-          <P>انشأها {{review_set.created_by.first_name}}</P>
+          <P>انشئت من قبل  {{review_set.created_by.first_name}}</P>
 
           {% if request.user.id == review_set.created_by.id  %}
 

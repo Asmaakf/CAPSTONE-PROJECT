@@ -14,7 +14,6 @@ def add_set_view(request: HttpRequest,group_id):
     
     group=StudyGroup.objects.get(pk=group_id)
     if request.method == 'POST':
-
         if request.user.is_authenticated:
             try:
                 new_set = ReviewSet(
@@ -134,6 +133,7 @@ def add_card_view(request: HttpRequest, set_id):
     return render(request, "review_sets/full_set.html",{"review_set":review_set})
 
 def update_card_view(request: HttpRequest, set_id, card_id):
+
     review_set = ReviewSet.objects.get(pk=set_id)
     group_id = review_set.group.id 
 
@@ -153,7 +153,8 @@ def update_card_view(request: HttpRequest, set_id, card_id):
 
 
 def delete_card_view(request: HttpRequest, set_id, card_id):
-    
+     
+   
     review_set = ReviewSet.objects.get(pk=set_id)
     group_id = review_set.group.id  
 
