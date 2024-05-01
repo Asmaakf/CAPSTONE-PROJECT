@@ -9,7 +9,8 @@ def all_attachment_view(request:HttpRequest , group_id):
     if request.user.is_authenticated:    
       try:
           group=StudyGroup.objects.get(pk=group_id)
-          attachments= Attachment.objects.all()
+          attachments=Attachment.objects.filter(group=group_id)
+
       except Exception as e:
           return render(request, "main/not_allowed.html") # no permission page
       

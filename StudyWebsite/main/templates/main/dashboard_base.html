@@ -41,10 +41,10 @@
             <button type="button" class="drop btn  dropdown-toggle" data-bs-toggle="dropdown" >
             <img class="profile-img"src="{{user.profile.avatar.url}}"> </button>
                 <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"> ملفي الشخصي</a></li>
+            <li><a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"> لوحة التحكم</a></li>
             <li><a class="dropdown-item" href="{% url 'accounts:user_logout_view' %}"> تسجيل الخروج </a></li>
             </ul>
-            <p class="name">{{user.first_name}}</p>
+            <p class="name">{{user.first_name}} يا هلا </p>
             
             </div>
             </div>
@@ -52,12 +52,19 @@
            
             <nav class="navbar">
                
-                
+              
+            
+              <a class="nav-link active" aria-current="page" href="{% url 'common_questions:view_messages' %}">اسئلة وأجوبة</a>
+                <a class="nav-link active" aria-current="page" href="{% url 'contact:contact_view' %}">تواصل معنا</a>
+        
+
+         <a class="nav-link active" aria-current="page" href="/">الرئيسية</a>
+        
             </nav>
 
             <div class="logo">
             <div> <span><p class="logo-text" href="/"><strong>مِحزم  </strong></p></span></div>
-            <img class="logoimg" src="{% static 'images/logo1.png' %}" />
+             <img src="{% static 'images/logo.png' %}" alt="logo" class="logoimg mx-2 rounded-5" style="width: 50px;">
                
              
             </div>
