@@ -8,6 +8,7 @@ from zoom .models import ZoomMeeting
 from django.core.mail import send_mail
 from django.conf import settings
 from datetime import datetime ,timedelta 
+from attachments .models import Attachment
 
 # Create your views here.
 def index_view(request: HttpRequest):
@@ -27,12 +28,12 @@ def group_dashboard(request:HttpRequest , group_id , user_id):
   member=MembershipeRequesite.objects.filter(member=user)
   members=MembershipeRequesite.objects.filter(group=group_id)
   users = User.objects.all()
-  user_requests=MembershipeRequesite.objects.all
-  discussion=Discussion.objects.all
-  sessions=ZoomMeeting.objects.all
- 
+  user_requests=MembershipeRequesite.objects.all()
+  discussion=Discussion.objects.all()
+  sessions=ZoomMeeting.objects.filter(study_group=group, start_time__gte=datetime.now())
+  attachments=Attachment.objects.all
 
-  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests , "discussion":discussion ,"sessions":sessions} )
+  return render(request,"main/group_dashboard.html" , {"users":users,"group":group , "members":members , "user_requests":user_requests , "discussion":discussion ,"sessions":sessions , "attachments":attachments} )
 
 
 def user_dashboard(request:HttpRequest , user_id):
