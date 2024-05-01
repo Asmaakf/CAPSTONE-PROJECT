@@ -132,7 +132,12 @@
             </div>
             <div class="title">
                 <h5><a href="{% url 'review_sets:full_set_view' r_set.id group.id %}" style="text-decoration: none; color: #363636;">{{r_set.title}}</a></h5>
-                <p style="font-size: 0.75rem;"> {{ r_set.created_at }}</p> 
+                <p style="font-size: 0.75rem;"> {{ r_set.created_at }}</p>
+                
+                <li>
+                    <strong>{{ review_set.title }}</strong> - {{ r_set.flashcard.all.count }} flashcards
+                </li>
+            
             </div>
           
             <div class="action gap-2 d-flex justify-content-center">

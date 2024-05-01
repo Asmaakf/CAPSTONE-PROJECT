@@ -4,7 +4,7 @@ from datetime import date, timedelta
 from .models import ReviewSet, FlashCard
 from main.models import StudyGroup
 import math
-
+from django.db import models
 
 # Create your views here.
 
@@ -64,10 +64,13 @@ def all_sets_view(request: HttpRequest,group_id):
     try:
         group=StudyGroup.objects.get(pk=group_id)
         sets= ReviewSet.objects.filter(group=group)
+        review_sets = ReviewSet.objects.all().annotate(
+            flashcard_count=models.Count('flashcard')
+            )
     except Exception as e:
         print(e)
     
-    return render(request, "review_sets/all_sets.html", {"sets": sets,"group":group} )
+    return render(request, "review_sets/all_sets.html", {"sets": sets,"group":group, "review_sets":review_sets} )
 
 
 def full_set_view(request: HttpRequest, set_id, group_id): #  set detail
