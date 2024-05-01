@@ -49,6 +49,7 @@ def update_set_view(request: HttpRequest, set_id,group_id):
 
 
 def delete_set_view(request: HttpRequest, set_id,group_id ):
+    
     group=StudyGroup.objects.get(pk=group_id)
     #limit access to this view for only staff
     try:
