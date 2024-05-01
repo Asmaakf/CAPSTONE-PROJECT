@@ -31,7 +31,7 @@
 {{group.description}}
 {{group.creator}}
 {{group.created_at}}
-<form action="{% url 'main:delete_group_view' group.id %}" method="post">
+<form action="{% url 'main:admin_delete_group_view' group.id %}" method="post">
 {% csrf_token %}
 <input type="hidden" name="group" value="delete">
 <button class="b"type="submit">delete</button>

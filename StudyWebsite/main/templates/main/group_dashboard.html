@@ -77,14 +77,16 @@ body{
 {% for request in user_requests %}
 {% if request.group_id == group.id and request.status == 'Accept' and request.group.creator != request.member %}
 {% if user.id == request.group.creator_id %}
+
 <form action="{% url 'main:remove_member_view' user.id request.id group.id %}" method="post">
 {% csrf_token %}
 <input type="hidden" name="status" value="Reject">
 <button class="remove"type="submit">Remove</button>
 </form>
+
 {% endif %}
-<div class="col"></div>
 <p>{{ request.member.first_name }} {{ request.member.last_name }} <img class="member-img" src="{% static 'images/profile.png'%}"></p>
+
 {% endif %}
 {% endfor %}
 
@@ -102,7 +104,7 @@ body{
     <div class="col">
       
 
-  <div class="banner-box">
+  <div class="banner-box2">
 <div class="banner-title">
 <h1> {{group.name}}</h1>
 <h4>{{group.description}}</h4>
@@ -178,14 +180,12 @@ body{
   <div class="col-md-1 d-flex flex-column ">
     <div class="sid_bar2">
     <div class="sid-info2">
-     <a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"><img class="profile-img"src="{{user.profile.avatar.url}}"></a>
-     <a class="plus_icon" href="{% url 'zoom:create_zoom_meeting_view' group.id user.id %}"><i class="fa-solid fa-plus"></i><a><br><br>
+     <a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"><img class="profile-img2"src="{{user.profile.avatar.url}}"></a><br><br>
+     <a class=" " href="{% url 'zoom:create_zoom_meeting_view' group.id user.id %}"><i class="sid_icon fa-solid fa-plus"></i> </a><br><strong class="sid_font ">جلسة </strong><br><br>
 
-    <a class="dash_icon"href="{% url 'main:group_dashboard_view' group.id user.id %}"><span class="material-symbols-outlined">
-team_dashboard
-</span><a><br><br>
-    <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class="fa-solid fa-folder"></i><a><br><br>
-    <a href="{% url 'review_sets:all_sets_view' group.id %}"><i class="fa-solid fa-book"></i><a><br><br>
+    <a href="{% url 'main:group_dashboard_view' group.id user.id %}"><i class=" sid_icon fa-solid fa-table-columns"></i><a><br><strong class="sid_font ">المجموعة </strong><br><br>
+    <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class=" sid_icon fa-solid fa-folder"></i><a><br><strong class="sid_font ">ملفات </strong><br><br>
+    <a href="{% url 'review_sets:all_sets_view' group.id %}"><i class=" sid_icon fa-solid fa-book"></i><a><br><strong class="sid_font ">اسأله </strong><br><br>
            
             
     

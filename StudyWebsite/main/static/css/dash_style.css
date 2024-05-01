@@ -147,6 +147,11 @@ color: #ffffff;
     width: 40px;
     height: 40px;
 }
+.profile-img2{
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+}
 
 .member-titl{
     margin-top: 10px;
@@ -172,10 +177,12 @@ color: #ffffff;
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 118px;
-    background-color: #3e914d;
+    width: 110px;
+    background-color: rgba(37, 175, 99, 0.3);
     border-radius: 200px 0 0 0;
-    
+    margin-left: 1vw;
+    border: #8cc596 solid 1.5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.50);
     
 }
 
@@ -185,14 +192,27 @@ color: #ffffff;
     text-align: center;
 }
 .plus_icon{
-    font-size: 40px;
+    font-size: 33px;
 }
 .dash_icon{
     font-size: 30px;
 }
+
+.sid_font {
+    font-size: 16px;
+    color: #003d1c;
+}
+.sid_icon{
+    padding-top: 8px;
+ width: 40px;
+ height: 40px;
+ border-radius: 30%;
+ background-color: #eeeeee;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.30);
+}
 .sid-info2{
-    margin-left: 2vw;
-    margin-top: 9vw;
+   
+    margin-top: 5vw;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -200,11 +220,12 @@ color: #ffffff;
     color: #ffffff;
 }
 .sid-info2 a{
-    color: #ffffff;
+    color: #009144;
+    
 }
 
 .sid-info2 a:hover{
-    color: #ffd941;
+    color: #0069af;
 }
 .group-name{
     font-weight: 500;
@@ -216,9 +237,9 @@ color: #ffffff;
 
 .members{
     margin-top: 2vw;
-    justify-content: space-between;
+    justify-content: center;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
 }
 .member-img{
     width: 40px;
@@ -267,17 +288,38 @@ color: #ffffff;
     font-size: 22px;
     
 }
+.star{
+    margin-top: 7px;
+    font-size: 20px;
+    color: #3e914d;
+}
+.star2{
+    margin-top: 7px;
+    font-size: 20px;
+    color: transparent
+}
+.mail{
+    font-size: 20px;
+}
+.mail a{
+    font-size: 20px;
+}
+
 
 .edit {
     
-    background-color: rgb(57, 61, 59);
+    background-color: rgb(14, 37, 64);
     width: 200px;
-    height: 40px;
+    height: 35px;
     border: none;
     border-radius: 10px;
     
-    font-size: 22px;
+
     
+}
+.edit a{
+    font-size: 16px;
+    color: #c0c0c0;
 }
 .show_g{
     background-color: rgb(6, 185, 105);
@@ -347,12 +389,21 @@ color: #ffffff;
 }
 
 .banner-info{
+    
     margin-right: 20vw;
     text-align: right;
+    
+}
+.banner-info2{
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .banner-title{
     margin-right: 2vw;
+    color: #c0c0c0;
 }
 
 .circle2{
@@ -380,6 +431,9 @@ color: #ffffff;
 
 
 }
+.info-title{
+    color: #ffffff;
+}
 .member_name a{
     text-decoration: none;
     color: #000;
@@ -391,7 +445,20 @@ color: #ffffff;
     margin-left: 2vw;
     padding-right: 4vw;
     width: 1540px;
-    height: 230px;
+    height: 240px;
+    border-radius: 30px 120px 30px 30px;
+    padding-top: 1vw;
+    background-color: rgba(0, 123, 68, 0.5);
+    
+
+}
+.banner-box2{
+   
+    text-align: right;
+    margin-left: 2vw;
+    padding-right: 4vw;
+    width: 1120px;
+    height: 200px;
     border-radius: 30px 120px 30px 30px;
     padding-top: 1vw;
     background-color: rgba(0, 123, 68, 0.5);
@@ -458,6 +525,18 @@ button {
     border-radius: 30px;
     border: none;
 }
+
+.pro_right{
+margin-bottom: 7vw;
+}
+.line_profile{
+    width: 1400px;
+    height: 2px;
+    background-color: #cecece;
+    border-radius: 30px;
+    margin-top: 1vw;
+   
+}
 .line{
     width: 150px;
     height: 1px;
@@ -494,15 +573,7 @@ button {
     
 }
 
-.name-group a{
-    font-size: 20px;
-    color: #121212;
-    
-}
-.name-group a:hover{
-    color: #ff960d;
-    
-}
+
 .profile-sid{
     background-color: #ffffff;
     width: 370px;
@@ -629,7 +700,7 @@ button {
     border-radius: 0.75rem;
     background-color: white;
     width: 250px;
-    height: 370px;
+    height: 400px;
     box-shadow: 0 4px 6px -1px rgba(0,0,0,.1),
     0 2px 4px -2px rgba(0,0,0,.1);
   }
@@ -882,17 +953,28 @@ margin-right: 2vw;
     margin-left: 2vw;
     
 }
+
+
+.name-group a{
+    font-size: 25px;
+    color: #085790;
+    
+}
+.name-group a:hover{
+    color: #ff960d;
+    
+}
   .leader_group{
     padding-top: 4px;
     margin-top: 1vw;
     text-align: center;
     color: #121212;
-    background: rgba(190, 207, 184, 0.2);
+    background: transparent;
     box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.1);
     border: #ccf0d2 solid 1px;
     max-width: 222px;
-    height: 50px;
-    border-radius: 30px;
+    height: 55px;
+    border-radius: 10px;
     padding-right: 1vw;
     
     
@@ -917,6 +999,22 @@ margin-right: 2vw;
     position: relative;
     border: 2px solid transparent;
     transition: all 0.5s ease-in-out;
+  }
+
+  .member_card {
+    margin-left: 13px;
+    justify-content: center;
+    width: 360px;
+    height: 64px;
+    background: rgb(255, 255, 255);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 20px;
+    
+    border: 2px solid transparent;
+    
   }
 
 .request_name{
@@ -1018,7 +1116,7 @@ ul {
     top: -30px;
     left: 50%;
     transform: translateX(-50%);
-    color: #fff;
+    color: #ffffff;
     padding: 6px 10px;
     border-radius: 5px;
     opacity: 0;
@@ -1037,11 +1135,11 @@ ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
-    color: #4d4d4d;
-    background-color: #fff;
+    color: rgb(14, 37, 64);
+    background-color: #ededed;
     transition: all 0.3s ease-in-out;
   }
   .example-2 .icon-content a:hover {
@@ -1052,6 +1150,7 @@ ul {
     z-index: 1;
     width: 30px;
     height: 30px;
+    border-radius: 50%;
   }
   .example-2 .icon-content a:hover {
     color: white;
@@ -1153,12 +1252,12 @@ background-color: rgb(63, 128, 169);
 }
 
 .leave{
-    margin-top: 15vw;
+    margin-top: 13vw;
     background-color: rgb(225, 62, 62);
-    width: 50px;
+    width: 40px;
     height: 40px;
     border: none;
-    border-radius: 30px;
+    border-radius: 10px;
     margin-bottom: 1vw;
     font-size: 20px;
 }
