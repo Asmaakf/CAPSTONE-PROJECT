@@ -42,7 +42,7 @@ def update_set_view(request: HttpRequest, set_id,group_id):
             r_set.title = request.POST["title"]
             r_set.description = request.POST["description"]
             r_set.save()
-            return redirect("review_sets:full_set_view", set_id = r_set.id, group_id=group.id)
+            return redirect("review_sets:set_details_view", set_id = r_set.id, group_id=group.id)
         except Exception as e:
             print(e)
     return render(request, "review_sets/update_set.html", {"r_set" : r_set,"group":group})
@@ -96,20 +96,12 @@ def set_details_view(request:HttpRequest,set_id,group_id):
         review_set = ReviewSet.objects.get(pk=set_id)
         cards = FlashCard.objects.filter(review_set=review_set)
 
-        limit = 1
-        pages_count = [str(n) for n in range(1, math.ceil(cards.count()/limit)+1)] #use list comprehension to convert number to string number
-        start = (int(request.GET.get("page", 1))-1)*limit
-        end = (start)+limit
-
-        #apply the limit/slicing
-        cards = cards[start:end]
-
     except ReviewSet.DoesNotExist:
         review_set = None
     except Exception as e:
         print(e)
 
-    return render(request, "review_sets/set_details.html", {"review_set" : review_set, "cards" : cards,"group":group, "pages_count":pages_count})
+    return render(request, "review_sets/set_details.html", {"review_set" : review_set, "cards" : cards,"group":group})
 
 
 
@@ -131,7 +123,7 @@ def add_card_view(request: HttpRequest, set_id):
                     review_set = review_set,
                 )
                 new_card.save()  
-                return redirect("review_sets:full_set_view", set_id=review_set.id, group_id=group_id) ##pop up successfully
+                return redirect("review_sets:set_details_view", set_id=review_set.id, group_id=group_id) ##pop up successfully
             except Exception as e:
                 print(e)
 
@@ -148,10 +140,10 @@ def update_card_view(request: HttpRequest, set_id, card_id):
             card.question = request.POST["question"]
             card.answer = request.POST["answer"]
             card.save()
-            return redirect("review_sets:full_set_view", set_id=set_id, group_id=group_id)
+            return redirect("review_sets:set_details_view", set_id=set_id, group_id=group_id)
         except Exception as e:
             print(e)
-    return render(request, 'review_sets/full_set.html', {"review_set": review_set, "card": card})
+    return render(request, 'review_sets/set_details.html', {"review_set": review_set, "card": card})
 
 
 
@@ -169,6 +161,6 @@ def delete_card_view(request: HttpRequest, set_id, card_id):
     except Exception as e:
         print(e)
 
-    return redirect("review_sets:full_set_view", set_id=set_id, group_id=group_id)
+    return redirect("review_sets:set_details_view", set_id=set_id, group_id=group_id)
 
     
