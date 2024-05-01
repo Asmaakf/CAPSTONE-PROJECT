@@ -127,11 +127,12 @@ body{
                                 </div>
 
                                 <div class="d-flex justify-content-center align-items-center gap-2">
+                                    {% if request.user == group.creator%}
                                     <button type="button" class="btn btn-danger text-decoration-none rounded-pill"><a href="{% url 'attachments:delete_attachment_view' attachment.id group.id %}" class="text-decoration-none text-white"><i class="fa-solid fa-trash"></i></a></button>
                                     <button type="button" class="btn btn-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#updateAttachmentModal{{ attachment.id }}">
                                        <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
-                                    
+                                    {% endif %}
                                     <!-- update modal -->
                                     <div class="modal fade" id="updateAttachmentModal{{ attachment.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog">
@@ -259,7 +260,7 @@ body{
                                         <h5>اختيار الملف:</h5>
                                         <input name="media" type="file" accept="image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" required />
                                     </div>
-                                    <input type="submit" class="btn btn-success" value="إضافة الملف" />
+                                    <input type="submit" class="btn btn-success" value="إضافة" />
                                 </form>
                             </div>
                         </div>
