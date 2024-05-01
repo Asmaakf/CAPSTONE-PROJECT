@@ -82,7 +82,7 @@ def admin_delete_group(request:HttpRequest , group_id):
       return redirect('main:not_allowed_view')
     except Exception as e:
       print(e)
-    return redirect('main:admin_dashboard_view',request.user.id)
+    return redirect('main:all_groups_view')
   
 
 

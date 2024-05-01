@@ -100,7 +100,13 @@ body{
     <div class="col">
       
       <div class="file-box">
+      
+      
       <h2 class="disctions_title">الملفات</h2>
+
+       <button type="button" class="btn btn-dark float-end" data-bs-toggle="modal" data-bs-target="#addAttachmentModal">
+                    إضافة ملف
+                </button>
         <div class="file-box2">
         <div class="row">
           {% for attachment in attachments %}
@@ -123,7 +129,7 @@ body{
                                 <div class="d-flex justify-content-center align-items-center gap-2">
                                     <button type="button" class="btn btn-danger text-decoration-none rounded-pill"><a href="{% url 'attachments:delete_attachment_view' attachment.id group.id %}" class="text-decoration-none text-white"><i class="fa-solid fa-trash"></i></a></button>
                                     <button type="button" class="btn btn-dark rounded-pill" data-bs-toggle="modal" data-bs-target="#updateAttachmentModal{{ attachment.id }}">
-                                       
+                                       <i class="fa-solid fa-pen-to-square"></i>
                                     </button>
                                     
                                     <!-- update modal -->
@@ -218,77 +224,49 @@ body{
 </div><!--end row -->
 
 
-                <!-- Modal -->
-                <div class="modal fade" id="add_member" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                
+                </div>
+            </div>
+
+
+
+
+
+
+
+               
+
+
+                <!-- add Modal -->
+                <div class="modal fade" id="addAttachmentModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="add_member"> </h5>
+                                <h5 class="modal-title" id="exampleModalLabel">إضافة ملف</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                               <form action="{% url 'main:member_request_view' group.id %}"  method="POST"  class="d-flex flex-column gap-2" >
-                                {% csrf_token %}
-                                <label for="user-select">invaite a user:</label>
-                                <input type="text" name="user_name" placeholder="ahamd@gmail.com" class="form-control" required  />
-                                <br>
-                                <input type="submit" value="send"  class="b btn btn-primary"/>
+                                <form action="{% url 'attachments:add_attachment_view' group.id %}" method="post" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        
+                                        <div class="col-md-12">
+                                            <h4>اسم الملف</h4>
+                                            <input name="title" type="text" placeholder="Science" class="form-control" required minlength="2" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <h5>اختيار الملف:</h5>
+                                        <input name="media" type="file" accept="image/*, video/*, application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" class="form-control" required />
+                                    </div>
+                                    <input type="submit" class="btn btn-success" value="إضافة الملف" />
                                 </form>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-
-
-
-                <!-- edit Modal -->
-                {% for msg in discussion %}
-                {% if msg.id == msg.id %}
-        <div class="modal fade" id="edit_msg{{ msg.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="edit_msg{{ msg.id }}">{{ msg.title }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{% url 'main:edit_discussion_view' group.id msg.id %}" method="POST" class="d-flex flex-column gap-2">
-                            {% csrf_token %}
-                            <label for="message">Edit your message:</label>
-                            <input type="text" name="message" value="{{ msg.message }}" class="form-control" required >
-                            <br>
-                            <input type="submit" value="edit" class="btn btn-primary" />
-                        </form>
-                    </div>
-                </div>
+         
             </div>
         </div>
-    {% endif %}
-{% endfor %}
-
-
-
-                <!-- user_informations Modal -->
-        {% for request in user_requests %}
-        
-        <div class="modal fade" id="user_info{{ request.member.user.id }}" tabindex="-1" aria-labelledby="exampleModalLabel{{request.member.user.id}}" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="#user_info{{ request.member.user.id }}"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        {{ request.member.first_name }}
-                    </div>
-                </div>
-            </div>
-        </div>
-  
-        {% endfor %}
-
-
+    </div>
   {% endblock %}
