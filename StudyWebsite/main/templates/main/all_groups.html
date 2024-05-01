@@ -3,39 +3,89 @@
 
 {% block title %} all groups {% endblock %}
 
-
 {% block content %}
+<style>
+    .card {
+        width: 300px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
 
+    .card-img {
+        position: relative;
+    }
 
+    .group-icon {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
 
+    .delete-form {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+    }
 
-<!-- hero -->   
-<section class="bg-dark" style="width: 100%; height: 700px;">
+    .delete-button {
+        background-color: #ff0000;
+        color: #fff;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-</section>
+    .delete-button:hover {
+        background-color: #cc0000;
+    }
 
-<!-- content -->
+    .card-info {
+        padding: 10px;
+    }
+
+    .group-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+
+    .group-details {
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+
+<section class="hero"></section>
+
 <section class="mt-5">
     <div class="container mt-5 mb-5">
         <div class="row mt-5">
-            <div class="col text-center">
-                <h1>الصفحة الرئيسية</h1>
+            {% for group in all_group %}
+            <div class="col-md-3 mb-3"> <!-- إضافة mb-4 هنا -->
+                <div class="card">
+                    <div class="card-img">
+                        <img class="group-icon" src="{{ group.icon.url }}" alt="Group Icon">
+                    </div>
+                    <div class="card-info">
+                        <p class="group-name"><a href="{% url 'main:group_dashboard_view' group.id user.id  %}">{{ group.name }}</a></p>
+                        <p class="group-details">{{ group.description }}<br>
+                            Created by: {{ group.creator }}<br>
+                            Created at: {{ group.created_at }}</p>
+                    </div>
+                    <div class="card-footer" style="text-align: center;">
+                        <form action="{% url 'main:admin_delete_group_view' group.id %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="group" value="delete">
+                            <button class="delete-button rounded-pill" type="submit">Delete</button>
+                        </form>
+                    </div>
+                </div>
             </div>
+            {% endfor %}
         </div>
-    </div>
-</section>
+    </section>
+    {% endblock %}
 
-{% for group in all_group%}
-<img class="member-img"  style="width: 40px; height: 40px; border-radius: 50%;" src="{{ group.icon.url }}" alt="Group Icon">
-<a href="{% url 'main:group_dashboard_view' group.id user.id  %}"> {{group.name}} </a>
-{{group.description}}
-{{group.creator}}
-{{group.created_at}}
-<form action="{% url 'main:admin_delete_group_view' group.id %}" method="post">
-{% csrf_token %}
-<input type="hidden" name="group" value="delete">
-<button class="b"type="submit">delete</button>
-</form>
-{% endfor %}
-
-{% endblock %}
