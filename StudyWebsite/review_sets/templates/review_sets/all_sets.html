@@ -1,9 +1,9 @@
-{% extends 'main/base.html' %}
-{% load static %}
-{% block title %} كل المجموعات {% endblock %}
+{% extends 'main/dashboard_base.html' %}
 
-{% block content %}
-<style>
+{% load static %}
+
+{% block style %}
+ <style>
 
 .card {
   --bg-card: #e7e7eb;
@@ -108,18 +108,111 @@
   
  
 }
+body{
+  overflow-x: hidden;
+ 
+}
+.btn {
+    width: 40px !important;
+    height: 30px !important;
+    padding: 0 !important;
+    border: none !important;
+     
+    
+}
+.dropdown-menu {
+    min-width: 100px !important;
+}
+
+.dropdown-item {
+    padding: 0px 5px !important;
+    font-size: 12px !important;
+}
+
+ </style>
+
+{% endblock %}
+
+ {% block content %}
+
+{% if messages %}
+    {% for message in messages %}
+        {% if message.tags == 'success' %}
+            <div class="alert alert-success" role="alert">{{ message }}</div>
+        {% elif message.tags == 'error' %}
+            <div class="alert alert-danger" role="alert">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+{% endif %}
+
+
+<div class="row ">
+<div class="col-2 mt-3">
+
+<div class="group-info">
+
+<h6 class="disctions_title2">الجلسات </h6>
+{% for session in sessions %}
+    {% if session.study_group_id == group.id %}
+        {% if session.user_id == user.id %}
+            <div class="requests_card">
+                {{ session.topic }}
+                {{ session.start_time }}
+                <a href="{{ session.start_url }}" target="_blank" class="btn btn-success mr-3">بدء الاجتماع</a>
+            </div>
+        {% else %}
+            <div class="requests_card">
+                {{ session.topic }}
+                {{ session.start_time }}
+                <a href="{{ session.join_url }}" target="_blank" class="btn btn-info">الانضمام إلى الاجتماع</a>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
+
+</div>
+</div>
+
+
+<!-- contant -->
+  <div class="col-md-9 mt-5 d-flex flex-column align-items-end">
+  <div class="row">
+    <div class="col">
+      
+
+  <div class="banner-box2">
+   <img class="circle3" src="{{group.icon.url}}">
+<div class="banner-title">
+<h1> {{group.name}}</h1>
+<h4>{{group.description}}</h4>
+</div>
+
+</div>
 
 
 
+ 
 
-</style>
+      
+      
+    </div>
+  </div>
 
+  <!-- Discussion -->
+  <div class="row ">
+    <div class="col">
+      
+      <div class="file-box">
+      
+      
+      <h2 class="disctions_title">المراجعة</h2>
 
-
+        <div class="file-box2">
+         <p><a href="{% url 'review_sets:add_set_view' group.id %}" class="text-decoration-none know-more"><span class="material-symbols-outlined">add_to_photos</span></a></p>   
 <section>
     <div class="container mt-5 px-5">  
-      <div class="row d-flex text-end">
-        <p><a href="{% url 'review_sets:add_set_view' group.id %}" class="text-decoration-none know-more"><span class="material-symbols-outlined">add_to_photos</span></a></p>      
+      <div class="row d-flex text-end">   
 
       </div>
         <div class="row g-5" style="display: flex; flex-wrap: wrap;">
@@ -135,7 +228,7 @@
                 <p style="font-size: 0.75rem;"> {{ r_set.created_at }}</p>
                 
                 <li>
-                    <strong>{{ review_set.title }}</strong> - {{ r_set.flashcard.all.count }} flashcards
+                    <strong>{{ review_set.title }}</strong> {{ r_set.flashcard_set.all.count }} flashcards
                 </li>
             
             </div>
@@ -155,9 +248,71 @@
     </div>
 </section>
 
+      </div><!---->
+    </div>
+  </div>
+  </div>
+</div><!-- col end -->
 
-{% endblock %}
 
+
+
+  <div class="col-md-1 d-flex flex-column ">
+    <div class="sid_bar2">
+    <div class="sid-info2">
+     <a class="dropdown-item" href="{% url 'main:user_dashboard_view' user.id %}"><img class="profile-img2"src="{{user.profile.avatar.url}}"></a><br><br>
+     <a class=" " href="{% url 'zoom:create_zoom_meeting_view' group.id user.id %}"><i class="sid_icon fa-solid fa-plus"></i> </a><br><strong class="sid_font ">جلسة </strong><br><br>
+
+    <a href="{% url 'main:group_dashboard_view' group.id user.id %}"><i class=" sid_icon fa-solid fa-table-columns"></i><a><br><strong class="sid_font ">المجموعة </strong><br><br>
+    <a href="{% url 'attachments:all_attachment_view' group.id %}"><i class=" sid_icon fa-solid fa-folder"></i><a><br><strong class="sid_font ">ملفات </strong><br><br>
+    <a href="{% url 'review_sets:all_sets_view' group.id %}"><i class=" sid_icon fa-solid fa-book"></i><a><br><strong class="sid_font ">اسأله </strong><br><br>
+           
+            
+    
+    <!--member leave group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator != request.member %}
+<form action="{% url 'main:accept_reject_member_request_view' user.id request.id %}" method="post">
+{% csrf_token %}
+<input type="hidden" name="status" value="Reject">
+<button class="leave"type="submit"> <i class="fa-solid fa-arrow-right-from-bracket"></i> </button>
+</form>
+{% endif %}
+{% endfor %}
+
+<!--leader delete group button-->
+{% for request in user_requests %}
+{% if request.member_id == user.id and request.group_id == group.id and request.group.creator == request.member %}
+<form action="{% url 'main:creator_delete_group_view' group.id %}" method="post">
+{% csrf_token %}
+<button class="leave"type="submit"><i class="fa-solid fa-trash"></i></button>
+</form>
+{% endif %}
+{% endfor %}
+    </div>
+    </div>
+  </div>
+
+  
+</div><!--end row -->
+
+
+                
+              
+
+
+
+
+
+
+               
+
+
+              
+         
+           
+    
+  {% endblock %}
 
 
 
